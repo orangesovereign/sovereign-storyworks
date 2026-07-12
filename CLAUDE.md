@@ -4,9 +4,9 @@ All-in-one mission, quest, job, campaign, NPC, dialogue, and cutscene builder + 
 
 ## Project status
 
-**Current phase: PLANNING / DESIGN / FEATURE BRAINSTORM.** No coding until the owner approves the Master Feature List and Coding Plan.
+**Current phase: PLANNING — Master Feature List LOCKED at v1.0 (2026-07-12, 40 features); Coding Plan v0.1 drafted, AWAITING OWNER SIGN-OFF.** No coding until the plan is approved.
 
-Standing owner rulings (2026-07-12): **blank-page design** — the prior RC6 prototype in `sovereign_storyworks.zip` is ignored entirely, never reference or reuse it; **hard VORP dependency** — requires vorp_core, integrate via its exports/events directly (no framework-neutral adapter); **multiplayer scope** — undecided, to be settled in the brainstorm.
+Standing owner rulings (2026-07-12, full text in MASTER_FEATURE_LIST): #1 blank-page design (RC6 zip ignored entirely, never reference it); #2 hard VORP dependency (no adapter layer); #3 solo V1 on a party-ready participants-list core (posse missions V2); #4 society = job+grade gating only; #5 player journal in V1; #6 dashboard mockup approved as NUI baseline; #7 robust V1, no cuts (all 40 candidates approved; E3/E5 spike-conditional).
 
 ## Source of truth — read before any task
 

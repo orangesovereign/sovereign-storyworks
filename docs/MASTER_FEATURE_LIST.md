@@ -1,155 +1,147 @@
 # Sovereign Storyworks — Master Feature List
 
-**Version: 0.5 (PLANNING DRAFT — features below are not yet approved; see standing rulings for what is)**
-**Project phase: Planning / Design / Feature Brainstorm**
+**Version: 1.0 (LOCKED — owner ruling "Robust V1, no cuts", 2026-07-12)**
+**Project phase: Planning — feature list locked; Coding Plan drafted, awaiting owner sign-off**
 
-> Rule (carried over from the Medical Suite): a feature is only APPROVED when the owner (Wilbur) explicitly approves it in plain text. Approved features get an ID and move to the Approved section. If a behavior isn't in the Approved section, it is NOT approved and will not be coded.
+> Rule: if a behavior isn't in the Approved section, it is NOT approved and will not be coded. New ideas → propose to the owner in plain text → explicit approval → doc update → THEN implement. Changes are versioned in the changelog.
 
-**Buildability legend** — every candidate carries a verdict:
-- ✅ **Buildable** — proven pattern in RedM/VORP; supporting data or API verified in the reference repos.
-- 🔎 **Spike needed** — buildable in principle; a specific native/API must be verified on the dev server before the feature is locked.
-- ⚠️ **Constraint** — buildable only in a reduced form; the limitation is stated and the owner must accept it.
+**Legend** — ✅ buildable (verified pattern/data) · 🔎 **spike-conditional**: approved contingent on its Phase 0 spike passing; if the spike fails, the feature auto-defers to V2 and the owner is notified.
 
 ## Standing owner rulings (2026-07-12)
 
 1. **Blank-page design.** The prior RC6 prototype is ignored entirely; V1 is designed from scratch.
 2. **Hard VORP dependency.** Requires vorp_core; integrates via its exports/events directly. No framework-neutral adapter layer.
-3. **Solo V1, party-ready core.** V1 ships solo mission instances (with synced cutscene audiences as a candidate), but the runtime is architected around a participants list from day one so V2 posse missions extend it without a rewrite. Networked party combat NPCs are V2.
-4. **"Society" = job + grade gating only.** Mission visibility/start restricted by VORP job(s) and grade range; no society-treasury integration in V1.
-5. **Player journal is in V1** (C-K3 endorsed) — players browse available/active/completed missions and reset timers, and start eligible ones from a branded NUI.
-6. **Dashboard mockup APPROVED** (July 12, 2026) — `docs/mockups/dashboard_mockup_v1_APPROVED.html` is the visual baseline for all Storyworks NUI (ledger window, filigree, Registry/Craft/Office nav, stat tiles, reset strip, mission ledger, telegram dispatches).
+3. **Solo V1, party-ready core.** V1 ships solo mission instances; the runtime is architected around a participants list from day one so V2 posse missions extend it without a rewrite. Networked party combat NPCs are V2.
+4. **"Society" = job + grade gating only.** No society-treasury integration in V1.
+5. **Player journal is in V1.**
+6. **Dashboard mockup APPROVED** — `docs/mockups/dashboard_mockup_v1_APPROVED.html` is the visual baseline for all Storyworks NUI.
+7. **Robust V1 — no cuts.** The entire candidate list (v0.5) is approved for V1, including the full 13-task roster with escort and defend-area.
 
 ---
 
-## 1. Approved features (V1 Release Candidate)
+## 1. Approved features — V1 Release Candidate (40 features)
 
-*None yet — awaiting brainstorm rulings.*
+### A. Builder & Editor
 
----
+| ID | Feature | Verdict |
+|---|---|---|
+| A1 | Full no-code visual builder — every task, condition, and value is a form field, dropdown, or in-world capture. Acceptance test: a non-technical staff member builds a working mission unassisted. | ✅ |
+| A2 | React + Vite NUI, strict Sovereign County branding per BRANDING.md and the approved dashboard mockup baseline. | ✅ |
+| A3 | Node-graph mission canvas — tasks as connected blocks with success/failure branch paths. | ✅ |
+| A4 | Mission library — drafts, published, duplicate, archive (oxmysql-backed). | ✅ |
+| A5 | In-world capture buttons ("use my current position/heading/camera") throughout every location field. | ✅ |
+| A6 | Live draft preview — creator test-runs the unpublished mission privately via the normal runtime in preview mode. | ✅ |
+| A7 | Builder access via ACE permissions (`storyworks.builder`, `storyworks.admin`) + optional VORP job gate. | ✅ |
 
-## 2. Candidate features (brainstorm parking lot — NOT approved)
+### B. Modular Task System
 
-Candidates carry temporary `C-x.y` numbers for discussion only; real feature IDs are assigned at approval. Items marked **(owner)** come from the owner's initial list (2026-07-12); items marked **(proposed)** are Claude's supporting proposals — infrastructure the owner's features imply, surfaced for explicit approval rather than smuggled in.
-
-### A. Builder & Editor — the creator's NUI
-
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-A1 | Full no-code visual builder — nobody writes a line of code to make a mission **(owner)** | ✅ | Governing design principle. Every task, condition, and value is a form field, dropdown, or in-world capture. Acceptance test: a non-technical staff member builds a working mission unassisted. |
-| C-A2 | React + Vite NUI, strict Sovereign County branding **(owner)** | ✅ | Same pipeline as sovereign_mdt: source in `ui/src/`, committed `ui/dist/` bundle, zero CDN, bundled fonts. |
-| C-A3 | Node-graph mission canvas — tasks as connected blocks with branch paths **(proposed)** | ✅ | The natural surface for C-B1 modular tasks. Pure frontend work. |
-| C-A4 | Mission library — drafts, published, duplicate, archive **(proposed)** | ✅ | oxmysql-backed, `sovereign_` tables. |
-| C-A5 | In-world capture: "use my current position/heading/camera" buttons throughout **(proposed)** | ✅ | Standard NUI-callback → client native reads. Removes all coordinate typing — load-bearing for C-A1. |
-| C-A6 | Live draft preview — creator test-runs the unpublished mission privately **(proposed)** | ✅ | Runs the normal runtime flagged as preview. |
-| C-A7 | Builder access via ACE permission + optional VORP job gate **(proposed)** | ✅ | `storyworks.builder` / `storyworks.admin`. |
-
-### B. Modular Task System — the building blocks
-
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-B1 | Robust modular task system: chain/branch any task types to compose nearly any mission **(owner)** | ✅ | The architectural core. Each task type = one self-contained runtime module with a declared config schema; the builder renders schemas generically, so new task types never require NUI rework. |
-| C-B2 | Starter task set: go to location, multi-checkpoint route, talk to NPC, collect/deliver item, search area, eliminate targets, escort NPC, defend area, timed wait, hold-action, player choice, play cutscene, end mission **(proposed)** | ✅ | Each individually proven in RedM. Exact V1 roster is an owner call — this is the menu. |
-| C-B3 | Per-task failure outcomes (fail branch, retry, mission fail) **(proposed)** | ✅ | Graph edges: success path / failure path. |
-| C-B4 | Task-level rewards and requirements (see C-C block) attached to any node **(proposed)** | ✅ | |
+| ID | Feature | Verdict |
+|---|---|---|
+| B1 | Modular task engine: each task type is a self-contained runtime module with a declared config schema; the builder renders schemas generically so new task types never require NUI rework. | ✅ |
+| B2 | Full 13-task V1 roster: go to location, multi-checkpoint route, talk to NPC, collect/deliver item, search area, eliminate targets, escort NPC, defend area, timed wait, hold-action, player choice, play cutscene, end mission. | ✅ |
+| B3 | Per-task failure outcomes: fail branch, retry, mission fail. | ✅ |
+| B4 | Task-level rewards and requirements attachable to any node. | ✅ |
 
 ### C. Story Logic & Progression
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-C1 | Advanced, complete story system — multi-mission arcs with chapters **(owner)** | ✅ | Missions group into stories; stories order by chapter; chapter unlocks gate on prior completions. |
-| C-C2 | Story & progression support: per-character persistent variables, completion history, resume after disconnect **(owner)** | ✅ | Server-side state in oxmysql keyed to VORP character ID (not player ID — respects multi-character). |
-| C-C3 | Conditions & branching: compare variables, check job/grade, money, gold, XP, items, time of day **(proposed)** | ✅ | Job/grade/money/gold/XP confirmed on VORP's character class; items via vorp_inventory exports. |
-| C-C4 | Rewards: money, gold, XP, items; requirements optionally consumed **(proposed)** | ✅ | Same verified API surface. |
-| C-C5 | Chance/random branch nodes **(proposed)** | ✅ | Server-rolled. |
+| ID | Feature | Verdict |
+|---|---|---|
+| C1 | Stories: multi-mission arcs with ordered chapters; chapter unlocks gate on prior completions. | ✅ |
+| C2 | Per-character persistent variables, completion history, resume after disconnect (keyed to VORP character ID). | ✅ |
+| C3 | Conditions & branching: variables, job/grade, money, gold, XP, items, time of day. | ✅ |
+| C4 | Rewards: money, gold, XP, items; requirements optionally consumed. | ✅ |
+| C5 | Chance/random branch nodes (server-rolled). | ✅ |
 
 ### D. Scheduling, Availability & Access
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-D1 | Time-based missions: daily / weekly / monthly availability and reset cycles **(owner)** | ✅ | Server clock is authority; per-character cooldown rows; configurable reset hour and week start. Also covers "only available 6pm–6am game time" style windows if wanted. |
-| C-D2 | Job/Society mission access: restrict who can see/start a mission by VORP job + grade range **(owner)** | ✅ | Job + grade live on the character object. **Open question for owner:** does "society" mean anything beyond job-gating (e.g. society funds paying rewards)? |
-| C-D3 | Repeatability rules: once-ever, once per reset cycle, unlimited **(proposed)** | ✅ | |
+| ID | Feature | Verdict |
+|---|---|---|
+| D1 | Time-based missions: daily/weekly/monthly availability + reset cycles; configurable reset hour and week start; time-of-day windows. | ✅ |
+| D2 | Job/grade mission access: restrict visibility and start by VORP job(s) + grade range. | ✅ |
+| D3 | Repeatability rules: once-ever, once per reset cycle, unlimited. | ✅ |
 
 ### E. NPCs, Dialogue & Voice
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-E1 | Dynamic NPC dialogue: multi-line branching conversations, per-line speaker, player response choices **(owner)** | ✅ | NPC spawning, freezing, scenario idle — all standard RedM natives. Dialogue UI in NUI. |
-| C-E2 | Voice audio support: creator-supplied voice files play with dialogue lines **(owner)** | ✅ | Via NUI audio playback (`.ogg` bundled in the resource) — the proven RedM pattern, since the game engine cannot stream arbitrary user files natively. |
-| C-E3 | Native RDR2 ped speech lines (game's own voice barks) as an alternative to custom files **(proposed)** | 🔎 | RDR3 ambient-speech natives exist; usable line names per ped need a dev-server spike before this is promised. |
-| C-E4 | NPC Maker: model picker, name, behavior (standing/scenario/animation), in-world preview **(proposed)** | ✅ | Ped model list in rdr3_discoveries/peds. |
-| C-E5 | NPC outfit/appearance variation | 🔎 | Random preset variation via native outfit natives is likely; full custom clothing needs a spike against peds_customization data. Flagged now so it doesn't become a silent promise. |
+| ID | Feature | Verdict |
+|---|---|---|
+| E1 | Branching NPC dialogue: multi-line conversations, per-line speaker, player response choices. | ✅ |
+| E2 | Creator-supplied voice files (`.ogg` bundled in resource) played via NUI audio with dialogue lines. | ✅ |
+| E3 | Native RDR2 ped speech lines (game voice barks) as alternative to custom files. | 🔎 spike S2 |
+| E4 | NPC Maker: model picker, name, behavior (standing/scenario/animation), in-world preview. | ✅ |
+| E5 | NPC outfit/appearance variation. | 🔎 spike S3 |
 
 ### F. Cutscene Director
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-F1 | Advanced story cutscene system: cast, timeline of shots, captured cameras, actor animations/movement, dialogue overlays, fades **(owner)** | ✅ | Scripted-camera cutscenes (machinima style) are fully supported: CAM natives, ped tasking, anim dicts from rdr3_discoveries. |
-| C-F2 | Scene dressing: props, weather override, time-of-day override, screen effects (animpostfx), particle effects (ptfx), music stings/soundsets **(proposed)** | ✅ | All six categories have verified data dumps in rdr3_discoveries; natives are standard. Individual catalog entries still get spot-verified as catalogs are curated. |
-| C-F3 | Playing Rockstar's own prerecorded story cutscenes | ⚠️ | Not reliably exposed in RedM — **excluded from scope.** Our cutscenes are scripted scenes built from cameras + actors, which is what every RedM cutscene tool does. Owner must accept this boundary. |
+| ID | Feature | Verdict |
+|---|---|---|
+| F1 | Scripted cutscene system: cast roster, timeline of shots, captured cameras, actor animations/movement, dialogue overlays, fades, skip control, full cleanup. | ✅ |
+| F2 | Scene dressing: props, weather override, time-of-day override, screen effects (animpostfx), particle effects (ptfx), music stings/soundsets. | ✅ |
 
-### G. Asset Catalogs — "hundreds of game assets"
+*Engine boundary (recorded, not a scope cut): Rockstar's prerecorded story cinematics (cutfiles) are not reliably exposed by RedM and are excluded. Storyworks cutscenes are scripted scenes — the creator's cameras, actors, and NPCs.*
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-G1 | Searchable in-builder catalogs: peds, objects/props, vehicles/wagons, animations, scenarios, soundsets/music, particle effects, screen effects **(owner)** | ✅ | Source data confirmed present in rdr3_discoveries (read as data, not copied code). Work is curation: friendly names, categories, tags, server-side paginated search. |
-| C-G2 | In-world asset preview (spawn the ped/prop in front of the creator, audition the animation/sound) **(proposed)** | ✅ | |
-| C-G3 | Server-custom catalog additions via config JSON **(proposed)** | ✅ | Lets the owner add streamed custom assets without code. |
+### G. Asset Catalogs
+
+| ID | Feature | Verdict |
+|---|---|---|
+| G1 | Searchable in-builder catalogs: peds, objects/props, vehicles/wagons, animations, scenarios, soundsets/music, particle effects, screen effects. Server-side paginated search, friendly names, categories, tags. | ✅ |
+| G2 | In-world asset preview (spawn ped/prop, audition animation/sound). | ✅ |
+| G3 | Server-custom catalog additions via config JSON. | ✅ |
 
 ### H. Random Encounters
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-H1 | Random encounter missions dynamically spawning across the map, fully configurable **(owner)** | ✅ | Design: encounters are normal built missions tagged "encounter" + spawn rules (zones or anywhere, chance, min player distance, cooldown, max concurrent). Server rolls and offers; client spawns on proximity. Needs careful cleanup + density guardrails, standard engineering. |
-| C-H2 | Encounter zones drawn/captured in-world **(proposed)** | ✅ | Zone data also available in rdr3_discoveries for named-district targeting. |
+| ID | Feature | Verdict |
+|---|---|---|
+| H1 | Encounter director: missions tagged "encounter" + spawn rules (zones or map-wide, chance, min player distance, cooldown, max concurrent); server rolls and offers, client spawns on proximity, guaranteed cleanup. | ✅ |
+| H2 | Encounter zones captured in-world; named-district targeting via zone data. | ✅ |
 
 ### I. Integration & External Scripts
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-I1 | Integration support for external scripts **(owner)** | ✅ | Two directions: exports/events others call (start mission, query progress, completion events) + an **external action registry** — another resource registers a named action and it appears as a no-code task block in the builder. |
-| C-I2 | Discord webhook logging (mission published, completed, rewards granted) **(proposed)** | ✅ | Same pattern as Medical Suite webhooks. |
+| ID | Feature | Verdict |
+|---|---|---|
+| I1 | Integration surface: exports/events (start mission, query progress, completion events) + external action registry — another resource registers a named action that appears as a no-code task block in the builder. | ✅ |
+| I2 | Discord webhook logging: mission published, completed, rewards granted. | ✅ |
 
 ### J. Portability
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-J1 | Import/export missions and stories as portable files — share with other creators/servers **(owner)** | ✅ | JSON export with schema version; import as new draft, never overwriting; **server-side validation/sanitization of every imported field** (imports are untrusted input). |
+| ID | Feature | Verdict |
+|---|---|---|
+| J1 | Import/export missions and stories as versioned JSON; import as new draft, never overwriting; full server-side validation/sanitization of imported content (untrusted input). | ✅ |
 
 ### K. Player Experience
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-K1 | On-screen objective tracker (current task, progress, distance) **(proposed)** | ✅ | Minimal branded HUD element. |
-| C-K2 | Map blips/waypoints for active objectives **(proposed)** | ✅ | |
-| C-K3 | Player mission journal — browse available/active/completed missions, start eligible ones **(proposed)** | ✅ | Natural home for C-D1 daily/weekly visibility. Owner call on V1 vs later. |
+| ID | Feature | Verdict |
+|---|---|---|
+| K1 | On-screen objective tracker (current task, progress, distance) — minimal branded HUD. | ✅ |
+| K2 | Map blips/waypoints for active objectives, cleaned up on task/mission end. | ✅ |
+| K3 | Player mission journal — browse available/active/completed missions and reset timers; start eligible missions (owner-endorsed for V1, ruling #5). | ✅ |
 
-### L. Ops & Safety rails
+### L. Ops & Safety Rails
 
-| # | Candidate | Verdict | Notes |
-|---|---|---|---|
-| C-L1 | Fully configurable systems **(owner)** | ✅ | Split config files: limits, timers, permissions, encounter density, reset hours, webhook URLs. Zero magic numbers in code (standing rule). |
-| C-L2 | Server-side validation + rate limiting on every builder/runtime callback **(proposed)** | ✅ | Standing rule made explicit as a feature so it's planned, not hoped for. |
-| C-L3 | Locale system for all player-facing text **(proposed)** | ✅ | Standing rule. |
-
----
-
-## 3. Explicitly rejected / deferred
-
-- **C-F3 scope boundary:** playback of Rockstar's prerecorded story cutscenes — excluded (engine limitation), pending owner acknowledgment.
+| ID | Feature | Verdict |
+|---|---|---|
+| L1 | Fully configurable systems: split config files for limits, timers, permissions, encounter density, reset hours, webhook URLs. Zero magic numbers in code. | ✅ |
+| L2 | Server-side validation + rate limiting on every builder/runtime callback. | ✅ |
+| L3 | Locale system for all player-facing text (`locales/en.lua`, `T(key)`). | ✅ |
 
 ---
 
-## Open rulings requested from owner
+## 2. Candidate features
 
-1. **C-B2 starter task roster** — which task types make the V1 cut.
-2. **C-F3 boundary acknowledgment** — confirm acceptance that cutscenes are scripted scenes (cameras + actors), not Rockstar's prerecorded story cutscenes.
-3. **Full-list approval pass** — every remaining candidate needs an approve/cut/defer ruling before the Coding Plan is authored.
+*Empty — list locked at v1.0. New proposals go here pending owner approval.*
+
+## 3. Rejected / deferred (V2 and beyond)
+
+- **Party/posse missions with networked combat NPCs** — V2 (ruling #3; V1 core is architected participants-first to receive it).
+- **Society treasury integration** (rewards from/into job funds) — V2 candidate (ruling #4).
+- **Rockstar prerecorded cinematics** — engine boundary, excluded outright (see F block note).
+
+---
 
 ## Changelog
 
-- **v0.5 (2026-07-12)** — Dashboard mockup approved by owner (standing ruling #6); GitHub repository connected (orangesovereign/sovereign-storyworks).
-- **v0.4 (2026-07-12)** — Owner rulings recorded: solo V1 with party-ready core (party play V2), society = job+grade gating only, player journal endorsed for V1. Open rulings narrowed to task roster, cutscene boundary, and the full approval pass.
-- **v0.3 (2026-07-12)** — Owner's 15-point initial list decomposed into 12 categories with buildability verdicts; asset data and VORP API surface verified against reference repos; supporting proposals added for explicit approval; open rulings listed.
-- **v0.2 (2026-07-12)** — Owner rulings: blank-page design, hard VORP dependency, multiplayer tabled.
+- **v1.0 (2026-07-12)** — LIST LOCKED. Owner ruling #7 "Robust V1, no cuts": all 40 candidates approved with permanent IDs; E3/E5 spike-conditional; F3 recorded as engine boundary; deferred section populated.
+- **v0.5 (2026-07-12)** — Dashboard mockup approved (ruling #6); GitHub repository connected.
+- **v0.4 (2026-07-12)** — Rulings: solo V1/party-ready core, society = job+grade only, journal in V1.
+- **v0.3 (2026-07-12)** — Owner's 15-point list decomposed into categories with buildability verdicts; asset data + VORP API verified.
+- **v0.2 (2026-07-12)** — Rulings: blank-page design, hard VORP dependency.
 - **v0.1 (2026-07-12)** — Initial planning skeleton.
