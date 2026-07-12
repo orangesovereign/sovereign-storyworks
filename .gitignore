@@ -1,0 +1,13 @@
+# Node / frontend
+node_modules/
+ui/node_modules/
+web/node_modules/
+*.log
+
+# OS junk
+Thumbs.db
+.DS_Store
+
+# Local scratch
+_scratch/
+.claude/settings.local.json
