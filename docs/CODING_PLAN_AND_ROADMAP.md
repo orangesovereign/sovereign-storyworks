@@ -1,7 +1,7 @@
 # Sovereign Storyworks — Coding Plan & Roadmap
 
-**Version: 0.1 (DRAFT — awaiting owner sign-off; coding does not begin until this document is approved)**
-**Scope: Master Feature List v1.0 (40 approved features, rulings #1–7)**
+**Version: 0.2 (DRAFT — awaiting owner sign-off; coding does not begin until this document is approved)**
+**Scope: Master Feature List v1.1 (42 approved features, rulings #1–8)**
 
 ## How this plan works (plain language)
 
@@ -19,8 +19,8 @@ The build is split into eleven phases. Each phase ends with an **exit gate**: a 
 
 - Resource skeleton: `fxmanifest.lua` (lua54, RedM prerelease acknowledgment line), folder structure doc, split config files, `locales/en.lua`, DB migration runner, tagged logging.
 - S1: extract exact vorp_core / vorp_inventory-v2 export signatures from the cloned reference repos into TECH_SPEC (verbatim).
-- Owner dev-server spikes: S2 native ped speech, S3 outfit natives, S4 ptfx/animpostfx spot test, S5 soundset/music spot test. Results recorded; E3/E5 confirmed or auto-deferred per the feature list rule.
-- **Exit gate:** resource boots clean on the dev server, tables migrate on a fresh DB, all five spike results recorded in TECH_SPEC.
+- Owner dev-server spikes: S2 native ped speech, S3 outfit natives, S4 ptfx/animpostfx spot test, S5 soundset/music spot test, S6 carriable route selection (B5/B6). Results recorded; E3/E5 confirmed or auto-deferred per the feature list rule; S6 picks the B5/B6 implementation route (the features ship either way).
+- **Exit gate:** resource boots clean on the dev server, tables migrate on a fresh DB, all six spike results recorded in TECH_SPEC.
 
 ## Phase 1 — Mission Runtime Core *(tag: v0.1-alpha)*
 
@@ -34,11 +34,11 @@ The build is split into eleven phases. Each phase ends with an **exit gate**: a 
 
 ## Phase 2 — Task Vocabulary I: Movement & Interaction *(tag: v0.2-alpha)*
 
-**Features:** B2 (7 of 13), B4, E1, E2, K1, K2.
+**Features:** B2 (9 of 15), B4, B5, B6, E1, E2, K1, K2.
 
-- Tasks: multi-checkpoint route, talk to NPC, collect/deliver item, search area, timed wait, hold-action, player choice.
+- Tasks: multi-checkpoint route, talk to NPC, collect/deliver item, search area, timed wait, hold-action, player choice, **physical carry (B5)**, **load/unload cargo (B6)** — route per spike S6.
 - Branching dialogue runtime (E1) with NUI voice audio (E2). Objective tracker HUD (K1) and blips (K2) — both to the approved visual baseline.
-- **Exit gate:** owner-run checklist covering each task type solo and chained, dialogue with choices and voice file, tracker/blips correctness.
+- **Exit gate:** owner-run checklist covering each task type solo and chained, dialogue with choices and voice file, tracker/blips correctness, and a full physical-cargo run (pick up crate → load wagon → drive → unload → objective counts correct; drop/disconnect mid-carry leaves no orphaned props).
 
 ## Phase 3 — Task Vocabulary II: Combat & NPC Operations *(tag: v0.3-alpha)*
 
@@ -114,4 +114,5 @@ The build is split into eleven phases. Each phase ends with an **exit gate**: a 
 
 ## Changelog
 
+- **v0.2 (2026-07-12)** — B5/B6 (physical carry, load/unload cargo) added to Phase 2 per ruling #8; spike S6 added to Phase 0; Phase 2 exit gate extended with the physical-cargo run.
 - **v0.1 (2026-07-12)** — Initial draft against Master Feature List v1.0. Awaiting owner sign-off.

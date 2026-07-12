@@ -1,6 +1,6 @@
 # Sovereign Storyworks — Master Feature List
 
-**Version: 1.0 (LOCKED — owner ruling "Robust V1, no cuts", 2026-07-12)**
+**Version: 1.1 (LOCKED — owner rulings #7 "Robust V1, no cuts" + #8 physical object interaction, 2026-07-12)**
 **Project phase: Planning — feature list locked; Coding Plan drafted, awaiting owner sign-off**
 
 > Rule: if a behavior isn't in the Approved section, it is NOT approved and will not be coded. New ideas → propose to the owner in plain text → explicit approval → doc update → THEN implement. Changes are versioned in the changelog.
@@ -16,10 +16,11 @@
 5. **Player journal is in V1.**
 6. **Dashboard mockup APPROVED** — `docs/mockups/dashboard_mockup_v1_APPROVED.html` is the visual baseline for all Storyworks NUI.
 7. **Robust V1 — no cuts.** The entire candidate list (v0.5) is approved for V1, including the full 13-task roster with escort and defend-area.
+8. **Physical object interaction is a V1 requirement** (owner directive, 2026-07-12): picking up, carrying, putting down, and loading/unloading mission props must be real, physical, animated interactions — not inventory abstractions. Features B5/B6.
 
 ---
 
-## 1. Approved features — V1 Release Candidate (40 features)
+## 1. Approved features — V1 Release Candidate (42 features)
 
 ### A. Builder & Editor
 
@@ -38,9 +39,11 @@
 | ID | Feature | Verdict |
 |---|---|---|
 | B1 | Modular task engine: each task type is a self-contained runtime module with a declared config schema; the builder renders schemas generically so new task types never require NUI rework. | ✅ |
-| B2 | Full 13-task V1 roster: go to location, multi-checkpoint route, talk to NPC, collect/deliver item, search area, eliminate targets, escort NPC, defend area, timed wait, hold-action, player choice, play cutscene, end mission. | ✅ |
+| B2 | Full 15-task V1 roster: go to location, multi-checkpoint route, talk to NPC, collect/deliver item, search area, eliminate targets, escort NPC, defend area, timed wait, hold-action, player choice, play cutscene, physical carry (B5), load/unload cargo (B6), end mission. | ✅ |
 | B3 | Per-task failure outcomes: fail branch, retry, mission fail. | ✅ |
 | B4 | Task-level rewards and requirements attachable to any node. | ✅ |
+| B5 | Physical carry task: player picks up a mission prop with real animation, carries it on foot (configurable movement restriction), puts it down or places it at a target point. Primary route: the game's native carriable system (carrying flags, `GET_PED_CARRIED_ENTITY`, `TASK_PLACE_CARRIED_ENTITY_AT_COORD` — all confirmed in the native data); fallback route: attach-to-bone + carry animation (proven RedM pattern). Spike S6 selects the primary route. | ✅ (route via S6) |
+| B6 | Load/unload cargo task: carried props load onto wagons/carts (attach at configurable offsets/slots) and mounts (native *can be placed on mount* flag confirmed); unloading reverses it; server counts loaded/unloaded cargo for objectives (e.g. "load 5 crates, drive to the depot, unload"). | ✅ (route via S6) |
 
 ### C. Story Logic & Progression
 
@@ -139,6 +142,7 @@
 
 ## Changelog
 
+- **v1.1 (2026-07-12)** — Ruling #8 (owner directive): physical object interaction added as B5 (physical carry) and B6 (load/unload cargo); task roster now 15; native carriable system confirmed in reference data; spike S6 added to select primary implementation route.
 - **v1.0 (2026-07-12)** — LIST LOCKED. Owner ruling #7 "Robust V1, no cuts": all 40 candidates approved with permanent IDs; E3/E5 spike-conditional; F3 recorded as engine boundary; deferred section populated.
 - **v0.5 (2026-07-12)** — Dashboard mockup approved (ruling #6); GitHub repository connected.
 - **v0.4 (2026-07-12)** — Rulings: solo V1/party-ready core, society = job+grade only, journal in V1.

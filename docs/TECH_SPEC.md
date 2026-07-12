@@ -34,8 +34,10 @@ Data is read as reference data for building our curated catalogs. Individual ent
 - ✅ Scripted cutscenes: CAM natives (create/point/interp), ped task natives, anim dict loading — standard proven RedM machinima pattern.
 - ✅ Custom voice audio: NUI `<audio>` playback of `.ogg` bundled in the resource. Game engine cannot stream arbitrary user audio files.
 - ⚠️ Rockstar prerecorded story cutscenes (cutfiles): not reliably exposed in RedM — out of scope (feature list C-F3).
-- 🔎 Native ambient ped speech (voice barks) — natives exist; usable line/voice names per ped model need a dev-server spike (C-E3).
-- 🔎 NPC outfit/appearance control depth — preset variation vs full component control (C-E5).
+- 🔎 Native ambient ped speech (voice barks) — natives exist; usable line/voice names per ped model need a dev-server spike (E3).
+- 🔎 NPC outfit/appearance control depth — preset variation vs full component control (E5).
+- ✅ **Native carriable system exists** (confirmed 2026-07-12, `AI/CARRYING_FLAGS` + community natives): carrying flags incl. `CAN_BE_CARRIED_ON_FOOT` (2), `CAN_BE_CARRIED_ON_MOUNT` (3), `CAN_BE_DROPPED` (4), `CAN_BE_PLACED_ON_MOUNT` (14), `IS_INSTANT_PICKUP` (21), `CLEAN_UP_WHEN_NOT_CARRIED` (27); `GET_PED_CARRIED_ENTITY(ped)`; `TASK_PLACE_CARRIED_ENTITY_AT_COORD(ped, carried, x, y, z, ukn, flag)`; transport config flags (`SET_TRANSPORT_CONFIG_FLAG` 0xBA8818212633500A) for mount/vehicle interaction control. Supports B5/B6.
+- ✅ Fallback for B5/B6: attach-to-bone + carry animation loop, detach + ground placement, attach to vehicle at offsets — the standard proven RedM carry-script pattern; guarantees B5/B6 ship even if the native carriable route disappoints.
 
 ## 4. Open spikes (Phase 0 checklist)
 
@@ -46,7 +48,9 @@ Data is read as reference data for building our curated catalogs. Individual ent
 | S3 | Ped outfit natives test | C-E5 only |
 | S4 | PTFX + animpostfx spot test (spawn a few from the dumps) | C-F2 catalog curation |
 | S5 | Soundset/music event spot test | C-F2 catalog curation |
+| S6 | Carriable route selection: make an arbitrary spawned prop carriable via carrying flags (pick up / put down / place / stow on mount), attach test on a wagon — decides B5/B6 primary route (native vs attach fallback); feature ships either way | B5/B6 implementation route only |
 
 ## Changelog
 
+- **v0.2 (2026-07-12)** — Native carriable system verified (carrying flags, GET_PED_CARRIED_ENTITY, TASK_PLACE_CARRIED_ENTITY_AT_COORD, transport config flags); attach fallback documented; spike S6 added for B5/B6 route selection.
 - **v0.1 (2026-07-12)** — Initial ledger: VORP surface, asset data inventory, engine patterns, Phase 0 spikes.
