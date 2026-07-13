@@ -35,7 +35,7 @@ GitHub repository: https://github.com/orangesovereign/sovereign-storyworks (remo
 
 - Claude cannot run a RedM server. Loop: write → owner deploys to dev server → owner pastes server console + F8 output → fix. Guard nils, wrap DB calls, tagged prints (`[sovereign_storyworks]`).
 - Database: MySQL via **oxmysql**. Tables prefixed `sovereign_`, migrations clean on fresh AND existing DBs.
-- At the end of each coding phase: create/maintain a testing checklist + log in `/docs/testing/` so the owner or a helper can test without context.
+- At the end of each coding phase: publish the testing checklist as an interactive **Exit-Gate Ledger artifact** in the Medical Suite format (dark BRANDING.md ledger sheet, embedded SC fonts, ART. sections with feature-ID tags, tickable items with "Expect:" lines, localStorage persistence, sticky progress bar, two-click reset — never confirm(), artifacts block it), plus a plain-text mirror + log in `/docs/testing/` linking to the ledger.
 - Communication style: plain language first, tech talk alongside.
 
 ## Conventions

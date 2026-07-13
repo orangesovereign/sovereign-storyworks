@@ -1,5 +1,9 @@
 # Phase 0 Testing Checklist — Foundations & Spikes
 
+> **The live checklist is the interactive Exit-Gate Ledger (Medical Suite format — tickable, progress bar, ticks persist):**
+> **https://claude.ai/code/artifact/0978f7ba-a319-4568-b9cc-5e86f09f817e**
+> This file is the plain-text mirror kept in the repo for the permanent record.
+
 **Written for:** anyone — no developer knowledge needed.
 **What you need:** the dev server with `oxmysql` and `vorp_core` running, admin rights, and 15 minutes.
 **What to send back to Claude:** the full server console output from resource start, plus your F8 console lines for each spike, plus a PASS/FAIL/WEIRD note per item below.
