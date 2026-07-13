@@ -42,6 +42,13 @@ server_scripts {
   'server/main.lua',
 }
 
+ui_page 'ui/dist/index.html'
+
+files {
+  'ui/dist/index.html',
+  'ui/dist/assets/*',
+}
+
 dependencies {
   'oxmysql',
   'vorp_core',

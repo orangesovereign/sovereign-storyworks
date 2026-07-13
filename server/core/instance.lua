@@ -64,18 +64,20 @@ local function notifyCard(inst, variant, title, body)
   end)
 end
 
--- K2: objective map blips. The server tells clients WHERE the objective is
--- (display only); completion checks remain server-side.
+-- K1/K2: objective display state. The server tells clients WHAT the objective
+-- is and (when fixed) WHERE — display only; completion checks remain server-side.
 local function broadcastObjectiveBlip(inst)
   local target = inst.taskCtx and inst.taskCtx.target or nil
   local label = inst.taskNode and inst.taskNode.label or ''
+  local payload = {
+    title = inst.def.title,
+    label = label,
+    x = target and target.x or nil,
+    y = target and target.y or nil,
+    z = target and target.z or nil,
+  }
   forEachParticipant(inst, function(src)
-    if target then
-      TriggerClientEvent('sovereign_storyworks:client:objectiveBlip', src,
-        { x = target.x, y = target.y, z = target.z, label = label })
-    else
-      TriggerClientEvent('sovereign_storyworks:client:objectiveBlip', src, nil)
-    end
+    TriggerClientEvent('sovereign_storyworks:client:objectiveBlip', src, payload)
   end)
 end
 

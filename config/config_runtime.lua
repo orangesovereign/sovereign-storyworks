@@ -29,6 +29,12 @@ ConfigRuntime.InstanceExpiryHours = 48
 -- (vorp_utils blips.lua / vorp_banking). 0 disables blips entirely.
 ConfigRuntime.ObjectiveBlipStyle = 1664425300
 
+-- Objective tracker HUD (K1). Server-set, identical for every player.
+ConfigRuntime.Tracker = {
+  anchor = 'bottom-left', -- bottom-left | bottom-right | top-left | top-right
+  scale = 1.0,
+}
+
 -- Phase 1 test fixture: load data/*.json mission definitions at boot as published
 -- missions (validated first). The builder replaces this pipeline in Phase 5.
 ConfigRuntime.SeedMissionsFromData = true

@@ -1,0 +1,110 @@
+/* Sovereign Storyworks — K1 objective tracker
+   Phase 2 | Features: K1 — BRANDING.md tokens; fonts bundled, no CDN. */
+
+@font-face {
+  font-family: 'SC Cinzel';
+  src: url('./assets/fonts/Cinzel-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SC Baskerville';
+  src: url('./assets/fonts/LibreBaskerville-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SC Fell';
+  src: url('./assets/fonts/IMFellEnglish-Italic.woff2') format('woff2');
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --parchment: #e0d2b5;
+  --parchment-dim: #9c8c6b;
+  --brass: #a8834b;
+  --brass-dim: #59461f;
+  --red-deep: #6a1b11;
+  --font-display: 'SC Cinzel', Georgia, serif;
+  --font-body: 'SC Baskerville', Georgia, serif;
+  --font-fell: 'SC Fell', Georgia, serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+}
+
+.k1-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--font-body);
+  font-size: calc(15px * var(--k1-scale, 1));
+}
+
+@keyframes k1-in {
+  from { opacity: 0; transform: translateY(0.5em); }
+  to { opacity: 1; transform: none; }
+}
+
+.k1-tracker {
+  position: absolute;
+  width: 19em;
+  max-width: 26vw;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(16, 12, 9, 0.85), rgba(22, 16, 11, 0.85));
+  border: 1px solid var(--brass-dim);
+  border-left: 3px solid var(--red-deep);
+  padding: 0.5em 0.75em 0.5em;
+  box-shadow: 0 0.3em 0.9em rgba(0, 0, 0, 0.55);
+  animation: k1-in 0.25s ease both;
+}
+.k1-tracker.bottom-left { bottom: 4.5vh; left: 1.4vw; }
+.k1-tracker.bottom-right { bottom: 4.5vh; right: 1.4vw; }
+.k1-tracker.top-left { top: 3.5vh; left: 1.4vw; }
+.k1-tracker.top-right { top: 3.5vh; right: 1.4vw; }
+
+.k1-title {
+  font-family: var(--font-display);
+  font-size: 0.6em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 0.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.k1-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+}
+
+.k1-label {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 0.85em;
+  line-height: 1.3;
+  color: var(--parchment);
+}
+
+.k1-distance {
+  flex: none;
+  font-size: 0.95em;
+  color: var(--parchment);
+  font-variant-numeric: tabular-nums;
+}
+.k1-distance span {
+  font-size: 0.7em;
+  color: var(--parchment-dim);
+  margin-left: 0.1em;
+}
