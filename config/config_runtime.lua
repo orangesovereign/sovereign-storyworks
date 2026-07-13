@@ -35,6 +35,20 @@ ConfigRuntime.Tracker = {
   scale = 1.0,
 }
 
+-- Interaction prompts (hold-action, choices, deliveries). Key hashes from the
+-- rdr3_discoveries Controls dump; every key is on-foot safe.
+ConfigRuntime.Interact = {
+  holdKey = 0x760A9C6F,    -- [G] INPUT_INTERACT_OPTION1
+  choiceKeyA = 0x760A9C6F, -- [G] option one
+  choiceKeyB = 0x2EAB0795, -- [E] INPUT_DYNAMIC_SCENARIO — option two
+  defaultHoldMs = 1200,    -- how long a hold prompt must be held
+  choiceHoldMs = 500,      -- short hold on choices so a stray tap can't decide
+  positionSlack = 3.0,     -- extra meters allowed in the server-side position check
+}
+
+-- How often the server re-checks inventories for collect-type objectives (ms).
+ConfigRuntime.InventoryPollMs = 2000
+
 -- Phase 1 test fixture: load data/*.json mission definitions at boot as published
 -- missions (validated first). The builder replaces this pipeline in Phase 5.
 ConfigRuntime.SeedMissionsFromData = true

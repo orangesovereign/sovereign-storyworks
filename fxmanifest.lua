@@ -24,6 +24,7 @@ client_scripts {
   'client/util/dataview.lua',
   'client/main.lua',
   'client/runtime.lua',
+  'client/prompts.lua',
   'client/spikes.lua',
 }
 
@@ -33,11 +34,15 @@ server_scripts {
   'server/core/ratelimit.lua',
   'server/core/registry.lua',
   'server/core/missions.lua',
+  'server/core/interactions.lua',
   'server/core/instance.lua',
   'server/tasks/goto.lua',
   'server/tasks/route.lua',
   'server/tasks/wait.lua',
   'server/tasks/search.lua',
+  'server/tasks/holdaction.lua',
+  'server/tasks/choice.lua',
+  'server/tasks/collectdeliver.lua',
   'server/tasks/end.lua',
   'server/core/seed.lua',
   'server/commands.lua',
@@ -55,5 +60,6 @@ files {
 dependencies {
   'oxmysql',
   'vorp_core',
+  'vorp_inventory',   -- collect/deliver objectives (S1-verified exports)
   'sovereign_notify', -- K4 renderer (ruling #9) — extracted as a county-wide standalone
 }

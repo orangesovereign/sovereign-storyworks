@@ -101,6 +101,13 @@ local function makeCtx(inst, node)
       ctx.target = target
       broadcastObjectiveBlip(inst)
     end,
+    -- server-validated prompts (hold/choice/deliver); auto-cleared on task stop
+    ArmInteraction = function(spec, onDone)
+      return SWInteractions.Arm(inst, spec, onDone)
+    end,
+    ClearInteraction = function()
+      SWInteractions.Clear(inst)
+    end,
     instance = inst,
     node = node,
     config = node.config or {},
@@ -124,6 +131,7 @@ end
 local function stopCurrentTask(inst)
   if inst.taskCtx and inst.taskNode then
     clearObjectiveBlip(inst)
+    SWInteractions.Clear(inst)
     local taskType = SWTasks.Get(inst.taskNode.type)
     if taskType and taskType.stop then
       local ok, err = pcall(taskType.stop, inst.taskCtx)

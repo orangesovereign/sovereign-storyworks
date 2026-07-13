@@ -43,4 +43,9 @@ Locales['en'] = {
   search_progress = 'Searching: %d of %d seconds.',
   search_paused = 'You have left the search area — the trail goes cold until you return.',
   search_done = 'Your search turns something up.',
+  holdaction_done = 'Done.',
+  deliver_prompt = 'Deliver %d x %s',
+  deliver_done = 'Delivered.',
+  deliver_missing = 'You are short %d — gather the rest and return.',
+  collect_done = 'You have gathered everything needed.',
 }
