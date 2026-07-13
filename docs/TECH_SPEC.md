@@ -80,8 +80,11 @@ Data is read as reference data for building our curated catalogs. Individual ent
 | S4 | ✅ PASSED round 1 (ptfx + animpostfx) | F2 catalog curation |
 | S5 | ✅ PASSED round 1 (soundsets) | F2 catalog curation |
 | S6 | ✅ RULED FINAL rounds 1–2 — attach route only; native carriable closed even for stock models (audition ran: no prompts) | B5/B6 |
+| S7 | 🔎 OPEN (Phase 3) — escort locomotion: confirm the escort ped walks to its destination. Combat/relationship/weapon natives verified (vorp_utils); the go-to/navmesh movement native is NOT in the local reference repos — built with `TaskFollowNavMeshToCoord` and flagged. Fallback: `TaskGoStraightToCoord` or follow-player. Blocks escort ARRIVAL only; death/separation/cleanup unaffected. | escort arrival only |
 
 ## Changelog
+
+- **v0.5 (2026-07-13)** — Phase 3 opened. Combat natives verified from vorp_utils (SetPedCombatAttributes/Movement/Range/Ability, TaskCombatPed 0xF166E48407BAC484, GiveWeaponToPed, SetEntityAsMissionEntity) and rdr3_discoveries RELATIONSHIP (type 6 = HATE; AddRelationshipGroup + SetRelationshipBetweenGroups). Mission NPCs are client-local in solo V1: client detects death/arrival/separation and reports, server owns counts/timers/decisions (interaction-layer trust posture, rate-limited). Escort locomotion native unverifiable locally → spike S7.
 
 - **v0.4 (2026-07-12)** — Owner spike round 2: S3 PASSED (E5 confirmed via numbered-outfit native); S6 final — stock models don't prompt either, attach route only; ground-snap and chest attach confirmed (ticked, no notes). All six spikes resolved — every Phase 0 exit-gate condition met, gate awaiting owner ruling.
 - **v0.3 (2026-07-12)** — Owner spike round 1 recorded: S6 native carriable route closed for arbitrary props → attach is B5/B6 primary (verified working); ground-snap + place-on-ground pattern added (airborne spawn fix); outfit spike switched to numbered-outfit native after metaped hash no-op; SKEL_Spine3 bone indexes documented. S2/S5 (speech/sound) results pending owner confirmation.

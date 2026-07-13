@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "code": "phase3_skirmish",
+  "title": "The Carmody Trouble",
+  "start": "clear_them",
+  "nodes": {
+    "clear_them": {
+      "type": "eliminate",
+      "label": "Ride to the marked ground and clear out the three gunmen.",
+      "config": {
+        "center": { "originOffset": { "e": 40, "n": 0 } },
+        "count": 3,
+        "spread": 10,
+        "hostile": true
+      },
+      "onSuccess": "hold_ground",
+      "onFailure": "botched"
+    },
+    "hold_ground": {
+      "type": "defend",
+      "label": "More are coming — hold this ground for 45 seconds.",
+      "config": {
+        "center": { "originOffset": { "e": 40, "n": 0 } },
+        "durationSeconds": 45,
+        "boundary": 35,
+        "waves": 3,
+        "perWave": 2,
+        "spread": 22
+      },
+      "onSuccess": "walk_witness",
+      "onFailure": "botched"
+    },
+    "walk_witness": {
+      "type": "escort",
+      "label": "Walk the witness back to safety — keep them alive and close.",
+      "config": {
+        "model": "a_m_m_valtownfolk_01",
+        "start": { "originOffset": { "e": 40, "n": 4 } },
+        "destination": { "originOffset": { "e": 0, "n": 0 } },
+        "walkSpeed": 1.2,
+        "arriveRadius": 5,
+        "maxSeparation": 55,
+        "protected": false
+      },
+      "onSuccess": "done",
+      "onFailure": "botched"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "The Carmody trouble is settled, and the witness lives to talk." }
+    },
+    "botched": {
+      "type": "end",
+      "config": { "outcome": "failed", "message": "The trouble got the better of you this time." }
+    }
+  }
+}

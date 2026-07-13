@@ -113,6 +113,16 @@ local function makeCtx(inst, node, nodeId)
     ClearInteraction = function()
       SWInteractions.Clear(inst)
     end,
+    -- combat/mission NPCs (eliminate/escort/defend); auto-cleared on task stop
+    SpawnNpcs = function(spec, events)
+      return SWMissionNpcs.Spawn(inst, spec, events)
+    end,
+    DespawnNpcs = function(batchId)
+      SWMissionNpcs.Despawn(inst, batchId)
+    end,
+    NpcsAlive = function(batchId)
+      return SWMissionNpcs.Alive(batchId)
+    end,
     instance = inst,
     node = node,
     config = node.config or {},
@@ -142,6 +152,7 @@ local function stopCurrentTask(inst)
   if inst.taskCtx and inst.taskNode then
     clearObjectiveBlip(inst)
     SWInteractions.Clear(inst)
+    SWMissionNpcs.Clear(inst)
     local taskType = SWTasks.Get(inst.taskNode.type)
     if taskType and taskType.stop then
       local ok, err = pcall(taskType.stop, inst.taskCtx)

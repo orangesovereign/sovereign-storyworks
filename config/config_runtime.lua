@@ -50,6 +50,23 @@ ConfigRuntime.Interact = {
 -- How often the server re-checks inventories for collect-type objectives (ms).
 ConfigRuntime.InventoryPollMs = 2000
 
+-- Combat & mission NPCs (Phase 3). Natives verified in vorp_utils/rdr3_discoveries;
+-- escort locomotion native flagged S7. V1 = solo instances, so mission NPCs are
+-- client-local: the client detects death/arrival/separation and reports; the server
+-- owns counts, timers, and the complete/fail decision (same trust posture as the
+-- interaction layer, rate-limited). V2 party missions revisit with networked NPCs.
+ConfigRuntime.Combat = {
+  enemyRelGroup = 'SOVEREIGN_SW_ENEMY',       -- our mission-enemy relationship group
+  defaultEnemyModel = 'a_m_m_unigunslinger_01',
+  defaultEnemyWeapon = 'WEAPON_REVOLVER_CATTLEMAN',
+  defaultEnemyHealth = 200,
+  enemyAmmo = 250,
+  escortWalkSpeed = 1.0,                       -- 1.0 walk, 2.0+ run
+  enemyBlipStyle = 1622809600,                 -- hostile blip (rdr3 blip style)
+  allyBlipStyle = 1830367310,                  -- friendly/escort blip
+  deathReportGraceMs = 250,                    -- debounce so one death reports once
+}
+
 -- Dialogue (E1/E2). Lines without their own durationMs time themselves by
 -- length (owner round 1: fixed 3.5s was unreadably fast on long lines).
 ConfigRuntime.Dialogue = {
@@ -96,4 +113,5 @@ ConfigRuntime.SeedFiles = {
   'data/phase2_errand.json',
   'data/phase2_freight.json',
   'data/phase2_delivery.json',
+  'data/phase3_skirmish.json',
 }
