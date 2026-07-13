@@ -73,4 +73,9 @@ Exit gate: the hand-authored mission runs end-to-end (§2), the failure edge fir
 - **Fixes (rev 3):** callouts every 2s (config); ALL runtime messages moved to the right-tip channel; objectives prefixed "NEW OBJECTIVE —" and announced ~1.5s after the completion tip (config delay); channel finding recorded in TECH_SPEC. Stock channels retire entirely when K4 ships (ruling #9).
 - Note: the mission-complete full screen the owner saw (and dislikes) is exactly what K4 replaces in Phase 2.
 
-### Round 3 — (awaiting: ART II rev-3 retest + ART V persistence)
+### Round 3 — 2026-07-12 (owner)
+
+- **ART II rev-3 retest: "Worked as expected."** 2s callouts, arrival tip, NEW OBJECTIVE announcement, completion — the courier route is fully green.
+- Owner reaffirmed (with feeling): the stock notification system goes **in its entirety** — ruling #9 wording strengthened; K4 replaces every channel, right-tips included.
+
+### Remaining for the gate: ART V (persistence — disconnect/reconnect + resource restart), then the owner's ruling.
