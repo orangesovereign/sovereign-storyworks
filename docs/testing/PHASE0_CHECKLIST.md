@@ -71,6 +71,9 @@ Phase 0 exit gate passes when: B1–B5 all pass, every spike has a recorded resu
 - **ART VI / attach (S6c):** WORKS (attached to head — bone fixed rev 2 to SKEL_Spine3 per skeleton). **B5/B6 primary route = attach.**
 - **Owner convention (2026-07-12): a ledger line ticked without notes = confirmed working.** Accordingly round 1 CONFIRMS: ART I install, ART II boot/migrations/restart-idempotency, ART IV speech (S2 PASS → E3 stays in V1) and sound (S5 PASS), ART V ptfx + postfx (S4 PASS), ART VI cleanup, ART VII permission deny + rate limit (L2 pattern).
 
-### Round 2 — 2026-07-12 (in progress)
+### Round 2 — 2026-07-12 (owner)
 
-Retest lines: ped ground spawn, outfit cycle (S3 → E5 verdict), chest attach. Optional: stock-model carriable audition.
+- **ART VI / stock-model audition + place:** stock models (hay bale/sack family) spawn but give NO prompt and are not carriable → **S6 FINAL: native carriable closed entirely; B5/B6 is attach-route only.** No "native carry" catalog subset.
+- Ticked without notes (= confirmed): ped spawns ON THE GROUND (fix verified), **outfit cycling WORKS (S3 PASSED → E5 confirmed for V1)**, crate rides the CHEST (attach bone fix verified).
+
+**All Phase 0 exit-gate conditions met (boot clean, migrations clean, all six spikes resolved). Gate awaits the owner's ruling.**
