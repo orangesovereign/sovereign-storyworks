@@ -66,28 +66,33 @@ CreateThread(function()
       Wait(250)
     else
       Wait(0)
-      local show = true
-      if current.target then
-        local dist = #(GetEntityCoords(PlayerPedId()) - current.target)
-        show = dist <= current.radius
-      end
+      -- snapshot: the clear event can null `current` DURING the Wait above
+      -- (owner-reported nil-index crash); skip the frame if it did
+      local cur = current
+      if cur then
+        local show = true
+        if cur.target then
+          local dist = #(GetEntityCoords(PlayerPedId()) - cur.target)
+          show = dist <= cur.radius
+        end
 
-      if show then
-        UiPromptSetActiveGroupThisFrame(current.group, VarString(10, 'LITERAL_STRING', current.groupLabel), 0, 0, 0, 0) -- vorp_banking client.lua:153
+        if show then
+          UiPromptSetActiveGroupThisFrame(cur.group, VarString(10, 'LITERAL_STRING', cur.groupLabel), 0, 0, 0, 0) -- vorp_banking client.lua:153
 
-        if not current.reported then
-          if current.mode == 'hold' then
-            if UiPromptHasHoldModeCompleted(current.prompts[1]) then
-              current.reported = true
-              TriggerServerEvent('sovereign_storyworks:server:interactionDone', current.id)
-            end
-          else
-            if UiPromptHasHoldModeCompleted(current.prompts[1]) then
-              current.reported = true
-              TriggerServerEvent('sovereign_storyworks:server:interactionDone', current.id, 1)
-            elseif UiPromptHasHoldModeCompleted(current.prompts[2]) then
-              current.reported = true
-              TriggerServerEvent('sovereign_storyworks:server:interactionDone', current.id, 2)
+          if not cur.reported then
+            if cur.mode == 'hold' then
+              if UiPromptHasHoldModeCompleted(cur.prompts[1]) then
+                cur.reported = true
+                TriggerServerEvent('sovereign_storyworks:server:interactionDone', cur.id)
+              end
+            else
+              if UiPromptHasHoldModeCompleted(cur.prompts[1]) then
+                cur.reported = true
+                TriggerServerEvent('sovereign_storyworks:server:interactionDone', cur.id, 1)
+              elseif UiPromptHasHoldModeCompleted(cur.prompts[2]) then
+                cur.reported = true
+                TriggerServerEvent('sovereign_storyworks:server:interactionDone', cur.id, 2)
+              end
             end
           end
         end
