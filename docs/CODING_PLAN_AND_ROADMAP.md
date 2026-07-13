@@ -34,11 +34,12 @@ The build is split into eleven phases. Each phase ends with an **exit gate**: a 
 
 ## Phase 2 — Task Vocabulary I: Movement & Interaction *(tag: v0.2-alpha)*
 
-**Features:** B2 (9 of 15), B4, B5, B6, E1, E2, K1, K2.
+**Features:** B2 (9 of 15), B4, B5, B6, E1, E2, K1, K2, K4.
 
 - Tasks: multi-checkpoint route, talk to NPC, collect/deliver item, search area, timed wait, hold-action, player choice, **physical carry (B5)**, **load/unload cargo (B6)** — route per spike S6.
 - Branching dialogue runtime (E1) with NUI voice audio (E2). Objective tracker HUD (K1) and blips (K2) — both to the approved visual baseline.
-- **Exit gate:** owner-run checklist covering each task type solo and chained, dialogue with choices and voice file, tracker/blips correctness, and a full physical-cargo run (pick up crate → load wagon → drive → unload → objective counts correct; drop/disconnect mid-carry leaves no orphaned props).
+- **Sovereign notification system (K4, ruling #9):** the runtime HUD NUI (React/Vite — this bootstraps the project's UI pipeline ahead of the Phase 5 builder) renders all mission messaging as branded telegram/parchment overlays; the engine's single notify point swaps from VORP stock notifies to K4; per-player presentation settings persisted via resource KVPs (settings surface joins the journal in Phase 8).
+- **Exit gate:** owner-run checklist covering each task type solo and chained, dialogue with choices and voice file, tracker/blips correctness, a full physical-cargo run (pick up crate → load wagon → drive → unload → objective counts correct; drop/disconnect mid-carry leaves no orphaned props), and zero native/VORP stock overlays anywhere in the flow (K4).
 
 ## Phase 3 — Task Vocabulary II: Combat & NPC Operations *(tag: v0.3-alpha)*
 
@@ -114,6 +115,7 @@ The build is split into eleven phases. Each phase ends with an **exit gate**: a 
 
 ## Changelog
 
+- **v1.2 (2026-07-12)** — Ruling #9: K4 Sovereign notification system added to Phase 2 (runtime HUD NUI bootstraps the React pipeline early; engine's notify point swaps off VORP stock overlays); Phase 2 exit gate extended.
 - **v1.1 (2026-07-12)** — **Phase 0 exit gate PASSED** (owner ruling "Phase 0 closed"; two dev-server rounds, all six spikes resolved, E3/E5 confirmed in, S6 attach-route ruling). Phase 1 begun same day.
 - **v1.0 (2026-07-12)** — SIGNED OFF by owner in plain text ("Approve"). Coding authorized; Phase 0 begun same day.
 - **v0.2 (2026-07-12)** — B5/B6 (physical carry, load/unload cargo) added to Phase 2 per ruling #8; spike S6 added to Phase 0; Phase 2 exit gate extended with the physical-cargo run.
