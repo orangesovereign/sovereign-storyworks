@@ -209,6 +209,11 @@ finishInstance = function(inst, status, message)
   inst.status = status
   persist(inst)
 
+  -- B5/B6: wipe every mission prop this instance placed on its participants
+  forEachParticipant(inst, function(src)
+    TriggerClientEvent('sovereign_storyworks:client:carry', src, { action = 'clearAll' })
+  end)
+
   local variant = status == 'completed' and 'complete' or (status == 'cancelled' and 'cancelled' or 'failed')
   local title = status == 'completed' and T('mission_over_title')
     or (status == 'cancelled' and T('mission_cancelled_title') or T('mission_failed_title'))

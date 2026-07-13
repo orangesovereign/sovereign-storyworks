@@ -25,6 +25,7 @@ client_scripts {
   'client/main.lua',
   'client/runtime.lua',
   'client/prompts.lua',
+  'client/carry.lua',
   'client/spikes.lua',
 }
 
@@ -43,6 +44,8 @@ server_scripts {
   'server/tasks/holdaction.lua',
   'server/tasks/choice.lua',
   'server/tasks/collectdeliver.lua',
+  'server/tasks/carry.lua',
+  'server/tasks/cargo.lua',
   'server/tasks/end.lua',
   'server/core/seed.lua',
   'server/commands.lua',

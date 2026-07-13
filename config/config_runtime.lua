@@ -49,6 +49,32 @@ ConfigRuntime.Interact = {
 -- How often the server re-checks inventories for collect-type objectives (ms).
 ConfigRuntime.InventoryPollMs = 2000
 
+-- Physical carry & cargo (B5/B6) — attach route per TECH_SPEC S6 ruling.
+ConfigRuntime.Carry = {
+  -- animation set verified in rdr3_discoveries ingameanims (mech_carry_box)
+  animDict = 'mech_carry_box',
+  animIdle = 'idle',
+  animPickup = 'pickup',
+  animPutdown = 'putdown',
+
+  -- SKEL_Spine3 bone index per player skeleton (boneNames dumps; bone_id 14413)
+  attachBoneBySkeleton = { mp_male = 134, mp_female = 218 },
+  attachOffset = { x = 0.0, y = 0.45, z = 0.0 }, -- carried in front of the chest
+
+  -- controls blocked while carrying (Controls dump: INPUT_SPRINT, INPUT_JUMP)
+  blockedControls = { 0x8FFC75D6, 0xD9D0E1C0 },
+
+  -- wagon-bed attachment slots (offsets from the vehicle root), used in order
+  wagonSlots = {
+    { x = -0.35, y = -1.6, z = 0.55 },
+    { x = 0.35, y = -1.6, z = 0.55 },
+    { x = -0.35, y = -2.2, z = 0.55 },
+    { x = 0.35, y = -2.2, z = 0.55 },
+    { x = 0.0, y = -1.9, z = 1.05 },
+  },
+  wagonSearchRadius = 8.0, -- how far the wagon may stand from the load point
+}
+
 -- Phase 1 test fixture: load data/*.json mission definitions at boot as published
 -- missions (validated first). The builder replaces this pipeline in Phase 5.
 ConfigRuntime.SeedMissionsFromData = true
