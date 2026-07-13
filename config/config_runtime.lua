@@ -11,8 +11,12 @@ ConfigRuntime.PositionPollMs = 750
 ConfigRuntime.DefaultGotoRadius = 3.0
 
 -- Progress ping for location tasks: distance callout every N seconds (0 disables).
--- Navigation aid until map blips land in Phase 2 (K2).
-ConfigRuntime.GotoProgressPingSeconds = 8
+-- Navigation aid until map blips land in Phase 2 (K2). Owner-set to 2 (round 2).
+ConfigRuntime.GotoProgressPingSeconds = 2
+
+-- Delay before announcing the next objective after a task completes (ms), so the
+-- completion tip and the new objective don't collide on the same channel.
+ConfigRuntime.ObjectiveAnnounceDelayMs = 1500
 
 -- One mission at a time in V1 (participants-list core still party-ready, ruling #3).
 ConfigRuntime.MaxActiveInstancesPerCharacter = 1

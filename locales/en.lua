@@ -30,6 +30,7 @@ Locales['en'] = {
   mission_failed = 'Mission failed.',
   mission_cancelled = 'Mission cancelled.',
   mission_broken = 'This mission is broken — the county clerk has been notified.',
+  objective_prefix = 'NEW OBJECTIVE — %s',
   goto_arrived = 'You have arrived.',
   goto_out_of_time = 'Too slow — the moment has passed.',
   goto_progress_reach = 'Objective: %d meters away.',

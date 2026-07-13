@@ -67,4 +67,10 @@ Exit gate: the hand-authored mission runs end-to-end (§2), the failure edge fir
 - **ART V:** blocked by the above; retest in round 2.
 - Ticked without notes (= confirmed): ART I boot/tables/reseed, ART II items 1–2 (/swmissions, mission start + objective), ART III failure edge, ART IV cancel & guards.
 
-### Round 2 — (awaiting: ART II retest + ART V persistence)
+### Round 2 — 2026-07-12 (owner)
+
+- **ART II items 2–4:** mission COMPLETED end-to-end (engine + direction-free route work), but: 8s callouts too sparse (owner: make it 2s); "You have arrived" and the leg-2 "turn back" objective never displayed — only the ledger told the tester what to do. Diagnosis: VORP's objective/bottom-tip channel never rendered; the right-tip channel (the callouts) worked throughout; same-moment messages on one channel swallow each other.
+- **Fixes (rev 3):** callouts every 2s (config); ALL runtime messages moved to the right-tip channel; objectives prefixed "NEW OBJECTIVE —" and announced ~1.5s after the completion tip (config delay); channel finding recorded in TECH_SPEC. Stock channels retire entirely when K4 ships (ruling #9).
+- Note: the mission-complete full screen the owner saw (and dislikes) is exactly what K4 replaces in Phase 2.
+
+### Round 3 — (awaiting: ART II rev-3 retest + ART V persistence)

@@ -43,12 +43,13 @@ end
 local function notify(inst, kind, text)
   local Core = core()
   if not Core then return end
+  -- Round 2 finding: VORP's objective channel (TipBottom) never rendered for the
+  -- owner while the right-tip channel worked every time. Until K4 (ruling #9)
+  -- replaces stock notifications entirely, EVERYTHING rides the proven channel;
+  -- objectives get a locale prefix so they read as instructions, not chatter.
+  if kind == 'objective' then text = T('objective_prefix', text) end
   forEachParticipant(inst, function(src)
-    if kind == 'objective' then
-      Core.NotifyObjective(src, text, 6000)
-    else
-      Core.NotifyRightTip(src, text, 5000)
-    end
+    Core.NotifyRightTip(src, text, kind == 'objective' and 7000 or 4000)
   end)
 end
 
@@ -110,7 +111,13 @@ local function enterNode(inst, nodeId)
   inst.taskCtx = makeCtx(inst, node)
 
   if node.label and node.label ~= '' then
-    notify(inst, 'objective', node.label)
+    -- announce after a short beat so a just-fired completion tip isn't swallowed
+    -- (round 2: same-channel messages sent together lost the objective)
+    SetTimeout(ConfigRuntime.ObjectiveAnnounceDelayMs or 0, function()
+      if inst.status == 'active' and inst.currentNode == nodeId then
+        notify(inst, 'objective', node.label)
+      end
+    end)
   end
 
   local ok, err = pcall(taskType.start, inst.taskCtx)
