@@ -39,4 +39,6 @@ Regression + ART II/III/IV/V run. Findings and fixes (all shipped same day; ledg
 
 - **Console error pasted:** `prompts.lua:65 attempt to index a nil value (upvalue 'current')` — the clear event nulls `current` during the display thread's frame wait. → Frame body snapshots the interaction and skips the frame if it vanished mid-wait.
 
-### Round 3 — (awaiting: ART II choice retest + remaining rev-2 lines)
+### Round 3 — 2026-07-13 (owner)
+
+**"All clear."** Every outstanding line witnessed: the response choice appears and vanishes correctly (fresh prompt group + nil-race fix held), freight depot leg runs with its mark (per-node state fix), delivery prompt clears, presentation approved at regular weight (bold dropped same round, notify v1.2.1). All Phase 2 exit-gate conditions met — **gate awaits the owner's ruling.**
