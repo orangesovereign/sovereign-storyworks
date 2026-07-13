@@ -1,7 +1,7 @@
 # Sovereign Storyworks — Master Feature List
 
 **Version: 1.1 (LOCKED — owner rulings #7 "Robust V1, no cuts" + #8 physical object interaction, 2026-07-12)**
-**Project phase: Planning — feature list locked; Coding Plan drafted, awaiting owner sign-off**
+**Project phase: Coding — Phase 0 in progress (Coding Plan v1.0 signed off 2026-07-12)**
 
 > Rule: if a behavior isn't in the Approved section, it is NOT approved and will not be coded. New ideas → propose to the owner in plain text → explicit approval → doc update → THEN implement. Changes are versioned in the changelog.
 

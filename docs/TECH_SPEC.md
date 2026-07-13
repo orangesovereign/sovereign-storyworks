@@ -4,12 +4,29 @@
 
 > Rule: only ✅ items may be used in code. 🔎 items must be verified (repo grep or dev-server spike) before any feature depending on them is coded. ⚠️ items are accepted constraints.
 
-## 1. VORP Core surface (✅ verified during Medical Suite; re-confirm exact signatures at Phase 0)
+## 1. VORP Core surface — S1 COMPLETE (extracted verbatim from reference repos, 2026-07-12)
 
-- ✅ Character object exposes job, grade, money/gold/XP mutation methods (`vorp_core/server/class/character.lua` — `addCurrency`/`removeCurrency`/`addXp`/`setJob` family confirmed present 2026-07-12).
-- ✅ Core user/character accessor exports (pattern known from Medical Suite TECH_SPEC).
-- ✅ vorp_inventory-v2 is the target inventory (standing owner ruling from the Medical Suite): item add/remove/count via its exports.
-- 🔎 Exact V1 export signatures to be extracted verbatim from the cloned repos at Phase 0 (they drift between VORP versions — extract, don't recall).
+### vorp_core (`exports.vorp_core:GetCore()` → CoreFunctions, `server/apicontroller.lua`)
+
+- ✅ `Core.getUser(source)` → user or nil; character via `user.getUsedCharacter`.
+- ✅ `Core.getUserByCharId(charid)` → user or nil (our persistence is keyed by charIdentifier; this maps back to a live player).
+- ✅ Character fields: `identifier`, `charIdentifier`, `group`, `job`, `jobgrade`, `joblabel`, `firstname`, `lastname`, `money`, `gold`, `rol`, `xp`, `isdead`, `source`, `multiJobs`.
+- ✅ Character methods (`server/class/character.lua`): `character.addCurrency(currency, quantity)` / `character.removeCurrency(currency, quantity)` — currency: 0=money, 1=gold, 2=rol; `character.addXp(quantity)`; `character.setJob(newjob)`; `character.Job(value)`, `character.Jobgrade(value)`, `character.Group(value)` (getter/setter style).
+- ⚠️ **`character.removeXp(quantity)` is BUGGY in vorp_core** (assigns `self.Xp` instead of `self.xp`, `character.lua:401-405`) — never use it; XP deduction goes through `addXp(-quantity)`.
+- ✅ Notifications: `Core.NotifyTip/NotifyLeft/NotifyRightTip/NotifyObjective/NotifyTop/NotifyAvanced/...(source, ...)` — full annotated list at `apicontroller.lua:1-34`.
+- ✅ Callbacks: `Core.Register(name, callback)`, `Core.TriggerAwait(name, source, ...)`.
+- ✅ Webhook: `Core.AddWebhook(title, webhook, description, color, name, logo?, footerlogo?, avatar?)`.
+- ✅ Job change events to listen on: `vorp:playerJobChange(source, newJob, oldJob)`, `vorp:playerJobGradeChange(source, newGrade, oldGrade)`.
+- Legacy `vorp:addMoney`-style events (`old_api.lua`) exist but are deprecated — **not used**.
+
+### vorp_inventory-v2 (direct exports, `server/services/inventoryApiService.lua`)
+
+- ✅ `exports.vorp_inventory:addItem(source, name, amount, metadata, cb, allow, degradation, percentage)`
+- ✅ `exports.vorp_inventory:subItem(source, name, amount, metadata, cb, allow, percentage)`
+- ✅ `exports.vorp_inventory:getItemCount(source, cb, itemName, metadata, percentage)`
+- ✅ `exports.vorp_inventory:canCarryItem(source, itemName, amount, cb)` (+ `canCarryItems` for weight-amount checks)
+- ✅ `exports.vorp_inventory:registerUsableItem(name, cb, resource)` / `unRegisterUsableItem(name)`
+- ✅ `exports.vorp_inventory:getItemByName(...)`, `getItemDB(...)` for item existence validation at mission-publish time.
 
 ## 2. Asset data sources (✅ confirmed present 2026-07-12, `_reference\rdr3_discoveries`)
 

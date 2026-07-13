@@ -1,6 +1,6 @@
 # Sovereign Storyworks — Coding Plan & Roadmap
 
-**Version: 0.2 (DRAFT — awaiting owner sign-off; coding does not begin until this document is approved)**
+**Version: 1.0 (SIGNED OFF by owner, 2026-07-12 — coding authorized)**
 **Scope: Master Feature List v1.1 (42 approved features, rulings #1–8)**
 
 ## How this plan works (plain language)
@@ -114,5 +114,6 @@ The build is split into eleven phases. Each phase ends with an **exit gate**: a 
 
 ## Changelog
 
+- **v1.0 (2026-07-12)** — SIGNED OFF by owner in plain text ("Approve"). Coding authorized; Phase 0 begun same day.
 - **v0.2 (2026-07-12)** — B5/B6 (physical carry, load/unload cargo) added to Phase 2 per ruling #8; spike S6 added to Phase 0; Phase 2 exit gate extended with the physical-cargo run.
 - **v0.1 (2026-07-12)** — Initial draft against Master Feature List v1.0. Awaiting owner sign-off.

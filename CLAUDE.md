@@ -4,7 +4,7 @@ All-in-one mission, quest, job, campaign, NPC, dialogue, and cutscene builder + 
 
 ## Project status
 
-**Current phase: PLANNING — Master Feature List LOCKED at v1.0 (2026-07-12, 40 features); Coding Plan v0.1 drafted, AWAITING OWNER SIGN-OFF.** No coding until the plan is approved.
+**Current phase: CODING — Phase 0 (Foundations & Spikes) IN PROGRESS.** Master Feature List LOCKED at v1.1 (2026-07-12, 42 features, rulings #1–8); Coding Plan v1.0 SIGNED OFF by owner 2026-07-12. Phase 0 exit gate: resource boots clean on dev server, tables migrate on fresh DB, all six spike results (S1–S6) recorded in TECH_SPEC.
 
 Standing owner rulings (2026-07-12, full text in MASTER_FEATURE_LIST): #1 blank-page design (RC6 zip ignored entirely, never reference it); #2 hard VORP dependency (no adapter layer); #3 solo V1 on a party-ready participants-list core (posse missions V2); #4 society = job+grade gating only; #5 player journal in V1; #6 dashboard mockup approved as NUI baseline; #7 robust V1, no cuts (all 40 candidates approved; E3/E5 spike-conditional).
 
