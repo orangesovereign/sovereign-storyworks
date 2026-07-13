@@ -114,6 +114,11 @@ local function makeCtx(inst, node)
     state = inst.state,
     ForEachParticipant = function(fn) forEachParticipant(inst, fn) end,
     Notify = function(kind, text) notify(inst, kind, text) end,
+    NotifySubtitle = function(speaker, text, ms)
+      forEachParticipant(inst, function(src)
+        sendK4(src, { kind = 'subtitle', speaker = speaker, text = text, ms = ms })
+      end)
+    end,
     Complete = function(success)
       if completed or inst.status ~= 'active' then return end
       completed = true
@@ -209,9 +214,10 @@ finishInstance = function(inst, status, message)
   inst.status = status
   persist(inst)
 
-  -- B5/B6: wipe every mission prop this instance placed on its participants
+  -- B5/B6/E1: wipe every mission prop and NPC this instance placed
   forEachParticipant(inst, function(src)
     TriggerClientEvent('sovereign_storyworks:client:carry', src, { action = 'clearAll' })
+    TriggerClientEvent('sovereign_storyworks:client:npc', src, { action = 'clearAll' })
   end)
 
   local variant = status == 'completed' and 'complete' or (status == 'cancelled' and 'cancelled' or 'failed')

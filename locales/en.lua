@@ -58,4 +58,5 @@ Locales['en'] = {
   cargo_progress_load = 'Loaded %d of %d.',
   cargo_progress_unload = 'Unloaded %d of %d.',
   cargo_done = 'The cargo is where it needs to be.',
+  talk_prompt = 'Talk',
 }

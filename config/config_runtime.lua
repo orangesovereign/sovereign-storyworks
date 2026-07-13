@@ -49,6 +49,13 @@ ConfigRuntime.Interact = {
 -- How often the server re-checks inventories for collect-type objectives (ms).
 ConfigRuntime.InventoryPollMs = 2000
 
+-- Dialogue (E1/E2).
+ConfigRuntime.Dialogue = {
+  defaultLineMs = 3500, -- subtitle duration when a line doesn't set its own
+  lineGapMs = 250,      -- breath between lines
+  voiceVolume = 0.8,    -- 0.0–1.0 for creator-supplied .ogg voice files
+}
+
 -- Physical carry & cargo (B5/B6) — attach route per TECH_SPEC S6 ruling.
 ConfigRuntime.Carry = {
   -- animation set verified in rdr3_discoveries ingameanims (mech_carry_box)

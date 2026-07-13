@@ -24,6 +24,12 @@ export default function App() {
       }
       if (data.type === 'k1:distance') setMeters(data.meters)
       if (data.type === 'k1:clear') { setObjective(null); setMeters(null) }
+      if (data.type === 'k1:voice' && data.file) {
+        // E2: creator-supplied voice files bundled in the resource's audio/
+        const audio = new Audio('../../' + data.file)
+        audio.volume = typeof data.volume === 'number' ? data.volume : 0.8
+        audio.play().catch(() => {})
+      }
     }
     window.addEventListener('message', onMessage)
     return () => window.removeEventListener('message', onMessage)

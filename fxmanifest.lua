@@ -26,6 +26,7 @@ client_scripts {
   'client/runtime.lua',
   'client/prompts.lua',
   'client/carry.lua',
+  'client/npcs.lua',
   'client/spikes.lua',
 }
 
@@ -46,6 +47,7 @@ server_scripts {
   'server/tasks/collectdeliver.lua',
   'server/tasks/carry.lua',
   'server/tasks/cargo.lua',
+  'server/tasks/talk.lua',
   'server/tasks/end.lua',
   'server/core/seed.lua',
   'server/commands.lua',
@@ -58,6 +60,7 @@ ui_page 'ui/dist/index.html'
 files {
   'ui/dist/index.html',
   'ui/dist/assets/*',
+  'audio/*.ogg', -- creator-supplied voice files (E2)
 }
 
 dependencies {
