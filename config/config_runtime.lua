@@ -1,0 +1,26 @@
+-- Sovereign Storyworks — mission runtime configuration
+-- Phase 1 (Mission Runtime Core) | Features: B1, C2, L1
+
+ConfigRuntime = {}
+
+-- Server-side position poll for location-based tasks (milliseconds).
+-- The server reads player positions itself — clients are never trusted (L2).
+ConfigRuntime.PositionPollMs = 750
+
+-- Default arrival radius (meters) for location tasks when the mission doesn't set one.
+ConfigRuntime.DefaultGotoRadius = 3.0
+
+-- One mission at a time in V1 (participants-list core still party-ready, ruling #3).
+ConfigRuntime.MaxActiveInstancesPerCharacter = 1
+
+-- Active instances untouched for this many hours are cancelled at resource boot
+-- (stale-state hygiene; disconnected players inside the window resume normally).
+ConfigRuntime.InstanceExpiryHours = 48
+
+-- Phase 1 test fixture: load data/*.json mission definitions at boot as published
+-- missions (validated first). The builder replaces this pipeline in Phase 5.
+ConfigRuntime.SeedMissionsFromData = true
+ConfigRuntime.SeedFiles = {
+  'data/test_mission.json',
+  'data/test_mission_fail.json',
+}

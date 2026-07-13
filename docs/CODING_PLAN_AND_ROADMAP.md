@@ -114,6 +114,7 @@ The build is split into eleven phases. Each phase ends with an **exit gate**: a 
 
 ## Changelog
 
+- **v1.1 (2026-07-12)** — **Phase 0 exit gate PASSED** (owner ruling "Phase 0 closed"; two dev-server rounds, all six spikes resolved, E3/E5 confirmed in, S6 attach-route ruling). Phase 1 begun same day.
 - **v1.0 (2026-07-12)** — SIGNED OFF by owner in plain text ("Approve"). Coding authorized; Phase 0 begun same day.
 - **v0.2 (2026-07-12)** — B5/B6 (physical carry, load/unload cargo) added to Phase 2 per ruling #8; spike S6 added to Phase 0; Phase 2 exit gate extended with the physical-cargo run.
 - **v0.1 (2026-07-12)** — Initial draft against Master Feature List v1.0. Awaiting owner sign-off.

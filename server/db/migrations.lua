@@ -20,7 +20,50 @@ SWMigrations.list = {
       ]],
     },
   },
-  -- Phase 1 adds mission/instance tables here as version 2+.
+  {
+    version = 2,
+    name = 'phase1_runtime_core',
+    queries = {
+      [[
+        CREATE TABLE IF NOT EXISTS `sovereign_missions` (
+          `id` INT NOT NULL AUTO_INCREMENT,
+          `code` VARCHAR(64) NOT NULL,
+          `title` VARCHAR(128) NOT NULL,
+          `status` VARCHAR(16) NOT NULL DEFAULT 'draft',
+          `definition` LONGTEXT NOT NULL,
+          `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          PRIMARY KEY (`id`),
+          UNIQUE KEY `uq_code` (`code`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+      ]],
+      [[
+        CREATE TABLE IF NOT EXISTS `sovereign_mission_instances` (
+          `id` INT NOT NULL AUTO_INCREMENT,
+          `mission_id` INT NULL,
+          `mission_code` VARCHAR(64) NOT NULL,
+          `status` VARCHAR(16) NOT NULL DEFAULT 'active',
+          `current_node` VARCHAR(64) NOT NULL DEFAULT '',
+          `state` LONGTEXT NULL,
+          `started_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          `finished_at` TIMESTAMP NULL DEFAULT NULL,
+          PRIMARY KEY (`id`),
+          KEY `ix_status` (`status`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+      ]],
+      [[
+        CREATE TABLE IF NOT EXISTS `sovereign_instance_participants` (
+          `instance_id` INT NOT NULL,
+          `char_identifier` VARCHAR(64) NOT NULL,
+          `role` VARCHAR(16) NOT NULL DEFAULT 'leader',
+          `joined_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          PRIMARY KEY (`instance_id`, `char_identifier`),
+          KEY `ix_char` (`char_identifier`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+      ]],
+    },
+  },
 }
 
 ---Run all pending migrations. Calls cb(true) on success, cb(false) on failure.

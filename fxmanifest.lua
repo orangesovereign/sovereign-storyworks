@@ -1,5 +1,5 @@
 -- Sovereign Storyworks — fxmanifest
--- Phase 0 (Foundations & Spikes) | Features: L1, L3 scaffolding
+-- Phase 1 (Mission Runtime Core) | Features: B1, B3, C2 (partial), L1, L2, L3
 
 fx_version 'cerulean'
 game 'rdr3'
@@ -9,11 +9,12 @@ lua54 'yes'
 
 author 'Sovereign County RP'
 description 'Sovereign Storyworks — all-in-one mission, story, NPC, dialogue and cutscene builder + runtime for RedM / VORP Core'
-version '0.0.1-phase0'
+version '0.1.0-phase1'
 
 shared_scripts {
   'config/config.lua',
   'config/config_limits.lua',
+  'config/config_runtime.lua',
   'locales/en.lua',
   'shared/locale.lua',
   'shared/log.lua',
@@ -28,8 +29,16 @@ client_scripts {
 server_scripts {
   '@oxmysql/lib/MySQL.lua',
   'server/db/migrations.lua',
-  'server/main.lua',
+  'server/core/ratelimit.lua',
+  'server/core/registry.lua',
+  'server/core/missions.lua',
+  'server/core/instance.lua',
+  'server/tasks/goto.lua',
+  'server/tasks/end.lua',
+  'server/core/seed.lua',
+  'server/commands.lua',
   'server/spikes.lua',
+  'server/main.lua',
 }
 
 dependencies {

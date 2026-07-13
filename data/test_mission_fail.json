@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "code": "phase1_test_fail",
+  "title": "The Impossible Deadline",
+  "start": "sprint",
+  "nodes": {
+    "sprint": {
+      "type": "goto",
+      "label": "Reach the point 300 meters ahead within 15 seconds. (You are not meant to make it.)",
+      "config": { "relative": { "forward": 300.0 }, "radius": 4.0, "timeLimitSeconds": 15 },
+      "onSuccess": "somehow_made_it",
+      "onFailure": "botched"
+    },
+    "somehow_made_it": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "Impossible. The clerk suspects witchcraft — but pays up." }
+    },
+    "botched": {
+      "type": "end",
+      "config": { "outcome": "failed", "message": "As intended — the failure path works. This mission exists to prove it." }
+    }
+  }
+}

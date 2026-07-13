@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "code": "phase1_test",
+  "title": "The Courier's First Ride",
+  "start": "ride_out",
+  "nodes": {
+    "ride_out": {
+      "type": "goto",
+      "label": "Head to the marker point about 60 meters ahead of where you started.",
+      "config": { "relative": { "forward": 60.0 }, "radius": 4.0 },
+      "onSuccess": "ride_back",
+      "onFailure": "botched"
+    },
+    "ride_back": {
+      "type": "goto",
+      "label": "Return to where you began.",
+      "config": { "relative": { "origin": true }, "radius": 4.0 },
+      "onSuccess": "done",
+      "onFailure": "botched"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "The courier's route is run. The county thanks you." }
+    },
+    "botched": {
+      "type": "end",
+      "config": { "outcome": "failed", "message": "The route went cold. Better luck next ride." }
+    }
+  }
+}

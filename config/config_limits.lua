@@ -6,6 +6,6 @@ ConfigLimits = {}
 
 ConfigLimits.RateLimits = {
   -- window is seconds; max is allowed calls per window per player
-  spikeCommand = { max = 12, window = 60 }, -- Phase 0 /swspike
-  -- builder/runtime limits land here in their phases (Phase 1+)
+  spikeCommand = { max = 12, window = 60 },   -- Phase 0 /swspike (disabled post-gate)
+  runtimeCommand = { max = 20, window = 60 }, -- Phase 1 /swstart /swcancel /swmissions
 }

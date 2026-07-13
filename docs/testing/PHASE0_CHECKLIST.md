@@ -76,4 +76,8 @@ Phase 0 exit gate passes when: B1–B5 all pass, every spike has a recorded resu
 - **ART VI / stock-model audition + place:** stock models (hay bale/sack family) spawn but give NO prompt and are not carriable → **S6 FINAL: native carriable closed entirely; B5/B6 is attach-route only.** No "native carry" catalog subset.
 - Ticked without notes (= confirmed): ped spawns ON THE GROUND (fix verified), **outfit cycling WORKS (S3 PASSED → E5 confirmed for V1)**, crate rides the CHEST (attach bone fix verified).
 
-**All Phase 0 exit-gate conditions met (boot clean, migrations clean, all six spikes resolved). Gate awaits the owner's ruling.**
+**All Phase 0 exit-gate conditions met (boot clean, migrations clean, all six spikes resolved).**
+
+### GATE RULING — 2026-07-12
+
+**PASSED. Owner: "Phase 0 closed."** Spike commands disabled in config; Phase 1 (Mission Runtime Core) begun.

@@ -27,7 +27,7 @@ Config.Ace = {
 -- taken from femga/rdr3_discoveries reference data.
 
 Config.Spikes = {
-  enabled = true, -- flip false once Phase 0 exit gate passes
+  enabled = false, -- Phase 0 gate PASSED 2026-07-12; re-enable only for native re-verification
 
   pedModel = 'a_m_m_valtownfolk_01',  -- peds_list.lua:459
   propModel = 'p_crate01x',           -- propsets_list.lua (0x04AC59BC)
