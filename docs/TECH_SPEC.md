@@ -51,8 +51,10 @@ Data is read as reference data for building our curated catalogs. Individual ent
 - ✅ Scripted cutscenes: CAM natives (create/point/interp), ped task natives, anim dict loading — standard proven RedM machinima pattern.
 - ✅ Custom voice audio: NUI `<audio>` playback of `.ogg` bundled in the resource. Game engine cannot stream arbitrary user audio files.
 - ⚠️ Rockstar prerecorded story cutscenes (cutfiles): not reliably exposed in RedM — out of scope (feature list C-F3).
-- 🔎 Native ambient ped speech (voice barks) — natives exist; usable line/voice names per ped model need a dev-server spike (E3).
-- 🔎 NPC outfit/appearance control depth — preset variation vs full component control (E5).
+- ✅ **Native ambient ped speech WORKS (S2 PASSED, owner round 1, 2026-07-12)** — `PLAY_AMBIENT_SPEECH1` 0x8E04FEDD28D42462 via DataView struct (audio_banks README pattern); E3 confirmed for V1. Voice line catalogs sourced from `audio/audio_banks`.
+- ✅ **Soundsets WORK (S5 PASSED, round 1)** — load 0xD9130842D7226045, `PLAY_SOUND_FROM_POSITION` 0xCCE219C922737BFA, release 0x531A78D6BF27014B.
+- ✅ **Looped ptfx + animpostfx WORK (S4 PASSED, round 1)** — the ptfx_assets_looped / animpostfx native sets as coded in the spike harness.
+- 🔎 NPC outfit/appearance control (E5) — metaped hash route no-op'd; numbered-outfit native retest in round 2.
 - ⚠️ **Native carriable route CLOSED for arbitrary props** (owner spike round 1, 2026-07-12): setting carrying flags (0x18FF3110CF47115D, flags 2/3/4/14/21) on a spawned `p_crate01x` produces NO pick-up prompt. Carriable inputs (`INPUT_PICKUP_CARRIABLE` 0xEB2AC491 etc.) and events (`EVENT_PICKUP_CARRIABLE`, `EVENT_CARRIABLE_UPDATE_CARRY_STATE`) exist in the dumps, but carriable *capability* is per-model game metadata with no exposed arming native. 🔎 open question: whether natively-carriable STOCK models (pelts, hay bales) prompt when spawned — `/swspike carriable <model>` auditions candidates; if some do, catalogs may mark a "native carry" subset later.
 - ✅ **B5/B6 PRIMARY ROUTE = ATTACH** (owner spike round 1: `AttachEntityToEntity` named native resolves and works in-game — crate attached, wrong bone since fixed). Carry = attach to `SKEL_Spine3` (bone_id 14413; bone INDEX per skeleton: mp_male 134, mp_female 218 — resolve by player model) + carry animation (Phase 2) + movement restriction; put-down = detach + `PlaceObjectOnGroundProperly`; wagon load = attach to vehicle at configured offsets. `GET_PED_CARRIED_ENTITY`/`TASK_PLACE_CARRIED_ENTITY_AT_COORD` remain usable only for game-recognized carriables.
 - ✅ Ground-snap for spawned entities: `GetGroundZAndNormalFor_3dCoord(x,y,z)` (named native; vorp_core coreactions.lua:191, vorp_utils peds.lua:33) + place-on-ground native 0x9587913B9E772D29 (vorp_utils peds.lua:104). Added after round 1 (entities spawned airborne).
@@ -62,12 +64,12 @@ Data is read as reference data for building our curated catalogs. Individual ent
 
 | ID | Spike | Blocks |
 |---|---|---|
-| S1 | Extract exact vorp_core/vorp_inventory export signatures from cloned repos | all VORP integration |
-| S2 | Ambient speech native + line names in-game test | C-E3 only |
-| S3 | Ped outfit natives test | C-E5 only |
-| S4 | PTFX + animpostfx spot test (spawn a few from the dumps) | C-F2 catalog curation |
-| S5 | Soundset/music event spot test | C-F2 catalog curation |
-| S6 | Carriable route selection: make an arbitrary spawned prop carriable via carrying flags (pick up / put down / place / stow on mount), attach test on a wagon — decides B5/B6 primary route (native vs attach fallback); feature ships either way | B5/B6 implementation route only |
+| S1 | ✅ DONE — signatures extracted verbatim into §1 | all VORP integration |
+| S2 | ✅ PASSED round 1 — E3 confirmed for V1 | E3 |
+| S3 | 🔎 round 2 — numbered-outfit native retest (round 1 metaped hash no-op) | E5 only |
+| S4 | ✅ PASSED round 1 (ptfx + animpostfx) | F2 catalog curation |
+| S5 | ✅ PASSED round 1 (soundsets) | F2 catalog curation |
+| S6 | ✅ RULED round 1 — attach route is B5/B6 primary; native carriable closed for arbitrary props (stock-model audition stays open as a curiosity, blocks nothing) | B5/B6 |
 
 ## Changelog
 

@@ -69,7 +69,7 @@
 |---|---|---|
 | E1 | Branching NPC dialogue: multi-line conversations, per-line speaker, player response choices. | ✅ |
 | E2 | Creator-supplied voice files (`.ogg` bundled in resource) played via NUI audio with dialogue lines. | ✅ |
-| E3 | Native RDR2 ped speech lines (game voice barks) as alternative to custom files. | 🔎 spike S2 |
+| E3 | Native RDR2 ped speech lines (game voice barks) as alternative to custom files. | ✅ spike S2 PASSED (owner, 2026-07-12) |
 | E4 | NPC Maker: model picker, name, behavior (standing/scenario/animation), in-world preview. | ✅ |
 | E5 | NPC outfit/appearance variation. | 🔎 spike S3 |
 

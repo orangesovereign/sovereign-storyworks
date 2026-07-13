@@ -69,6 +69,8 @@ Phase 0 exit gate passes when: B1–B5 all pass, every spike has a recorded resu
 - **ART V / outfit (S3):** no visible change with the metaped outfit hash → spike REBUILT rev 2 on the numbered-outfit native `0x77FF8D35EEC6BBC4` (36 outfits on the spike ped); E5 verdict awaits retest.
 - **ART VI / carriable (S6a):** no pick-up prompt on the flagged crate → **VERDICT: native carriable route closed for arbitrary props.** Recorded in TECH_SPEC v0.3.
 - **ART VI / attach (S6c):** WORKS (attached to head — bone fixed rev 2 to SKEL_Spine3 per skeleton). **B5/B6 primary route = attach.**
-- Pending owner confirmation: ART II (boot/migrations), ART IV (speech S2, sound S5), ART VII (locks & limits).
+- **Owner convention (2026-07-12): a ledger line ticked without notes = confirmed working.** Accordingly round 1 CONFIRMS: ART I install, ART II boot/migrations/restart-idempotency, ART IV speech (S2 PASS → E3 stays in V1) and sound (S5 PASS), ART V ptfx + postfx (S4 PASS), ART VI cleanup, ART VII permission deny + rate limit (L2 pattern).
 
-### Round 2 — (awaiting)
+### Round 2 — 2026-07-12 (in progress)
+
+Retest lines: ped ground spawn, outfit cycle (S3 → E5 verdict), chest attach. Optional: stock-model carriable audition.
