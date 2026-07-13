@@ -25,6 +25,10 @@ ConfigRuntime.MaxActiveInstancesPerCharacter = 1
 -- (stale-state hygiene; disconnected players inside the window resume normally).
 ConfigRuntime.InstanceExpiryHours = 48
 
+-- Objective map blip (K2). Style hash from the proven vorp pattern
+-- (vorp_utils blips.lua / vorp_banking). 0 disables blips entirely.
+ConfigRuntime.ObjectiveBlipStyle = 1664425300
+
 -- Phase 1 test fixture: load data/*.json mission definitions at boot as published
 -- missions (validated first). The builder replaces this pipeline in Phase 5.
 ConfigRuntime.SeedMissionsFromData = true

@@ -23,6 +23,7 @@ shared_scripts {
 client_scripts {
   'client/util/dataview.lua',
   'client/main.lua',
+  'client/runtime.lua',
   'client/spikes.lua',
 }
 

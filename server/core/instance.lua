@@ -64,6 +64,27 @@ local function notifyCard(inst, variant, title, body)
   end)
 end
 
+-- K2: objective map blips. The server tells clients WHERE the objective is
+-- (display only); completion checks remain server-side.
+local function broadcastObjectiveBlip(inst)
+  local target = inst.taskCtx and inst.taskCtx.target or nil
+  local label = inst.taskNode and inst.taskNode.label or ''
+  forEachParticipant(inst, function(src)
+    if target then
+      TriggerClientEvent('sovereign_storyworks:client:objectiveBlip', src,
+        { x = target.x, y = target.y, z = target.z, label = label })
+    else
+      TriggerClientEvent('sovereign_storyworks:client:objectiveBlip', src, nil)
+    end
+  end)
+end
+
+local function clearObjectiveBlip(inst)
+  forEachParticipant(inst, function(src)
+    TriggerClientEvent('sovereign_storyworks:client:objectiveBlip', src, nil)
+  end)
+end
+
 -- node lifecycle --------------------------------------------------------------
 
 local finishInstance -- forward declaration
@@ -92,6 +113,7 @@ end
 
 local function stopCurrentTask(inst)
   if inst.taskCtx and inst.taskNode then
+    clearObjectiveBlip(inst)
     local taskType = SWTasks.Get(inst.taskNode.type)
     if taskType and taskType.stop then
       local ok, err = pcall(taskType.stop, inst.taskCtx)
@@ -139,7 +161,10 @@ local function enterNode(inst, nodeId)
 
   -- persist again after start: tasks may have written resume-critical state
   -- (e.g. goto's captured origin) during start
-  if inst.status == 'active' then persist(inst) end
+  if inst.status == 'active' then
+    persist(inst)
+    broadcastObjectiveBlip(inst) -- K2: tasks that resolved a fixed target get a map blip
+  end
 end
 
 function SWInstances.NodeFinished(inst, success)
