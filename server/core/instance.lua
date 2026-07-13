@@ -40,16 +40,19 @@ local function forEachParticipant(inst, fn)
   end
 end
 
--- K4 (ruling #9): ALL runtime messaging renders in the Sovereign notification
--- NUI. A VORP Notify* call anywhere below this line is a defect.
+-- K4 (ruling #9): ALL runtime messaging renders through the standalone
+-- sovereign_notify resource. A VORP Notify* call anywhere below is a defect.
 local function sendK4(source, payload)
-  TriggerClientEvent('sovereign_storyworks:client:notify', source, payload)
+  local ok, err = pcall(function()
+    exports.sovereign_notify:Notify(source, payload)
+  end)
+  if not ok then SWLog.Error('sovereign_notify unavailable: %s', tostring(err)) end
 end
 
 local function notify(inst, kind, text)
   local payload = kind == 'objective'
-    and { type = 'k4:objective', text = text }
-    or { type = 'k4:tick', text = text }
+    and { kind = 'objective', text = text }
+    or { kind = 'tick', text = text }
   forEachParticipant(inst, function(src)
     sendK4(src, payload)
   end)
@@ -57,7 +60,7 @@ end
 
 local function notifyCard(inst, variant, title, body)
   forEachParticipant(inst, function(src)
-    sendK4(src, { type = 'k4:card', variant = variant, title = title, body = body })
+    sendK4(src, { kind = 'card', variant = variant, title = title, body = body })
   end)
 end
 
@@ -211,7 +214,7 @@ function SWInstances.Start(source, missionCode)
   active[insertId] = inst
   byChar[charIdentifier] = insertId
 
-  sendK4(source, { type = 'k4:card', variant = 'started', title = T('mission_started_title'), body = entry.title })
+  sendK4(source, { kind = 'card', variant = 'started', title = T('mission_started_title'), body = entry.title })
   SWLog.Info('instance %d started: %s (char %s)', insertId, entry.code, charIdentifier)
 
   enterNode(inst, entry.def.start)
@@ -294,7 +297,7 @@ local function resumeForCharacter(source, character)
   -- Re-enter the current node only if its task isn't already running (solo V1:
   -- the sole participant returning always re-arms it).
   if not inst.taskCtx then
-    sendK4(source, { type = 'k4:card', variant = 'started', title = T('mission_resumed_title'), body = inst.def.title })
+    sendK4(source, { kind = 'card', variant = 'started', title = T('mission_resumed_title'), body = inst.def.title })
     SWLog.Info('instance %d resumed by char %s', inst.id, tostring(character.charIdentifier))
     enterNode(inst, inst.currentNode)
   end

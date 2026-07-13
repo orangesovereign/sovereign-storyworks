@@ -24,6 +24,7 @@ GitHub repository: https://github.com/orangesovereign/sovereign-storyworks (remo
 
 - **RedM-native Lua only.** Never FiveM-only natives, GTA V hashes, or FiveM patterns. Verify natives against femga/rdr3_discoveries or the RDR3 native DB before first use; unverifiable → stop and flag.
 - **VORP Core is the framework.** Consume VORP exports/events; never write to VORP tables directly. Reference repos live in `..\_reference\` (vorp_core, vorp_inventory-v2, vorp_utils, vorp_menu, vorp_banking, rdr3_discoveries) — read-only, learn the API surface, never copy code wholesale (GPL hygiene).
+- **Notifications go through `sovereign_notify`** (sibling standalone resource at `..\sovereign_notify`, extracted from K4 by owner directive 2026-07-12; hard dependency). Server: `exports.sovereign_notify:Objective/Tick/Card/Notify(source, ...)`. Never a VORP Notify* call in the runtime (ruling #9).
 - **Server-authoritative everything.** Story state, progression, rewards, permissions live server-side. Every NUI callback and net event validated server-side and rate-limited. No client-trusted writes.
 - **Everything configurable.** No magic numbers/coords/prices/timers/item names in code — split config files per the structure doc.
 - **All player-facing strings through locales** (`locales/en.lua`, `T(key)` pattern).

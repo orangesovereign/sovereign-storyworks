@@ -15,7 +15,6 @@ shared_scripts {
   'config/config.lua',
   'config/config_limits.lua',
   'config/config_runtime.lua',
-  'config/config_notifications.lua',
   'locales/en.lua',
   'shared/locale.lua',
   'shared/log.lua',
@@ -24,15 +23,7 @@ shared_scripts {
 client_scripts {
   'client/util/dataview.lua',
   'client/main.lua',
-  'client/nui.lua',
   'client/spikes.lua',
-}
-
-ui_page 'ui/dist/index.html'
-
-files {
-  'ui/dist/index.html',
-  'ui/dist/assets/*',
 }
 
 server_scripts {
@@ -53,4 +44,5 @@ server_scripts {
 dependencies {
   'oxmysql',
   'vorp_core',
+  'sovereign_notify', -- K4 renderer (ruling #9) — extracted as a county-wide standalone
 }
