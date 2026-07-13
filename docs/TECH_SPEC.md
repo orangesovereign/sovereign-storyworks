@@ -80,7 +80,7 @@ Data is read as reference data for building our curated catalogs. Individual ent
 | S4 | ✅ PASSED round 1 (ptfx + animpostfx) | F2 catalog curation |
 | S5 | ✅ PASSED round 1 (soundsets) | F2 catalog curation |
 | S6 | ✅ RULED FINAL rounds 1–2 — attach route only; native carriable closed even for stock models (audition ran: no prompts) | B5/B6 |
-| S7 | 🔎 OPEN (Phase 3) — escort locomotion: confirm the escort ped walks to its destination. Combat/relationship/weapon natives verified (vorp_utils); the go-to/navmesh movement native is NOT in the local reference repos — built with `TaskFollowNavMeshToCoord` and flagged. Fallback: `TaskGoStraightToCoord` or follow-player. Blocks escort ARRIVAL only; death/separation/cleanup unaffected. | escort arrival only |
+| S7 | ✅ PASSED (owner dev-server run, 2026-07-13) — `TaskFollowNavMeshToCoord` walks the escort to its destination; the full escort leg ran clean, no fallback needed. | escort arrival — RESOLVED |
 
 ## Changelog
 

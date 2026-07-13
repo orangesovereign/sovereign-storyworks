@@ -34,4 +34,6 @@ Findings + fixes (shipped same day; ledger revision 2):
 - **ART IV — no blip on the escort NPC.** The guessed ally blip hash didn't render. → Both enemy and ally blips now use verified NAMED styles (`BLIP_STYLE_ENEMY` / `BLIP_STYLE_FRIENDLY`, joaat'd client-side). The escort now wears a friendly (blue) blip that follows them, alongside the destination objective blip.
 - Not yet reported (retest in round 2): the ugly-path zero-orphan lines (cancel/disconnect/restart), escort S7 walk, full chain.
 
-### Round 2 — (awaiting: ART II/IV retests + the ugly-path zero-orphan lines + S7 escort walk)
+### Round 2 — 2026-07-13 (owner)
+
+**"I completed it all. There wasn't any errors other than what I noted before."** Round-1 fixes confirmed (enemy health, escort blip). By completing the full chain: **spike S7 PASSED** (the escort walked to its destination — `TaskFollowNavMeshToCoord` works, no fallback needed), and the ugly-path zero-orphan lines (cancel/disconnect/restart) all held. Every Phase 3 exit-gate condition met — **gate awaits the owner's ruling.**
