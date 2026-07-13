@@ -33,6 +33,7 @@ function SWInteractions.Arm(inst, spec, onDone)
         armedAt = os.time(),
         onDone = onDone,
       }
+      SWLog.Info('interaction #%d (%s) armed for instance %d, source %s', id, spec.mode, inst.id, tostring(p.source))
       TriggerClientEvent('sovereign_storyworks:client:interaction', p.source, {
         id = id,
         mode = spec.mode,

@@ -24,14 +24,20 @@ local function sendVoice(ctx, file)
 end
 
 local function playLines(ctx, index)
-  -- abort silently if the mission moved on while we were talking
-  if ctx.instance.status ~= 'active' or ctx.instance.taskCtx ~= ctx then return end
+  -- abort (loudly, for the console record) if the mission moved on mid-talk
+  if ctx.instance.status ~= 'active' or ctx.instance.taskCtx ~= ctx then
+    SWLog.Info('talk: dialogue aborted at line %d (instance %d status=%s, ctx %s)',
+      index, ctx.instance.id, tostring(ctx.instance.status),
+      ctx.instance.taskCtx == ctx and 'current' or 'stale')
+    return
+  end
 
   local line = ctx.config.lines[index]
   if not line then
     -- conversation over: choice or straight completion
     local choice = ctx.config.choice
     if choice then
+      SWLog.Info('talk: dialogue done, arming response choice (instance %d)', ctx.instance.id)
       ctx.ArmInteraction({
         mode = 'choice',
         question = ctx.config.lines[#ctx.config.lines].text,

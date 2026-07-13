@@ -33,4 +33,8 @@ Regression + ART II/III/IV/V run. Findings and fixes (all shipped same day; ledg
 - **Owner verdicts:** notification system "great" pending sizing; subtitle design approved in substance (size was the complaint).
 - **IDEA logged:** sovereign_menus — county-wide branded menu standalone with mouse select (feature list §2 candidate, pending go-ahead; suggested as a post-gate side quest).
 
-### Round 2 — (awaiting: ART II/III/IV retests + ART V sizing re-rule)
+### Round 2 — 2026-07-13 (owner, partial)
+
+- **ART II: response choice never appears after the clerk's last line** (worked round 1 → regression from the round-1 prompt fixes). Primary suspect: the choice prompts registered into a prompt GROUP that had been fully emptied by the new immediate-clear — RedM appears not to revive an emptied group. → **Fix: every interaction now creates a fresh prompt group.** Plus instrumentation on the whole chain: server logs `interaction #N (mode) armed...` / `talk: dialogue done, arming response choice`; client F8 prints `interaction received: choice #N`. If round 3 still fails, those lines say which side died.
+
+### Round 3 — (awaiting: ART II choice retest + remaining rev-2 lines)

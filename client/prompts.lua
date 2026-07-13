@@ -5,17 +5,16 @@
 -- before anything happens. All natives verified against vorp_banking /
 -- vorp_core respawnsystem / vorp_inventory (UiPrompt family).
 
-local promptGroup = GetRandomIntInRange(0, 0xffffff)
-local current = nil -- { id, mode, prompts = {p1, p2?}, target, radius, reported }
+local current = nil -- { id, mode, group, prompts = {p1, p2?}, target, radius, reported }
 
-local function makePrompt(keyHash, text, holdMs)
+local function makePrompt(group, keyHash, text, holdMs)
   local prompt = UiPromptRegisterBegin()
   UiPromptSetControlAction(prompt, keyHash)
   UiPromptSetText(prompt, VarString(10, 'LITERAL_STRING', text))
   UiPromptSetEnabled(prompt, true)
   UiPromptSetVisible(prompt, true)
   UiPromptSetHoldMode(prompt, holdMs) -- vorp_core respawnsystem.lua:196
-  UiPromptSetGroup(prompt, promptGroup, 0)
+  UiPromptSetGroup(prompt, group, 0)
   UiPromptRegisterEnd(prompt)
   return prompt
 end
@@ -32,14 +31,19 @@ RegisterNetEvent('sovereign_storyworks:client:interaction', function(data)
   destroyCurrent()
   if type(data) ~= 'table' then return end
 
+  print(('[sovereign_storyworks] interaction received: %s #%s'):format(tostring(data.mode), tostring(data.id)))
+
   local keys = ConfigRuntime.Interact
   local prompts = {}
+  -- fresh group per interaction (round 2: choice prompts registered into a
+  -- group that had been emptied seconds earlier never displayed)
+  local group = GetRandomIntInRange(0, 0xffffff)
 
   if data.mode == 'hold' then
-    prompts[1] = makePrompt(keys.holdKey, data.label or '', data.holdMs or keys.defaultHoldMs)
+    prompts[1] = makePrompt(group, keys.holdKey, data.label or '', data.holdMs or keys.defaultHoldMs)
   elseif data.mode == 'choice' then
-    prompts[1] = makePrompt(keys.choiceKeyA, data.optionA or 'Option 1', data.holdMs or keys.choiceHoldMs)
-    prompts[2] = makePrompt(keys.choiceKeyB, data.optionB or 'Option 2', data.holdMs or keys.choiceHoldMs)
+    prompts[1] = makePrompt(group, keys.choiceKeyA, data.optionA or 'Option 1', data.holdMs or keys.choiceHoldMs)
+    prompts[2] = makePrompt(group, keys.choiceKeyB, data.optionB or 'Option 2', data.holdMs or keys.choiceHoldMs)
   else
     return
   end
@@ -47,6 +51,7 @@ RegisterNetEvent('sovereign_storyworks:client:interaction', function(data)
   current = {
     id = data.id,
     mode = data.mode,
+    group = group,
     prompts = prompts,
     target = data.target and vector3(data.target.x, data.target.y, data.target.z) or nil,
     radius = data.radius or 2.5,
@@ -68,7 +73,7 @@ CreateThread(function()
       end
 
       if show then
-        UiPromptSetActiveGroupThisFrame(promptGroup, VarString(10, 'LITERAL_STRING', current.groupLabel), 0, 0, 0, 0) -- vorp_banking client.lua:153
+        UiPromptSetActiveGroupThisFrame(current.group, VarString(10, 'LITERAL_STRING', current.groupLabel), 0, 0, 0, 0) -- vorp_banking client.lua:153
 
         if not current.reported then
           if current.mode == 'hold' then
