@@ -31,7 +31,8 @@ ConfigRuntime.ObjectiveBlipStyle = 1664425300
 
 -- Objective tracker HUD (K1). Server-set, identical for every player.
 ConfigRuntime.Tracker = {
-  anchor = 'bottom-left', -- bottom-left | bottom-right | top-left | top-right
+  -- bottom-left | bottom-right | top-left | top-right | mid-left | mid-right
+  anchor = 'mid-left', -- owner round 1: clear of the minimap corner
   scale = 1.0,
 }
 
@@ -49,11 +50,15 @@ ConfigRuntime.Interact = {
 -- How often the server re-checks inventories for collect-type objectives (ms).
 ConfigRuntime.InventoryPollMs = 2000
 
--- Dialogue (E1/E2).
+-- Dialogue (E1/E2). Lines without their own durationMs time themselves by
+-- length (owner round 1: fixed 3.5s was unreadably fast on long lines).
 ConfigRuntime.Dialogue = {
-  defaultLineMs = 3500, -- subtitle duration when a line doesn't set its own
-  lineGapMs = 250,      -- breath between lines
-  voiceVolume = 0.8,    -- 0.0–1.0 for creator-supplied .ogg voice files
+  baseLineMs = 1800,  -- reading runway before per-word time starts counting
+  msPerWord = 420,    -- added per word
+  minLineMs = 3500,   -- floor for even the shortest line
+  maxLineMs = 12000,  -- ceiling so a typo'd essay can't stall the story
+  lineGapMs = 350,    -- breath between lines
+  voiceVolume = 0.8,  -- 0.0–1.0 for creator-supplied .ogg voice files
 }
 
 -- Physical carry & cargo (B5/B6) — attach route per TECH_SPEC S6 ruling.

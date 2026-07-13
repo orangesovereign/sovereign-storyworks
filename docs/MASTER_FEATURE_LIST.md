@@ -132,7 +132,7 @@
 
 ## 2. Candidate features
 
-*Empty — list locked at v1.0. New proposals go here pending owner approval.*
+- **sovereign_menus** (owner idea, 2026-07-13, raised during the Phase 2 gate round): a county-wide standalone menu system — branded per BRANDING.md, mouse-select support — replacing the native/vorp_menu look server-wide, following the sovereign_notify extraction model. Not a Storyworks V1 feature (Storyworks' own NUI is already mouse-driven React); it would serve the county's other scripts, and Storyworks would adopt it wherever a menu surface ever appears. **Pending owner go-ahead and scoping; suggested timing: side quest after the Phase 2 gate closes.**
 
 ## 3. Rejected / deferred (V2 and beyond)
 

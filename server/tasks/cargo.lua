@@ -25,7 +25,7 @@ local armNextCrate
 
 armNextCrate = function(ctx)
   local cfg = ctx.config
-  local cargo = ctx.state.cargo
+  local cargo = ctx.nodeState.cargo
   local total = cfg.count or 1
   local radius = cfg.radius or 3.0
   local model = cfg.model or 'p_crate01x'
@@ -101,9 +101,9 @@ SWTasks.Register('cargo', {
   end,
 
   start = function(ctx)
-    ctx.state.cargo = ctx.state.cargo or { moved = 0 }
+    ctx.nodeState.cargo = ctx.nodeState.cargo or { moved = 0 }
     ctx.deadline = ctx.config.timeLimitSeconds and (os.time() + ctx.config.timeLimitSeconds) or nil
-    if ctx.state.cargo.moved >= (ctx.config.count or 1) then
+    if ctx.nodeState.cargo.moved >= (ctx.config.count or 1) then
       return ctx.Complete(true) -- resumed after the last crate was already moved
     end
     armNextCrate(ctx)

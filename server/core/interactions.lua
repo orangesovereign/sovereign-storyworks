@@ -50,10 +50,15 @@ function SWInteractions.Arm(inst, spec, onDone)
 end
 
 ---Clear the interaction for every online participant of an instance.
+---Sends the client clear UNCONDITIONALLY — round 1 bug: after a completed
+---interaction the bySource record was already gone, the guard skipped the
+---send, and the prompts stayed on screen forever.
 function SWInteractions.Clear(inst)
   for _, p in pairs(inst.participants) do
-    if p.source and bySource[p.source] and bySource[p.source].inst == inst then
-      bySource[p.source] = nil
+    if p.source then
+      if bySource[p.source] and bySource[p.source].inst == inst then
+        bySource[p.source] = nil
+      end
       TriggerClientEvent('sovereign_storyworks:client:interaction', p.source, nil)
     end
   end
@@ -102,6 +107,8 @@ RegisterNetEvent('sovereign_storyworks:server:interactionDone', function(id, cho
 
   local onDone = rec.onDone
   bySource[source] = nil
+  -- drop the prompt immediately (round 1: choice/deliver prompts lingered)
+  TriggerClientEvent('sovereign_storyworks:client:interaction', source, nil)
   onDone(source, choiceIndex)
 end)
 

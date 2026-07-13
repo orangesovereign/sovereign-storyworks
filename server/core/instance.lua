@@ -91,10 +91,15 @@ end
 
 local finishInstance -- forward declaration
 
-local function makeCtx(inst, node)
+local function makeCtx(inst, node, nodeId)
   local completed = false
+  -- per-node state bucket (round 1 bug: two cargo nodes shared state.cargo,
+  -- so the unload leg saw the load leg's count and completed itself unseen)
+  inst.state.nodes = inst.state.nodes or {}
+  inst.state.nodes[nodeId] = inst.state.nodes[nodeId] or {}
   local ctx
   ctx = {
+    nodeState = inst.state.nodes[nodeId],
     -- tasks with moving targets (checkpoint routes) call this to update the
     -- K1/K2 display; harmless before broadcast wiring completes
     UpdateTarget = function(target)
@@ -201,7 +206,7 @@ local function enterNode(inst, nodeId)
   end
 
   inst.taskNode = node
-  inst.taskCtx = makeCtx(inst, node)
+  inst.taskCtx = makeCtx(inst, node, nodeId)
 
   if node.label and node.label ~= '' then
     -- announce after a short beat so a just-fired completion tip isn't swallowed

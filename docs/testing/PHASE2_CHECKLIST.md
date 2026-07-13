@@ -21,4 +21,16 @@ Phase 2 fixtures run anywhere on the map (targets are placed east/north of where
 
 ## Test log
 
-### Round 1 — (awaiting)
+### Round 1 — 2026-07-13 (owner)
+
+Regression + ART II/III/IV/V run. Findings and fixes (all shipped same day; ledger revision 2):
+
+- **Sizing/resolution:** fixed-px NUI text read too small on the high-res display. → Both HUDs now scale with screen height (`clamp(..2.15vh..)`), everything bold (Baskerville Bold added), subtitle line enlarged. sovereign_notify v1.2.0.
+- **Positions:** bottom-left tracker fought the minimap; notify stack was top-right. → New `mid-left`/`mid-right` anchors; defaults per owner: tracker mid-left, notify stack mid-right.
+- **BUG — prompts lingered after use** (mission-accept choice, delivery prompt): `SWInteractions.Clear` skipped the client clear when the record was already consumed. → Clear is now unconditional + the completing client gets an immediate clear.
+- **BUG — freight unload had no depot mark / couldn't complete:** both cargo nodes shared `state.cargo`, so the unload leg saw the load leg's count (3 ≥ 2) and self-completed invisibly. → Engine now gives every node a private `nodeState` bucket; route/cargo migrated. (Generic fix — any future mission with two same-type nodes needed this.)
+- **Dialogue too fast to read:** fixed 3.5s per line. → Lines now time themselves by word count (config: base 1.8s + 0.42s/word, floor 3.5s, ceiling 12s).
+- **Owner verdicts:** notification system "great" pending sizing; subtitle design approved in substance (size was the complaint).
+- **IDEA logged:** sovereign_menus — county-wide branded menu standalone with mouse select (feature list §2 candidate, pending go-ahead; suggested as a post-gate side quest).
+
+### Round 2 — (awaiting: ART II/III/IV retests + ART V sizing re-rule)

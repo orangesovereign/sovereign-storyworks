@@ -47,7 +47,12 @@ local function playLines(ctx, index)
     return
   end
 
-  local ms = line.durationMs or ConfigRuntime.Dialogue.defaultLineMs
+  local ms = line.durationMs
+  if not ms then
+    local d = ConfigRuntime.Dialogue
+    local _, words = line.text:gsub('%S+', '')
+    ms = math.min(d.maxLineMs, math.max(d.minLineMs, d.baseLineMs + words * d.msPerWord))
+  end
   ctx.NotifySubtitle(line.speaker, line.text, ms)
   if line.voice then sendVoice(ctx, line.voice) end
 
