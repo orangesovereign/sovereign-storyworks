@@ -115,6 +115,7 @@ The build is split into eleven phases. Each phase ends with an **exit gate**: a 
 
 ## Changelog
 
+- **v1.3 (2026-07-12)** — **Phase 1 exit gate PASSED** (owner: "Phase 1 closed"; three rounds — direction rule and notification-channel rule earned along the way). Tagged `v0.1-alpha`. Phase 2 begins with the owner-agreed K4 mockup approval.
 - **v1.2 (2026-07-12)** — Ruling #9: K4 Sovereign notification system added to Phase 2 (runtime HUD NUI bootstraps the React pipeline early; engine's notify point swaps off VORP stock overlays); Phase 2 exit gate extended.
 - **v1.1 (2026-07-12)** — **Phase 0 exit gate PASSED** (owner ruling "Phase 0 closed"; two dev-server rounds, all six spikes resolved, E3/E5 confirmed in, S6 attach-route ruling). Phase 1 begun same day.
 - **v1.0 (2026-07-12)** — SIGNED OFF by owner in plain text ("Approve"). Coding authorized; Phase 0 begun same day.

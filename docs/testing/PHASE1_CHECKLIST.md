@@ -78,4 +78,8 @@ Exit gate: the hand-authored mission runs end-to-end (§2), the failure edge fir
 - **ART II rev-3 retest: "Worked as expected."** 2s callouts, arrival tip, NEW OBJECTIVE announcement, completion — the courier route is fully green.
 - Owner reaffirmed (with feeling): the stock notification system goes **in its entirety** — ruling #9 wording strengthened; K4 replaces every channel, right-tips included.
 
-### Remaining for the gate: ART V (persistence — disconnect/reconnect + resource restart), then the owner's ruling.
+### Round 3 addendum — ART V persistence completed by owner (ticked, no notes = confirmed): park on disconnect, resume on reconnect at the correct leg, restore across resource restart.
+
+### GATE RULING — 2026-07-12
+
+**PASSED. Owner: "Phase 1 closed."** Tagged `v0.1-alpha`. Next: K4 notification mockup (owner-agreed, before any K4 code), then Phase 2 — Task Vocabulary I.

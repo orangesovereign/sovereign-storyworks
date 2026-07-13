@@ -4,7 +4,7 @@ All-in-one mission, quest, job, campaign, NPC, dialogue, and cutscene builder + 
 
 ## Project status
 
-**Current phase: CODING — Phase 1 (Mission Runtime Core) IN PROGRESS.** Phase 0 gate PASSED by owner ruling 2026-07-12 ("Phase 0 closed") — all six spikes resolved (E3/E5 confirmed in; S6: B5/B6 physical carry is attach-route only, native carriable closed). Master Feature List LOCKED v1.1 (42 features); Coding Plan v1.0 signed off. Phase 1 exit gate: hand-authored JSON test mission runs end-to-end on the dev server, survives reconnect mid-mission, cleans up on cancel → tag `v0.1-alpha`.
+**Current phase: CODING — Phase 2 (Task Vocabulary I) — K4 MOCKUP APPROVAL FIRST.** Phase 1 gate PASSED 2026-07-12 ("Phase 1 closed"), tagged `v0.1-alpha` — engine, edges, persistence all owner-verified over three rounds. Phase 0 gate PASSED same day. Master Feature List LOCKED v1.3 (43 features, rulings #1–9); key field rules in TECH_SPEC: never derive direction server-side; VORP's objective/bottom-tip channel doesn't render (right-tips are a doomed bridge — ruling #9: K4 replaces ALL stock notification channels, any VORP Notify* call post-K4 is a defect). Phase 2 exit gate: every movement/interaction task solo + chained, dialogue + voice, tracker/blips, full physical-cargo run, zero stock overlays.
 
 Standing owner rulings (2026-07-12, full text in MASTER_FEATURE_LIST): #1 blank-page design (RC6 zip ignored entirely, never reference it); #2 hard VORP dependency (no adapter layer); #3 solo V1 on a party-ready participants-list core (posse missions V2); #4 society = job+grade gating only; #5 player journal in V1; #6 dashboard mockup approved as NUI baseline; #7 robust V1, no cuts (all 40 candidates approved; E3/E5 spike-conditional).
 
