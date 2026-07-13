@@ -1,6 +1,6 @@
 # Sovereign Storyworks — Master Feature List
 
-**Version: 1.3 (LOCKED — owner rulings #7 "Robust V1, no cuts" + #8 physical interaction + #9 Sovereign notifications [server-config only], 2026-07-12)**
+**Version: 1.4 (LOCKED — owner rulings #7 "Robust V1, no cuts" + #8 physical interaction + #9 Sovereign notifications [server-config only]; §2 candidates updated 2026-07-13)**
 **Project phase: Coding — Phase 0 in progress (Coding Plan v1.0 signed off 2026-07-12)**
 
 > Rule: if a behavior isn't in the Approved section, it is NOT approved and will not be coded. New ideas → propose to the owner in plain text → explicit approval → doc update → THEN implement. Changes are versioned in the changelog.
@@ -132,7 +132,9 @@
 
 ## 2. Candidate features
 
-- **sovereign_menus** (owner idea, 2026-07-13, raised during the Phase 2 gate round): a county-wide standalone menu system — branded per BRANDING.md, mouse-select support — replacing the native/vorp_menu look server-wide, following the sovereign_notify extraction model. Not a Storyworks V1 feature (Storyworks' own NUI is already mouse-driven React); it would serve the county's other scripts, and Storyworks would adopt it wherever a menu surface ever appears. **Pending owner go-ahead and scoping; suggested timing: side quest after the Phase 2 gate closes.**
+- **sovereign_menus** (owner idea, 2026-07-13, raised during the Phase 2 gate round): a county-wide standalone menu system — branded per BRANDING.md, mouse-select support — replacing the native/vorp_menu look server-wide, following the sovereign_notify extraction model. Not a Storyworks V1 feature (Storyworks' own NUI is already mouse-driven React); it would serve the county's other scripts, and Storyworks would adopt it wherever a menu surface ever appears. **GREEN-LIT by owner 2026-07-13 ("Lets ride into the side quest of sovereign_menus") — built as the between-gates side quest.** V1 scope: client export API (`Open(def, onSelect, onClose)` / `Close()`), mouse select + hover + wheel AND arrow/enter/esc keys, ledger-styled panel per BRANDING.md, resolution-dynamic sizing (regular weight), server-config presentation. Storyworks itself remains NUI-first; Phase 2 gate ruling still pending separately.
+
+- **sovereign_prompts** (owner idea, 2026-07-13, PARKING LOT — logged for a considered decision later, NOT green-lit): a county-wide standalone that replaces RedM's native `UiPrompt` button hints (the "Hold [G] — Pick up" / Talk / Deliver / A-B choice widgets) with a branded parchment prompt overlay. Motivation: after ruling #9 retired the stock notifications, the native interaction prompts are the last runtime surface still wearing the game's own look. **Recorded tradeoff (Claude's counsel, owner acknowledged): native prompts are worth keeping unless we accept these costs** — (1) native prompts auto-render the correct button glyph for keyboard, controller, OR a rebound key; a custom NUI prompt hard-codes a glyph and misleads controller users; (2) the game handles hold timing and input polling natively — a custom prompt reimplements exactly the surface where Phase 2 already hit two timing bugs (stuck prompts, nil-race); (3) many polished RedM scripts keep native prompts on purpose for that robustness. **Path if approved: mockup first (like every other UI decision), then decide native-vs-branded per prompt type.** Until then Storyworks' `client/prompts.lua` stays on native `UiPrompt*` and this is not scheduled.
 
 ## 3. Rejected / deferred (V2 and beyond)
 
@@ -144,6 +146,7 @@
 
 ## Changelog
 
+- **v1.4 (2026-07-13)** — §2 candidates: sovereign_menus marked GREEN-LIT + built (side quest); sovereign_prompts added to the parking lot (owner idea) with the native-vs-branded input-correctness tradeoff recorded — NOT green-lit, mockup-first if ever pursued.
 - **v1.3 (2026-07-12)** — Ruling #9 scope corrected by owner: K4 customization is server owner/dev config ONLY (config_notifications.lua); per-player settings removed.
 - **v1.2 (2026-07-12)** — Ruling #9 (owner directive): native full-screen/stock overlays banned for Storyworks messaging; K4 Sovereign notification system added. 43 features.
 - **v1.1 (2026-07-12)** — Ruling #8 (owner directive): physical object interaction added as B5 (physical carry) and B6 (load/unload cargo); task roster now 15; native carriable system confirmed in reference data; spike S6 added to select primary implementation route.
