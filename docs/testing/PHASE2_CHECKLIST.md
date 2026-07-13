@@ -37,4 +37,6 @@ Regression + ART II/III/IV/V run. Findings and fixes (all shipped same day; ledg
 
 - **ART II: response choice never appears after the clerk's last line** (worked round 1 → regression from the round-1 prompt fixes). Primary suspect: the choice prompts registered into a prompt GROUP that had been fully emptied by the new immediate-clear — RedM appears not to revive an emptied group. → **Fix: every interaction now creates a fresh prompt group.** Plus instrumentation on the whole chain: server logs `interaction #N (mode) armed...` / `talk: dialogue done, arming response choice`; client F8 prints `interaction received: choice #N`. If round 3 still fails, those lines say which side died.
 
+- **Console error pasted:** `prompts.lua:65 attempt to index a nil value (upvalue 'current')` — the clear event nulls `current` during the display thread's frame wait. → Frame body snapshots the interaction and skips the frame if it vanished mid-wait.
+
 ### Round 3 — (awaiting: ART II choice retest + remaining rev-2 lines)
