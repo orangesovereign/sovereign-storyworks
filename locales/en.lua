@@ -36,4 +36,11 @@ Locales['en'] = {
   goto_out_of_time = 'Too slow — the moment has passed.',
   goto_progress_reach = 'Objective: %d meters away.',
   goto_progress_depart = 'Distance covered: %d of %d meters.',
+  route_checkpoint = 'Checkpoint %d of %d.',
+  route_done = 'Route complete.',
+  wait_remaining = '%d seconds remain.',
+  search_started = 'You begin searching the area...',
+  search_progress = 'Searching: %d of %d seconds.',
+  search_paused = 'You have left the search area — the trail goes cold until you return.',
+  search_done = 'Your search turns something up.',
 }

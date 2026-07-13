@@ -93,7 +93,14 @@ local finishInstance -- forward declaration
 
 local function makeCtx(inst, node)
   local completed = false
-  return {
+  local ctx
+  ctx = {
+    -- tasks with moving targets (checkpoint routes) call this to update the
+    -- K1/K2 display; harmless before broadcast wiring completes
+    UpdateTarget = function(target)
+      ctx.target = target
+      broadcastObjectiveBlip(inst)
+    end,
     instance = inst,
     node = node,
     config = node.config or {},
@@ -111,6 +118,7 @@ local function makeCtx(inst, node)
       finishInstance(inst, outcome, message)
     end,
   }
+  return ctx
 end
 
 local function stopCurrentTask(inst)
