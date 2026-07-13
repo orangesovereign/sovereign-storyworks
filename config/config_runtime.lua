@@ -59,11 +59,13 @@ ConfigRuntime.Combat = {
   enemyRelGroup = 'SOVEREIGN_SW_ENEMY',       -- our mission-enemy relationship group
   defaultEnemyModel = 'a_m_m_unigunslinger_01',
   defaultEnemyWeapon = 'WEAPON_REVOLVER_CATTLEMAN',
-  defaultEnemyHealth = 200,
+  defaultEnemyHealth = 120,                    -- round 1: 200 was a bullet-sponge; ~normal-person now, tunable
   enemyAmmo = 250,
   escortWalkSpeed = 1.0,                       -- 1.0 walk, 2.0+ run
-  enemyBlipStyle = 1622809600,                 -- hostile blip (rdr3 blip style)
-  allyBlipStyle = 1830367310,                  -- friendly/escort blip
+  -- named blip styles (rdr3_discoveries blip_styles) — client joaats these; far
+  -- more reliable than raw hashes (round 1: the guessed ally hash didn't render)
+  enemyBlipStyle = 'BLIP_STYLE_ENEMY',
+  allyBlipStyle = 'BLIP_STYLE_FRIENDLY',
   deathReportGraceMs = 250,                    -- debounce so one death reports once
 }
 

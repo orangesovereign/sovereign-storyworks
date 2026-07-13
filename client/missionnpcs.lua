@@ -35,6 +35,7 @@ end
 
 local function makeBlip(ent, style, name)
   if not style or style == 0 then return nil end
+  if type(style) == 'string' then style = joaat(style) end -- named blip styles (BLIP_STYLE_*)
   local blip = Citizen.InvokeNative(0x23f74c2fda6e7c61, style, ent) -- BlipAddForEntity (vorp_utils peds.lua:154)
   if blip and name then Citizen.InvokeNative(0x9CB1A1623062F402, blip, name) end -- SetBlipName
   return blip

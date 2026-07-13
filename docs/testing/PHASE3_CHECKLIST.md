@@ -27,4 +27,11 @@ Escort **locomotion** uses `TaskFollowNavMeshToCoord`, a movement native not pre
 
 ## Test log
 
-### Round 1 — (awaiting)
+### Round 1 — 2026-07-13 (owner)
+
+Findings + fixes (shipped same day; ledger revision 2):
+- **ART II/III — enemies were bullet-sponges.** Default enemy health 200 → **120** (~normal person; killable in a shot or two, config-tunable in `ConfigRuntime.Combat.defaultEnemyHealth`).
+- **ART IV — no blip on the escort NPC.** The guessed ally blip hash didn't render. → Both enemy and ally blips now use verified NAMED styles (`BLIP_STYLE_ENEMY` / `BLIP_STYLE_FRIENDLY`, joaat'd client-side). The escort now wears a friendly (blue) blip that follows them, alongside the destination objective blip.
+- Not yet reported (retest in round 2): the ugly-path zero-orphan lines (cancel/disconnect/restart), escort S7 walk, full chain.
+
+### Round 2 — (awaiting: ART II/IV retests + the ugly-path zero-orphan lines + S7 escort walk)
