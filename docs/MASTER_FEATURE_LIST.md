@@ -1,6 +1,6 @@
 # Sovereign Storyworks — Master Feature List
 
-**Version: 1.2 (LOCKED — owner rulings #7 "Robust V1, no cuts" + #8 physical interaction + #9 Sovereign notifications, 2026-07-12)**
+**Version: 1.3 (LOCKED — owner rulings #7 "Robust V1, no cuts" + #8 physical interaction + #9 Sovereign notifications [server-config only], 2026-07-12)**
 **Project phase: Coding — Phase 0 in progress (Coding Plan v1.0 signed off 2026-07-12)**
 
 > Rule: if a behavior isn't in the Approved section, it is NOT approved and will not be coded. New ideas → propose to the owner in plain text → explicit approval → doc update → THEN implement. Changes are versioned in the changelog.
@@ -17,7 +17,7 @@
 6. **Dashboard mockup APPROVED** — `docs/mockups/dashboard_mockup_v1_APPROVED.html` is the visual baseline for all Storyworks NUI.
 7. **Robust V1 — no cuts.** The entire candidate list (v0.5) is approved for V1, including the full 13-task roster with escort and defend-area.
 8. **Physical object interaction is a V1 requirement** (owner directive, 2026-07-12): picking up, carrying, putting down, and loading/unloading mission props must be real, physical, animated interactions — not inventory abstractions. Features B5/B6.
-9. **No native full-screen messages** (owner directive, 2026-07-12): Storyworks does not use the game's/VORP's stock full-screen and notification overlays for mission text. All player-facing runtime messaging goes through Storyworks' own branded notification system (K4), and players can customize its presentation themselves.
+9. **No native full-screen messages** (owner directive, 2026-07-12; scope corrected same day): Storyworks does not use the game's/VORP's stock full-screen and notification overlays for mission text. All player-facing runtime messaging goes through Storyworks' own branded notification system (K4). Presentation customization is **server owner/dev only** — configured in the config files; players get what the server sets, no per-player toggles.
 
 ---
 
@@ -118,7 +118,7 @@
 | K1 | On-screen objective tracker (current task, progress, distance) — minimal branded HUD. | ✅ |
 | K2 | Map blips/waypoints for active objectives, cleaned up on task/mission end. | ✅ |
 | K3 | Player mission journal — browse available/active/completed missions and reset timers; start eligible missions (owner-endorsed for V1, ruling #5). | ✅ |
-| K4 | Sovereign notification system (ruling #9): all Storyworks runtime messaging — objectives, progress tips, mission started/complete/failed cards — rendered by our own branded NUI overlay (BRANDING.md + approved baseline: telegram/parchment language), replacing native/VORP stock overlays. Per-player presentation customization (position, scale, duration, progress-callout verbosity) persisted client-side (resource KVPs) with a settings surface in the journal (K3). | ✅ |
+| K4 | Sovereign notification system (ruling #9): all Storyworks runtime messaging — objectives, progress tips, mission started/complete/failed cards — rendered by our own branded NUI overlay (BRANDING.md + approved baseline: telegram/parchment language), replacing native/VORP stock overlays. Presentation customization is server-side config only (L1): position, scale, durations, callout verbosity, style variants — set by the owner/dev in `config_notifications.lua`; identical for every player. | ✅ |
 
 ### L. Ops & Safety Rails
 
@@ -144,7 +144,8 @@
 
 ## Changelog
 
-- **v1.2 (2026-07-12)** — Ruling #9 (owner directive): native full-screen/stock overlays banned for Storyworks messaging; K4 Sovereign notification system added (branded NUI overlay + per-player customization). 43 features.
+- **v1.3 (2026-07-12)** — Ruling #9 scope corrected by owner: K4 customization is server owner/dev config ONLY (config_notifications.lua); per-player settings removed.
+- **v1.2 (2026-07-12)** — Ruling #9 (owner directive): native full-screen/stock overlays banned for Storyworks messaging; K4 Sovereign notification system added. 43 features.
 - **v1.1 (2026-07-12)** — Ruling #8 (owner directive): physical object interaction added as B5 (physical carry) and B6 (load/unload cargo); task roster now 15; native carriable system confirmed in reference data; spike S6 added to select primary implementation route.
 - **v1.0 (2026-07-12)** — LIST LOCKED. Owner ruling #7 "Robust V1, no cuts": all 40 candidates approved with permanent IDs; E3/E5 spike-conditional; F3 recorded as engine boundary; deferred section populated.
 - **v0.5 (2026-07-12)** — Dashboard mockup approved (ruling #6); GitHub repository connected.
