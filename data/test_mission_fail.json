@@ -6,8 +6,8 @@
   "nodes": {
     "sprint": {
       "type": "goto",
-      "label": "Reach the point 300 meters ahead within 15 seconds. (You are not meant to make it.)",
-      "config": { "relative": { "forward": 300.0 }, "radius": 4.0, "timeLimitSeconds": 15 },
+      "label": "Get 300 meters away within 15 seconds. (You are not meant to make it.)",
+      "config": { "departure": { "distance": 300.0 }, "timeLimitSeconds": 15 },
       "onSuccess": "somehow_made_it",
       "onFailure": "botched"
     },

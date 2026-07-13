@@ -32,4 +32,6 @@ Locales['en'] = {
   mission_broken = 'This mission is broken — the county clerk has been notified.',
   goto_arrived = 'You have arrived.',
   goto_out_of_time = 'Too slow — the moment has passed.',
+  goto_progress_reach = 'Objective: %d meters away.',
+  goto_progress_depart = 'Distance covered: %d of %d meters.',
 }

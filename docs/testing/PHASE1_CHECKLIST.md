@@ -61,4 +61,10 @@ Exit gate: the hand-authored mission runs end-to-end (§2), the failure edge fir
 
 ## Test log
 
-### Round 1 — (awaiting)
+### Round 1 — 2026-07-12 (owner)
+
+- **ART II items 3–4:** "You have arrived" never fired — walked forever. Root cause: the leg-1 target derived its direction from SERVER-side heading (unreliable — recorded as a ⚠️ rule in TECH_SPEC), compounded by there being no map marker until Phase 2, making a blind 4m circle unhittable. **Fix (rev 2):** the courier route is now direction-free — leg 1 completes at ≥60m from start in ANY direction; both legs get ~8s distance callouts (`goto_progress_*`); return radius widened to 6m with a vertical allowance. Heading-based "relative forward" targets removed from the goto task entirely.
+- **ART V:** blocked by the above; retest in round 2.
+- Ticked without notes (= confirmed): ART I boot/tables/reseed, ART II items 1–2 (/swmissions, mission start + objective), ART III failure edge, ART IV cancel & guards.
+
+### Round 2 — (awaiting: ART II retest + ART V persistence)

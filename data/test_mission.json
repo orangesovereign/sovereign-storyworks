@@ -6,15 +6,15 @@
   "nodes": {
     "ride_out": {
       "type": "goto",
-      "label": "Head to the marker point about 60 meters ahead of where you started.",
-      "config": { "relative": { "forward": 60.0 }, "radius": 4.0 },
+      "label": "Ride at least 60 meters away from where you started — any direction. The wire will call out your distance.",
+      "config": { "departure": { "distance": 60.0 } },
       "onSuccess": "ride_back",
       "onFailure": "botched"
     },
     "ride_back": {
       "type": "goto",
-      "label": "Return to where you began.",
-      "config": { "relative": { "origin": true }, "radius": 4.0 },
+      "label": "Return to where you began — the wire counts you down.",
+      "config": { "relative": { "origin": true }, "radius": 6.0 },
       "onSuccess": "done",
       "onFailure": "botched"
     },

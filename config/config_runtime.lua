@@ -10,6 +10,10 @@ ConfigRuntime.PositionPollMs = 750
 -- Default arrival radius (meters) for location tasks when the mission doesn't set one.
 ConfigRuntime.DefaultGotoRadius = 3.0
 
+-- Progress ping for location tasks: distance callout every N seconds (0 disables).
+-- Navigation aid until map blips land in Phase 2 (K2).
+ConfigRuntime.GotoProgressPingSeconds = 8
+
 -- One mission at a time in V1 (participants-list core still party-ready, ruling #3).
 ConfigRuntime.MaxActiveInstancesPerCharacter = 1
 
