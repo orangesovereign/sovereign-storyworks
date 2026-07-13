@@ -41,4 +41,8 @@ Regression + ART II/III/IV/V run. Findings and fixes (all shipped same day; ledg
 
 ### Round 3 — 2026-07-13 (owner)
 
-**"All clear."** Every outstanding line witnessed: the response choice appears and vanishes correctly (fresh prompt group + nil-race fix held), freight depot leg runs with its mark (per-node state fix), delivery prompt clears, presentation approved at regular weight (bold dropped same round, notify v1.2.1). All Phase 2 exit-gate conditions met — **gate awaits the owner's ruling.**
+**"All clear."** Every outstanding line witnessed: the response choice appears and vanishes correctly (fresh prompt group + nil-race fix held), freight depot leg runs with its mark (per-node state fix), delivery prompt clears, presentation approved at regular weight (bold dropped same round, notify v1.2.1). All Phase 2 exit-gate conditions met.
+
+### GATE RULING — 2026-07-13
+
+**PASSED. Owner: "Phase 2 closed."** Tagged `v0.2-alpha`. Between-gates side quest sovereign_menus built (preview published). Next: Phase 3 — Task Vocabulary II (eliminate / escort / defend).
