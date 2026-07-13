@@ -40,16 +40,24 @@ local function forEachParticipant(inst, fn)
   end
 end
 
+-- K4 (ruling #9): ALL runtime messaging renders in the Sovereign notification
+-- NUI. A VORP Notify* call anywhere below this line is a defect.
+local function sendK4(source, payload)
+  TriggerClientEvent('sovereign_storyworks:client:notify', source, payload)
+end
+
 local function notify(inst, kind, text)
-  local Core = core()
-  if not Core then return end
-  -- Round 2 finding: VORP's objective channel (TipBottom) never rendered for the
-  -- owner while the right-tip channel worked every time. Until K4 (ruling #9)
-  -- replaces stock notifications entirely, EVERYTHING rides the proven channel;
-  -- objectives get a locale prefix so they read as instructions, not chatter.
-  if kind == 'objective' then text = T('objective_prefix', text) end
+  local payload = kind == 'objective'
+    and { type = 'k4:objective', text = text }
+    or { type = 'k4:tick', text = text }
   forEachParticipant(inst, function(src)
-    Core.NotifyRightTip(src, text, kind == 'objective' and 7000 or 4000)
+    sendK4(src, payload)
+  end)
+end
+
+local function notifyCard(inst, variant, title, body)
+  forEachParticipant(inst, function(src)
+    sendK4(src, { type = 'k4:card', variant = variant, title = title, body = body })
   end)
 end
 
@@ -155,18 +163,10 @@ finishInstance = function(inst, status, message)
   inst.status = status
   persist(inst)
 
-  if message and message ~= '' then
-    local Core = core()
-    if Core then
-      forEachParticipant(inst, function(src)
-        if status == 'completed' then
-          Core.NotifyUpdate(src, T('mission_over_title'), message, 6000)
-        else
-          Core.NotifyFail(src, message, '', 6000)
-        end
-      end)
-    end
-  end
+  local variant = status == 'completed' and 'complete' or (status == 'cancelled' and 'cancelled' or 'failed')
+  local title = status == 'completed' and T('mission_over_title')
+    or (status == 'cancelled' and T('mission_cancelled_title') or T('mission_failed_title'))
+  notifyCard(inst, variant, title, message)
 
   for charIdentifier in pairs(inst.participants) do
     byChar[tostring(charIdentifier)] = nil
@@ -211,8 +211,7 @@ function SWInstances.Start(source, missionCode)
   active[insertId] = inst
   byChar[charIdentifier] = insertId
 
-  local Core = core()
-  if Core then Core.NotifyUpdate(source, T('mission_started_title'), entry.title, 5000) end
+  sendK4(source, { type = 'k4:card', variant = 'started', title = T('mission_started_title'), body = entry.title })
   SWLog.Info('instance %d started: %s (char %s)', insertId, entry.code, charIdentifier)
 
   enterNode(inst, entry.def.start)
@@ -295,8 +294,7 @@ local function resumeForCharacter(source, character)
   -- Re-enter the current node only if its task isn't already running (solo V1:
   -- the sole participant returning always re-arms it).
   if not inst.taskCtx then
-    local Core = core()
-    if Core then Core.NotifyUpdate(source, T('mission_resumed_title'), inst.def.title, 5000) end
+    sendK4(source, { type = 'k4:card', variant = 'started', title = T('mission_resumed_title'), body = inst.def.title })
     SWLog.Info('instance %d resumed by char %s', inst.id, tostring(character.charIdentifier))
     enterNode(inst, inst.currentNode)
   end

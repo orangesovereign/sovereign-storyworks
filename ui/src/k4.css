@@ -1,0 +1,173 @@
+/* Sovereign Storyworks — K4 Sovereign Notifications
+   Phase 2 | Features: K4 — owner-approved baseline (mockup, 2026-07-12,
+   amendment: no County Wire header). BRANDING.md tokens. Fonts bundled, no CDN. */
+
+@font-face {
+  font-family: 'SC Cinzel';
+  src: url('./assets/fonts/Cinzel-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SC Baskerville';
+  src: url('./assets/fonts/LibreBaskerville-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SC Fell';
+  src: url('./assets/fonts/IMFellEnglish-Italic.woff2') format('woff2');
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --parchment: #e0d2b5;
+  --parchment-dim: #9c8c6b;
+  --brass: #a8834b;
+  --brass-dim: #59461f;
+  --red-deep: #6a1b11;
+  --font-display: 'SC Cinzel', Georgia, serif;
+  --font-body: 'SC Baskerville', Georgia, serif;
+  --font-fell: 'SC Fell', Georgia, serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+}
+
+.k4-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--font-body);
+  font-size: calc(16px * var(--k4-scale, 1));
+}
+
+/* ---- anchored stack: objective slips + progress tick ---- */
+
+.k4-stack {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 21em;
+  max-width: 30vw;
+}
+.k4-stack.top-right { top: 3.5vh; right: 1.6vw; align-items: flex-end; }
+.k4-stack.top-left { top: 3.5vh; left: 1.6vw; align-items: flex-start; }
+.k4-stack.bottom-right { bottom: 5vh; right: 1.6vw; align-items: flex-end; }
+.k4-stack.bottom-left { bottom: 5vh; left: 1.6vw; align-items: flex-start; }
+
+@keyframes k4-in {
+  from { opacity: 0; transform: translateY(-0.6em); }
+  to { opacity: 1; transform: none; }
+}
+
+.k4-slip {
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(172deg, #ddc79a, #c9ae7c 65%, #bda06d);
+  color: #241407;
+  padding: 0.55em 0.75em 0.5em;
+  border: 1px solid #8f6e3f;
+  box-shadow: 0 0.3em 0.9em rgba(0, 0, 0, 0.6);
+  animation: k4-in 0.28s ease both;
+}
+.k4-slip .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-display);
+  font-size: 0.55em;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #5a3214;
+  margin-bottom: 0.5em;
+}
+.k4-slip .seal {
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 50%;
+  flex: none;
+  background: radial-gradient(circle at 35% 30%, #93331f, #5b160c 70%);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 235, 200, 0.18), 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.k4-slip .body {
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 0.9em;
+  line-height: 1.35;
+}
+
+.k4-tick {
+  box-sizing: border-box;
+  max-width: 100%;
+  background: rgba(16, 12, 9, 0.82);
+  border: 1px solid rgba(168, 131, 75, 0.5);
+  color: var(--parchment);
+  padding: 0.3em 0.7em 0.26em;
+  font-size: 0.75em;
+  letter-spacing: 0.03em;
+  box-shadow: 0 0.2em 0.5em rgba(0, 0, 0, 0.5);
+  animation: k4-in 0.2s ease both;
+}
+
+/* ---- mission cards (never full-screen) ---- */
+
+@keyframes k4-card-in {
+  from { opacity: 0; transform: translate(-50%, -0.9em); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.k4-card {
+  position: absolute;
+  top: 6vh;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 28em;
+  max-width: 44vw;
+  text-align: center;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, rgba(18, 13, 9, 0.94), rgba(24, 17, 11, 0.94));
+  border: 1px solid var(--brass-dim);
+  outline: 1px solid rgba(0, 0, 0, 0.7);
+  padding: 0.8em 1.1em 0.75em;
+  box-shadow: 0 0.6em 1.9em rgba(0, 0, 0, 0.7);
+  animation: k4-card-in 0.35s ease both;
+}
+.k4-card .title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  font-size: 0.95em;
+  text-transform: uppercase;
+  color: var(--parchment);
+}
+.k4-card .rule {
+  height: 1px;
+  margin: 0.45em auto;
+  width: 70%;
+  background: linear-gradient(90deg, transparent, var(--red-deep), var(--brass), var(--red-deep), transparent);
+}
+.k4-card .body {
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 0.85em;
+  color: var(--parchment-dim);
+}
+.k4-card.complete { border-color: var(--brass); }
+.k4-card.complete .title {
+  color: #cfc39a;
+  text-shadow: 0 0 1.1em rgba(168, 131, 75, 0.35);
+}
+.k4-card.failed {
+  border-color: #5e1e13;
+  background: linear-gradient(180deg, rgba(26, 11, 8, 0.94), rgba(20, 10, 8, 0.94));
+}
+.k4-card.failed .title { color: #d08a7c; }

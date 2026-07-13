@@ -23,7 +23,7 @@ local types = {}
 ---  state,                -- instance-persistent state table (survives resume)
 ---  Complete(success),    -- report the task finished; engine follows the edge
 ---  ForEachParticipant(fn(source, charIdentifier)),
----  Notify(kind, text),   -- participant notification through VORP
+---  Notify(kind, text),   -- participant notification through K4 ('objective' or 'tip')
 ---}
 function SWTasks.Register(name, def)
   if types[name] then
