@@ -22,7 +22,13 @@ local function aheadOfPlayer(meters)
   local ped = PlayerPedId()
   local coords = GetEntityCoords(ped)
   local fwd = GetEntityForwardVector(ped)
-  return coords + fwd * meters
+  local pos = coords + fwd * meters
+  -- snap to ground (owner round 1: entities spawned in the air); pattern from vorp_utils peds.lua:33
+  local found, groundZ = GetGroundZAndNormalFor_3dCoord(pos.x, pos.y, pos.z + 1.0)
+  if found then
+    pos = vector3(pos.x, pos.y, groundZ)
+  end
+  return pos
 end
 
 local function loadModel(model)
@@ -50,6 +56,7 @@ local function spawnSpikePed(model)
   local pos = aheadOfPlayer(2.5)
   local ped = CreatePed(hash, pos.x, pos.y, pos.z, 0.0, false, true, false, false)
   Citizen.InvokeNative(0x283978A15512B2FE, ped, true) -- SetRandomOutfitVariation (vorp_utils peds.lua:109 — peds are invisible without it)
+  Citizen.InvokeNative(0x9587913B9E772D29, ped, true) -- place entity on ground (vorp_utils peds.lua:104)
   SetEntityInvincible(ped, true)
   FreezeEntityPosition(ped, true)
   SetModelAsNoLongerNeeded(hash)
@@ -119,16 +126,25 @@ function spikes.speech(args)
   report('S2: if you HEARD the ped speak, S2 PASSES. Try other refs/names: /swspike speech <ref> <name> [line]')
 end
 
+local nextOutfitNum = 1
+
 function spikes.outfit(args)
   local ped = lastSpikePed
   if not ped or not DoesEntityExist(ped) then ped = spawnSpikePed() end
   if not ped then return end
 
-  local outfitHash = tonumber(args[1]) or Config.Spikes.outfitHash
-  report('S3: applying metaped outfit 0x%X', outfitHash)
-  Citizen.InvokeNative(0x1902C4CFCC5BE57C, ped, outfitHash) -- _APPLY_NON_REQUESTED_METAPED_OUTFIT (peds_customization/ped_outfits.lua example)
-  Citizen.InvokeNative(0xCC8CA3E88256E58F, ped, false, true, true, true, false) -- _UPDATE_PED_VARIATION (same example)
-  report('S3: did the ped\'s appearance change? If yes, S3 PASSES.')
+  -- Round 2: metaped outfit hash from round 1 did nothing on this model — switched to
+  -- the numbered-outfit native documented in peds_list.lua header. valtownfolk_01 has
+  -- 36 outfits; each run advances to the next so the change is unmistakable.
+  local outfitNum = tonumber(args[1])
+  if not outfitNum then
+    outfitNum = nextOutfitNum
+    nextOutfitNum = (nextOutfitNum + 1) % Config.Spikes.outfitCount
+  end
+  report('S3: applying outfit #%d of %d', outfitNum, Config.Spikes.outfitCount)
+  Citizen.InvokeNative(0x77FF8D35EEC6BBC4, ped, outfitNum, 0) -- numbered outfit (peds_list.lua:4)
+  Citizen.InvokeNative(0xCC8CA3E88256E58F, ped, false, true, true, true, false) -- _UPDATE_PED_VARIATION
+  report('S3: did the ped\'s appearance change? Run again — it cycles outfits. If it changes, S3 PASSES.')
 end
 
 function spikes.ptfx(args)
@@ -190,16 +206,25 @@ function spikes.sound(args)
 end
 
 function spikes.carriable(args)
-  local prop = spawnSpikeProp(args[1])
+  -- Round 1 verdict: carrying flags do NOT arm pick-up prompts on arbitrary props —
+  -- carriable capability is per-model game metadata (Controls/AI dumps confirm the
+  -- inputs/events exist but no exposed arming native). This spike remains only to
+  -- audition STOCK models that may be natively carriable: /swspike carriable <model>
+  local model = args[1]
+  if not model then
+    report('S6a: closed for arbitrary props (round 1 verdict — attach route is primary).')
+    report('S6a: to audition a stock model for native carry, run /swspike carriable <model>')
+    return
+  end
+
+  local prop = spawnSpikeProp(model)
   if not prop then return end
 
   FreezeEntityPosition(prop, false)
   for _, flag in ipairs(Config.Spikes.carryingFlags) do
     Citizen.InvokeNative(0x18FF3110CF47115D, prop, flag, true) -- carrying-flag setter (AI/CARRYING_FLAGS/README.md)
   end
-  report('S6a: crate spawned with carrying flags %s.', table.concat(Config.Spikes.carryingFlags, ','))
-  report('S6a: walk to it — does a PICK UP prompt appear? Can you carry it, stow it on your horse, drop it?')
-  report('S6a: while carrying, run /swspike place to test native placement.')
+  report('S6a: "%s" spawned with carrying flags — does a PICK UP prompt appear on THIS model?', model)
 end
 
 function spikes.place()
@@ -218,13 +243,24 @@ function spikes.attach(args)
   if not prop then return end
 
   local ped = PlayerPedId()
-  -- Fallback route probe: named native (no raw hash). If this errors, the F8
-  -- console shows it — that itself is the spike result.
+  -- Round 2: bone index 0 landed the crate on the head. SKEL_Spine3 (bone_id 14413)
+  -- sits mid-chest; its INDEX differs per skeleton (boneNames dumps: mp_male 134,
+  -- mp_female 218), so pick by the player's model.
+  local model = GetEntityModel(ped)
+  local bone = 0
+  for skeleton, index in pairs(Config.Spikes.attachBoneBySkeleton) do
+    if model == joaat(skeleton) then bone = index break end
+  end
+  if bone == 0 then
+    report('S6c: player model is not mp_male/mp_female — attaching at entity root (expect odd placement).')
+  end
+
+  local off = Config.Spikes.attachOffset
   local ok, err = pcall(function()
-    AttachEntityToEntity(prop, ped, 0, 0.0, 0.35, 0.55, 0.0, 0.0, 0.0, false, false, false, false, 2, true, false, false)
+    AttachEntityToEntity(prop, ped, bone, off.x, off.y, off.z, 0.0, 0.0, 0.0, false, false, false, false, 2, true, false, false)
   end)
   if ok then
-    report('S6c: crate attached to your torso (no animation — that is Phase 2 work). Fallback route core PASSES.')
+    report('S6c: crate attached at the chest (bone %d; no animation — that is Phase 2 work). PASSES if it rides your torso.', bone)
     report('S6c: /swspike cleanup removes it.')
   else
     report('S6c: AttachEntityToEntity FAILED: %s — record this in TECH_SPEC.', tostring(err))

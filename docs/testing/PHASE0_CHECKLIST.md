@@ -60,9 +60,15 @@ Type each command in chat. Watch the F8 console (`F8`) for `[sovereign_storywork
 Phase 0 exit gate passes when: B1–B5 all pass, every spike has a recorded result (pass OR fail — fails are information, not blockers), and the results are written into TECH_SPEC. Then Phase 1 (Mission Runtime Core) begins.
 
 ---
-*Log (owner fills in):*
 
-- Date tested:
-- Tested by:
-- Server build:
-- Notes:
+## Test log
+
+### Round 1 — 2026-07-12 (owner)
+
+- **ART III / ped spawn:** peds spawned airborne → FIXED rev 2 (ground-snap via `GetGroundZAndNormalFor_3dCoord` + place-on-ground native, the vorp_utils pattern).
+- **ART V / outfit (S3):** no visible change with the metaped outfit hash → spike REBUILT rev 2 on the numbered-outfit native `0x77FF8D35EEC6BBC4` (36 outfits on the spike ped); E5 verdict awaits retest.
+- **ART VI / carriable (S6a):** no pick-up prompt on the flagged crate → **VERDICT: native carriable route closed for arbitrary props.** Recorded in TECH_SPEC v0.3.
+- **ART VI / attach (S6c):** WORKS (attached to head — bone fixed rev 2 to SKEL_Spine3 per skeleton). **B5/B6 primary route = attach.**
+- Pending owner confirmation: ART II (boot/migrations), ART IV (speech S2, sound S5), ART VII (locks & limits).
+
+### Round 2 — (awaiting)

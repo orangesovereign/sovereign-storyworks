@@ -53,8 +53,10 @@ Data is read as reference data for building our curated catalogs. Individual ent
 - ⚠️ Rockstar prerecorded story cutscenes (cutfiles): not reliably exposed in RedM — out of scope (feature list C-F3).
 - 🔎 Native ambient ped speech (voice barks) — natives exist; usable line/voice names per ped model need a dev-server spike (E3).
 - 🔎 NPC outfit/appearance control depth — preset variation vs full component control (E5).
-- ✅ **Native carriable system exists** (confirmed 2026-07-12, `AI/CARRYING_FLAGS` + community natives): carrying flags incl. `CAN_BE_CARRIED_ON_FOOT` (2), `CAN_BE_CARRIED_ON_MOUNT` (3), `CAN_BE_DROPPED` (4), `CAN_BE_PLACED_ON_MOUNT` (14), `IS_INSTANT_PICKUP` (21), `CLEAN_UP_WHEN_NOT_CARRIED` (27); `GET_PED_CARRIED_ENTITY(ped)`; `TASK_PLACE_CARRIED_ENTITY_AT_COORD(ped, carried, x, y, z, ukn, flag)`; transport config flags (`SET_TRANSPORT_CONFIG_FLAG` 0xBA8818212633500A) for mount/vehicle interaction control. Supports B5/B6.
-- ✅ Fallback for B5/B6: attach-to-bone + carry animation loop, detach + ground placement, attach to vehicle at offsets — the standard proven RedM carry-script pattern; guarantees B5/B6 ship even if the native carriable route disappoints.
+- ⚠️ **Native carriable route CLOSED for arbitrary props** (owner spike round 1, 2026-07-12): setting carrying flags (0x18FF3110CF47115D, flags 2/3/4/14/21) on a spawned `p_crate01x` produces NO pick-up prompt. Carriable inputs (`INPUT_PICKUP_CARRIABLE` 0xEB2AC491 etc.) and events (`EVENT_PICKUP_CARRIABLE`, `EVENT_CARRIABLE_UPDATE_CARRY_STATE`) exist in the dumps, but carriable *capability* is per-model game metadata with no exposed arming native. 🔎 open question: whether natively-carriable STOCK models (pelts, hay bales) prompt when spawned — `/swspike carriable <model>` auditions candidates; if some do, catalogs may mark a "native carry" subset later.
+- ✅ **B5/B6 PRIMARY ROUTE = ATTACH** (owner spike round 1: `AttachEntityToEntity` named native resolves and works in-game — crate attached, wrong bone since fixed). Carry = attach to `SKEL_Spine3` (bone_id 14413; bone INDEX per skeleton: mp_male 134, mp_female 218 — resolve by player model) + carry animation (Phase 2) + movement restriction; put-down = detach + `PlaceObjectOnGroundProperly`; wagon load = attach to vehicle at configured offsets. `GET_PED_CARRIED_ENTITY`/`TASK_PLACE_CARRIED_ENTITY_AT_COORD` remain usable only for game-recognized carriables.
+- ✅ Ground-snap for spawned entities: `GetGroundZAndNormalFor_3dCoord(x,y,z)` (named native; vorp_core coreactions.lua:191, vorp_utils peds.lua:33) + place-on-ground native 0x9587913B9E772D29 (vorp_utils peds.lua:104). Added after round 1 (entities spawned airborne).
+- ✅ Ped outfit change: numbered-outfit native `0x77FF8D35EEC6BBC4(ped, outfit_num, 0)` (peds_list.lua header; outfit counts per model in the list — valtownfolk_01: 36). The metaped-outfit-hash approach (0x1902C4CFCC5BE57C with the README example hash) did NOT change this model in round 1 — E5 verdict awaits the round-2 retest with the numbered native.
 
 ## 4. Open spikes (Phase 0 checklist)
 
@@ -69,5 +71,6 @@ Data is read as reference data for building our curated catalogs. Individual ent
 
 ## Changelog
 
+- **v0.3 (2026-07-12)** — Owner spike round 1 recorded: S6 native carriable route closed for arbitrary props → attach is B5/B6 primary (verified working); ground-snap + place-on-ground pattern added (airborne spawn fix); outfit spike switched to numbered-outfit native after metaped hash no-op; SKEL_Spine3 bone indexes documented. S2/S5 (speech/sound) results pending owner confirmation.
 - **v0.2 (2026-07-12)** — Native carriable system verified (carrying flags, GET_PED_CARRIED_ENTITY, TASK_PLACE_CARRIED_ENTITY_AT_COORD, transport config flags); attach fallback documented; spike S6 added for B5/B6 route selection.
 - **v0.1 (2026-07-12)** — Initial ledger: VORP surface, asset data inventory, engine patterns, Phase 0 spikes.

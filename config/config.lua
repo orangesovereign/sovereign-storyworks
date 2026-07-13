@@ -40,8 +40,13 @@ Config.Spikes = {
     line = 0, -- 0 = random line
   },
 
-  -- S3 outfit natives (ped_outfits.lua README example value)
-  outfitHash = 0x74D74B1C, -- metaped outfit example from reference data
+  -- S3 outfit natives (peds_list.lua header: numbered-outfit native 0x77FF8D35EEC6BBC4)
+  -- a_m_m_valtownfolk_01 has 36 outfits (peds_list.lua:459); each /swspike outfit advances one
+  outfitCount = 36,
+
+  -- S6c attach fallback: SKEL_Spine3 bone index per player skeleton (boneNames dumps; bone_id 14413)
+  attachBoneBySkeleton = { mp_male = 134, mp_female = 218 },
+  attachOffset = { x = 0.0, y = 0.28, z = 0.05 },
 
   -- S4 particle / screen effects (ptfx_assets_looped.lua / animpostfx.lua)
   ptfx = { dict = 'des_alchemist', name = 'ent_amb_alchemist_post_cloud_smk' },
