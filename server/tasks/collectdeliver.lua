@@ -55,8 +55,8 @@ SWTasks.Register('collectdeliver', {
     if type(config.item) ~= 'string' or config.item == '' then
       return false, 'item is required'
     end
-    if config.mode == 'deliver' and (config.x == nil or config.y == nil or config.z == nil) then
-      return false, 'deliver needs x/y/z'
+    if config.mode == 'deliver' and not SWValidPoint(config) then
+      return false, 'deliver needs x/y/z or originOffset'
     end
     if config.count ~= nil and (type(config.count) ~= 'number' or config.count < 1) then
       return false, 'count must be >= 1'

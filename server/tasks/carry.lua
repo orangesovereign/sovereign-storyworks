@@ -24,9 +24,8 @@ SWTasks.Register('carry', {
 
   validate = function(config)
     for _, key in ipairs({ 'pickup', 'dropoff' }) do
-      local p = config[key]
-      if type(p) ~= 'table' or p.x == nil or p.y == nil or p.z == nil then
-        return false, key .. ' needs x/y/z'
+      if not SWValidPoint(config[key]) then
+        return false, key .. ' needs x/y/z or originOffset'
       end
     end
     if config.timeLimitSeconds ~= nil and type(config.timeLimitSeconds) ~= 'number' then

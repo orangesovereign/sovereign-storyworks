@@ -14,8 +14,8 @@ SWTasks.Register('holdaction', {
   label = 'Perform an action',
 
   validate = function(config)
-    if config.x == nil or config.y == nil or config.z == nil then
-      return false, 'holdaction needs x/y/z'
+    if not SWValidPoint(config) then
+      return false, 'holdaction needs x/y/z or originOffset'
     end
     if type(config.promptLabel) ~= 'string' or config.promptLabel == '' then
       return false, 'holdaction needs promptLabel'

@@ -147,12 +147,49 @@ local function stopCurrentTask(inst)
   inst.taskNode = nil
 end
 
+-- originOffset resolution: any {originOffset={e=..,n=..}} table in a node's
+-- config becomes absolute x/y/z from the mission-start point (east/north
+-- meters — world axes, NO heading involved, per the round-1 direction rule).
+-- Lets test fixtures (and later templates) run anywhere on the map.
+local function resolveOffsets(value, origin)
+  if type(value) ~= 'table' then return value end
+  local out = {}
+  for k, v in pairs(value) do out[k] = resolveOffsets(v, origin) end
+  if type(out.originOffset) == 'table' and origin then
+    out.x = origin.x + (out.originOffset.e or 0.0)
+    out.y = origin.y + (out.originOffset.n or 0.0)
+    out.z = origin.z
+    out.originOffset = nil
+  end
+  return out
+end
+
 local function enterNode(inst, nodeId)
   local node = inst.def.nodes[nodeId]
   if not node then
     SWLog.Error('instance %d: missing node "%s" — failing mission', inst.id, tostring(nodeId))
     return finishInstance(inst, 'failed', T('mission_broken'))
   end
+
+  -- capture the mission origin once (also used by goto's relative modes)
+  if not inst.state.origin then
+    forEachParticipant(inst, function(src)
+      if inst.state.origin then return end
+      local ped = GetPlayerPed(src)
+      if ped and ped ~= 0 then
+        local c = GetEntityCoords(ped)
+        inst.state.origin = { x = c.x, y = c.y, z = c.z }
+      end
+    end)
+  end
+
+  node = {
+    type = node.type,
+    label = node.label,
+    onSuccess = node.onSuccess,
+    onFailure = node.onFailure,
+    config = resolveOffsets(node.config or {}, inst.state.origin),
+  }
 
   inst.currentNode = nodeId
   persist(inst)

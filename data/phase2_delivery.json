@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "code": "phase2_delivery",
+  "title": "The Grocer's Due",
+  "start": "gather",
+  "nodes": {
+    "gather": {
+      "type": "collectdeliver",
+      "label": "Get hold of 2 apples — buy, forage, or shake down your saddlebags. (EDIT data/phase2_delivery.json if your server names the item differently.)",
+      "config": { "mode": "collect", "item": "apple", "count": 2 },
+      "onSuccess": "handover",
+      "onFailure": "botched"
+    },
+    "handover": {
+      "type": "collectdeliver",
+      "label": "Deliver the apples at the marked spot.",
+      "config": {
+        "mode": "deliver",
+        "item": "apple",
+        "count": 2,
+        "originOffset": { "e": 0, "n": 25 },
+        "radius": 2.5
+      },
+      "onSuccess": "done",
+      "onFailure": "botched"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "The grocer's due is paid in full." }
+    },
+    "botched": {
+      "type": "end",
+      "config": { "outcome": "failed", "message": "The grocer waits still." }
+    }
+  }
+}

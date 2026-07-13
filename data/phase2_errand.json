@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "code": "phase2_errand",
+  "title": "The Clerk's Errand",
+  "start": "meet_clerk",
+  "nodes": {
+    "meet_clerk": {
+      "type": "talk",
+      "label": "A clerk waits nearby with a job — go talk to him.",
+      "config": {
+        "npc": { "model": "a_m_m_valtownfolk_01", "originOffset": { "e": 8, "n": 0 } },
+        "lines": [
+          { "speaker": "Clerk", "text": "Thank the stars — someone with working legs." },
+          { "speaker": "Clerk", "text": "Papers went missing north of here. Search the ground, fix what you find, and ride the round I mark you.", "voice": "test_voice.ogg" },
+          { "speaker": "Clerk", "text": "Well? Will you do it?" }
+        ],
+        "choice": { "optionA": "I'll handle it.", "optionB": "Find another errand boy." }
+      },
+      "onSuccess": "search_grounds",
+      "onFailure": "walked_away"
+    },
+    "search_grounds": {
+      "type": "search",
+      "label": "Search the grounds north of the clerk for the papers.",
+      "config": { "originOffset": { "e": 0, "n": 30 }, "radius": 9.0, "searchSeconds": 6 },
+      "onSuccess": "fix_crate",
+      "onFailure": "botched"
+    },
+    "fix_crate": {
+      "type": "holdaction",
+      "label": "Pry open the letterbox you found.",
+      "config": { "originOffset": { "e": 12, "n": 30 }, "promptLabel": "Pry open", "holdMs": 1500 },
+      "onSuccess": "catch_breath",
+      "onFailure": "botched"
+    },
+    "catch_breath": {
+      "type": "wait",
+      "label": "Keep watch a moment while the seal dries.",
+      "config": { "seconds": 8 },
+      "onSuccess": "the_round",
+      "onFailure": "botched"
+    },
+    "the_round": {
+      "type": "route",
+      "label": "Ride the clerk's round — three marks, in order.",
+      "config": {
+        "checkpoints": [
+          { "originOffset": { "e": 45, "n": 0 } },
+          { "originOffset": { "e": 45, "n": 45 } },
+          { "originOffset": { "e": 0, "n": 0 } }
+        ],
+        "radius": 5.0
+      },
+      "onSuccess": "done",
+      "onFailure": "botched"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "The clerk's errand is run, papers and all." }
+    },
+    "walked_away": {
+      "type": "end",
+      "config": { "outcome": "failed", "message": "You walked away. The clerk mutters something unkind." }
+    },
+    "botched": {
+      "type": "end",
+      "config": { "outcome": "failed", "message": "The errand went sideways." }
+    }
+  }
+}

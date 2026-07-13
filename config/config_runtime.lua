@@ -88,4 +88,7 @@ ConfigRuntime.SeedMissionsFromData = true
 ConfigRuntime.SeedFiles = {
   'data/test_mission.json',
   'data/test_mission_fail.json',
+  'data/phase2_errand.json',
+  'data/phase2_freight.json',
+  'data/phase2_delivery.json',
 }

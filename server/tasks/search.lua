@@ -13,8 +13,8 @@ SWTasks.Register('search', {
   label = 'Search an area',
 
   validate = function(config)
-    if config.x == nil or config.y == nil or config.z == nil then
-      return false, 'search needs x/y/z'
+    if not SWValidPoint(config) then
+      return false, 'search needs x/y/z or originOffset'
     end
     if config.searchSeconds ~= nil and (type(config.searchSeconds) ~= 'number' or config.searchSeconds <= 0) then
       return false, 'searchSeconds must be a number > 0'

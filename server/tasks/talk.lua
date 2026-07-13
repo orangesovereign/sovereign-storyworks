@@ -61,8 +61,8 @@ SWTasks.Register('talk', {
 
   validate = function(config)
     local npc = config.npc
-    if type(npc) ~= 'table' or type(npc.model) ~= 'string' or npc.x == nil or npc.y == nil or npc.z == nil then
-      return false, 'npc needs model and x/y/z'
+    if type(npc) ~= 'table' or type(npc.model) ~= 'string' or not SWValidPoint(npc) then
+      return false, 'npc needs model and x/y/z or originOffset'
     end
     if type(config.lines) ~= 'table' or #config.lines < 1 then
       return false, 'talk needs at least one dialogue line'

@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "code": "phase2_freight",
+  "title": "The Freight Job",
+  "start": "first_crate",
+  "nodes": {
+    "first_crate": {
+      "type": "carry",
+      "label": "A crate sits just ahead — haul it to the stack up north.",
+      "config": {
+        "pickup": { "originOffset": { "e": 6, "n": 0 } },
+        "dropoff": { "originOffset": { "e": 6, "n": 20 } },
+        "radius": 2.5
+      },
+      "onSuccess": "load_wagon",
+      "onFailure": "botched"
+    },
+    "load_wagon": {
+      "type": "cargo",
+      "label": "Bring your wagon alongside the stack and load three crates.",
+      "config": {
+        "mode": "load",
+        "count": 3,
+        "takePoint": { "originOffset": { "e": 6, "n": 20 } },
+        "putPoint": { "originOffset": { "e": 14, "n": 20 } },
+        "radius": 3.5
+      },
+      "onSuccess": "unload_depot",
+      "onFailure": "botched"
+    },
+    "unload_depot": {
+      "type": "cargo",
+      "label": "Drive north to the depot mark and unload two crates.",
+      "config": {
+        "mode": "unload",
+        "count": 2,
+        "takePoint": { "originOffset": { "e": 14, "n": 60 } },
+        "putPoint": { "originOffset": { "e": 8, "n": 60 } },
+        "radius": 3.5
+      },
+      "onSuccess": "done",
+      "onFailure": "botched"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "Freight moved, not a splinter lost." }
+    },
+    "botched": {
+      "type": "end",
+      "config": { "outcome": "failed", "message": "The freight job fell through." }
+    }
+  }
+}

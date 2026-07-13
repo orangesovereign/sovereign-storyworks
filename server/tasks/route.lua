@@ -16,8 +16,8 @@ SWTasks.Register('route', {
       return false, 'route needs at least 2 checkpoints'
     end
     for i, cp in ipairs(config.checkpoints) do
-      if type(cp) ~= 'table' or cp.x == nil or cp.y == nil or cp.z == nil then
-        return false, ('checkpoint %d needs x/y/z'):format(i)
+      if not SWValidPoint(cp) then
+        return false, ('checkpoint %d needs x/y/z or originOffset'):format(i)
       end
     end
     if config.timeLimitSeconds ~= nil and type(config.timeLimitSeconds) ~= 'number' then

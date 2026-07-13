@@ -41,12 +41,12 @@ SWTasks.Register('goto', {
   label = 'Go to location',
 
   validate = function(config)
-    local absolute = config.x ~= nil and config.y ~= nil and config.z ~= nil
+    local absolute = SWValidPoint(config)
     local toOrigin = type(config.relative) == 'table' and config.relative.origin == true
     local departure = type(config.departure) == 'table' and type(config.departure.distance) == 'number'
       and config.departure.distance > 0
     if not absolute and not toOrigin and not departure then
-      return false, 'goto needs x/y/z, relative.origin, or departure.distance'
+      return false, 'goto needs x/y/z (or originOffset), relative.origin, or departure.distance'
     end
     if config.timeLimitSeconds ~= nil and type(config.timeLimitSeconds) ~= 'number' then
       return false, 'timeLimitSeconds must be a number'

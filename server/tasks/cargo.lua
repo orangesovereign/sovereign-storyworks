@@ -87,9 +87,8 @@ SWTasks.Register('cargo', {
       return false, "mode must be 'load' or 'unload'"
     end
     for _, key in ipairs({ 'takePoint', 'putPoint' }) do
-      local p = config[key]
-      if type(p) ~= 'table' or p.x == nil or p.y == nil or p.z == nil then
-        return false, key .. ' needs x/y/z'
+      if not SWValidPoint(config[key]) then
+        return false, key .. ' needs x/y/z or originOffset'
       end
     end
     if config.count ~= nil and (type(config.count) ~= 'number' or config.count < 1) then

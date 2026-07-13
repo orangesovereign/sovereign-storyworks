@@ -42,6 +42,14 @@ function SWTasks.Get(name)
   return types[name]
 end
 
+---Shared validator: a location is either absolute x/y/z or an originOffset
+---({e=east, n=north} meters from the mission start — resolved at runtime).
+function SWValidPoint(p)
+  if type(p) ~= 'table' then return false end
+  if p.x ~= nil and p.y ~= nil and p.z ~= nil then return true end
+  return type(p.originOffset) == 'table'
+end
+
 function SWTasks.List()
   local names = {}
   for name in pairs(types) do names[#names + 1] = name end
