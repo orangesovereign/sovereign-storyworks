@@ -1,53 +1,31 @@
-// Sovereign Storyworks — K1 objective tracker (runtime HUD)
-// Phase 2 | Features: K1 — minimal branded HUD: current mission, current
-// objective, live distance (display only; client computes distance for its
-// own eyes, the server still judges arrival). Hidden when no mission runs.
-// Presentation is server-config only (ConfigRuntime.Tracker), ruling #9 spirit.
+// Sovereign Storyworks — NUI root
+// Phase 5 | The one React app hosts BOTH surfaces: the always-on runtime
+// tracker (K1, passive overlay) and the focus-taking builder (A1–A5), toggled
+// by messages from client/builder.lua. They never fight — the tracker is a
+// pointer-none overlay; the builder mounts above it only when opened.
 
 import { useEffect, useState } from 'react'
-
-const DEFAULTS = { anchor: 'bottom-left', scale: 1.0 }
+import Tracker from './Tracker.jsx'
+import Builder from './builder/Builder.jsx'
 
 export default function App() {
-  const [config, setConfig] = useState(DEFAULTS)
-  const [objective, setObjective] = useState(null) // { title, label, hasTarget }
-  const [meters, setMeters] = useState(null)
+  const [builderOpen, setBuilderOpen] = useState(false)
 
   useEffect(() => {
     const onMessage = (event) => {
       const data = event.data
       if (!data || typeof data.type !== 'string') return
-      if (data.type === 'k1:config') setConfig(c => ({ ...c, ...data.config }))
-      if (data.type === 'k1:objective') {
-        setObjective({ title: data.title, label: data.label, hasTarget: !!data.hasTarget })
-        setMeters(null)
-      }
-      if (data.type === 'k1:distance') setMeters(data.meters)
-      if (data.type === 'k1:clear') { setObjective(null); setMeters(null) }
-      if (data.type === 'k1:voice' && data.file) {
-        // E2: creator-supplied voice files bundled in the resource's audio/
-        const audio = new Audio('../../' + data.file)
-        audio.volume = typeof data.volume === 'number' ? data.volume : 0.8
-        audio.play().catch(() => {})
-      }
+      if (data.type === 'builder:open') setBuilderOpen(true)
+      if (data.type === 'builder:close') setBuilderOpen(false)
     }
     window.addEventListener('message', onMessage)
     return () => window.removeEventListener('message', onMessage)
   }, [])
 
-  if (!objective) return null
-
   return (
-    <div className="k1-root" style={{ '--k1-scale': config.scale }}>
-      <div className={`k1-tracker ${config.anchor}`}>
-        <div className="k1-title">{objective.title}</div>
-        <div className="k1-row">
-          <div className="k1-label">{objective.label}</div>
-          {objective.hasTarget && meters != null && (
-            <div className="k1-distance">{Math.round(meters)}<span>m</span></div>
-          )}
-        </div>
-      </div>
-    </div>
+    <>
+      <Tracker />
+      {builderOpen && <Builder onClose={() => setBuilderOpen(false)} />}
+    </>
   )
 }

@@ -88,6 +88,76 @@ function SWMissions.UpsertFromJson(jsonStr, sourceName)
   return true
 end
 
+-- Builder store (Phase 5) -----------------------------------------------------
+
+local function upsert(def, jsonStr, status)
+  MySQL.query.await([[
+    INSERT INTO `sovereign_missions` (`code`, `title`, `status`, `definition`)
+    VALUES (?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `definition` = VALUES(`definition`), `status` = VALUES(`status`)
+  ]], { def.code, def.title, status, jsonStr })
+  local row = MySQL.single.await('SELECT `id` FROM `sovereign_missions` WHERE `code` = ?', { def.code })
+  return row and row.id or nil
+end
+
+---Light draft check: parses, schema 1, has code/title/nodes. Drafts may be WIP.
+local function draftOk(def)
+  if type(def) ~= 'table' then return false, 'not an object' end
+  if def.schema ~= 1 then return false, 'schema must be 1' end
+  if type(def.code) ~= 'string' or def.code == '' then return false, 'missing code' end
+  if type(def.title) ~= 'string' or def.title == '' then return false, 'give the mission a title' end
+  if type(def.nodes) ~= 'table' then return false, 'missing nodes' end
+  return true
+end
+
+---Save a draft (WIP allowed). Returns ok, err.
+function SWMissions.SaveDraft(def)
+  local ok, err = draftOk(def)
+  if not ok then return false, err end
+  upsert(def, json.encode(def), 'draft')
+  published[def.code] = nil -- a re-saved draft leaves the live pool until re-published
+  return true
+end
+
+---Validate fully and publish (live + startable). Returns ok, err.
+function SWMissions.Publish(def)
+  local valid, err = SWMissions.Validate(def)
+  if not valid then return false, err end
+  local id = upsert(def, json.encode(def), 'published')
+  published[def.code] = { id = id, code = def.code, title = def.title, def = def }
+  return true
+end
+
+---List all missions (any status) for the library.
+function SWMissions.List()
+  local rows = MySQL.query.await("SELECT `code`, `title`, `status`, `definition`, UNIX_TIMESTAMP(`updated_at`) AS updated FROM `sovereign_missions` WHERE `status` <> 'deleted' ORDER BY `updated_at` DESC") or {}
+  local out = {}
+  for _, row in ipairs(rows) do
+    local nodeCount = 0
+    local okd, def = pcall(json.decode, row.definition)
+    if okd and type(def) == 'table' and type(def.nodes) == 'table' then
+      for _ in pairs(def.nodes) do nodeCount = nodeCount + 1 end
+    end
+    out[#out + 1] = { code = row.code, title = row.title, status = row.status, updated = row.updated, nodes = nodeCount }
+  end
+  return out
+end
+
+---Load one mission's full definition (any status). Returns def or nil.
+function SWMissions.Load(code)
+  local row = MySQL.single.await('SELECT `definition` FROM `sovereign_missions` WHERE `code` = ?', { code })
+  if not row then return nil end
+  local ok, def = pcall(json.decode, row.definition)
+  return ok and def or nil
+end
+
+---Archive: pull from the live pool, mark archived (kept in the library).
+function SWMissions.Archive(code)
+  MySQL.query.await("UPDATE `sovereign_missions` SET `status` = 'archived' WHERE `code` = ?", { code })
+  published[code] = nil
+  return true
+end
+
 ---Load every published mission from the DB into the cache.
 function SWMissions.LoadAll()
   published = {}

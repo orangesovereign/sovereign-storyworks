@@ -46,7 +46,7 @@ SWTasks.Register('eliminate', {
     center = { x = center.x + 0.0, y = center.y + 0.0, z = center.z + 0.0 }
     local count = cfg.count or 3
     ctx.total = count
-    ctx.deadline = cfg.timeLimitSeconds and (os.time() + cfg.timeLimitSeconds) or nil
+    ctx.deadline = cfg.timeLimitSeconds and cfg.timeLimitSeconds > 0 and (os.time() + cfg.timeLimitSeconds) or nil
     ctx.target = center
     ctx.UpdateTarget(center)
 

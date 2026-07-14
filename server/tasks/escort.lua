@@ -31,7 +31,7 @@ SWTasks.Register('escort', {
     local cfg = ctx.config
     local start = { x = cfg.start.x + 0.0, y = cfg.start.y + 0.0, z = cfg.start.z + 0.0, heading = cfg.start.heading }
     local dest = { x = cfg.destination.x + 0.0, y = cfg.destination.y + 0.0, z = cfg.destination.z + 0.0 }
-    ctx.deadline = cfg.timeLimitSeconds and (os.time() + cfg.timeLimitSeconds) or nil
+    ctx.deadline = cfg.timeLimitSeconds and cfg.timeLimitSeconds > 0 and (os.time() + cfg.timeLimitSeconds) or nil
     ctx.target = dest
     ctx.UpdateTarget(dest)
 

@@ -32,7 +32,7 @@ SWTasks.Register('search', {
     ctx.accumulated = 0
     ctx.lastTick = os.time()
     ctx.wasInside = false
-    ctx.deadline = ctx.config.timeLimitSeconds and (os.time() + ctx.config.timeLimitSeconds) or nil
+    ctx.deadline = ctx.config.timeLimitSeconds and ctx.config.timeLimitSeconds > 0 and (os.time() + ctx.config.timeLimitSeconds) or nil
     ctx.nextPing = 0
   end,
 

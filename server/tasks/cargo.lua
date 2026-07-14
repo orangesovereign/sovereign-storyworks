@@ -102,7 +102,7 @@ SWTasks.Register('cargo', {
 
   start = function(ctx)
     ctx.nodeState.cargo = ctx.nodeState.cargo or { moved = 0 }
-    ctx.deadline = ctx.config.timeLimitSeconds and (os.time() + ctx.config.timeLimitSeconds) or nil
+    ctx.deadline = ctx.config.timeLimitSeconds and ctx.config.timeLimitSeconds > 0 and (os.time() + ctx.config.timeLimitSeconds) or nil
     if ctx.nodeState.cargo.moved >= (ctx.config.count or 1) then
       return ctx.Complete(true) -- resumed after the last crate was already moved
     end

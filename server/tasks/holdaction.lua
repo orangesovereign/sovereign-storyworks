@@ -28,7 +28,7 @@ SWTasks.Register('holdaction', {
 
   start = function(ctx)
     ctx.target = { x = ctx.config.x + 0.0, y = ctx.config.y + 0.0, z = ctx.config.z + 0.0 }
-    ctx.deadline = ctx.config.timeLimitSeconds and (os.time() + ctx.config.timeLimitSeconds) or nil
+    ctx.deadline = ctx.config.timeLimitSeconds and ctx.config.timeLimitSeconds > 0 and (os.time() + ctx.config.timeLimitSeconds) or nil
 
     ctx.ArmInteraction({
       mode = 'hold',

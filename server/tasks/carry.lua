@@ -43,7 +43,7 @@ SWTasks.Register('carry', {
     local pickup = { x = cfg.pickup.x + 0.0, y = cfg.pickup.y + 0.0, z = cfg.pickup.z + 0.0 }
     local dropoff = { x = cfg.dropoff.x + 0.0, y = cfg.dropoff.y + 0.0, z = cfg.dropoff.z + 0.0 }
 
-    ctx.deadline = cfg.timeLimitSeconds and (os.time() + cfg.timeLimitSeconds) or nil
+    ctx.deadline = cfg.timeLimitSeconds and cfg.timeLimitSeconds > 0 and (os.time() + cfg.timeLimitSeconds) or nil
 
     sendCarry(ctx, { action = 'spawnProp', propId = propId, model = model, x = pickup.x, y = pickup.y, z = pickup.z })
     ctx.UpdateTarget(pickup)

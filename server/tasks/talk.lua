@@ -100,7 +100,7 @@ SWTasks.Register('talk', {
     local npcId = ctx.state.propSeq
     local pos = { x = npc.x + 0.0, y = npc.y + 0.0, z = npc.z + 0.0 }
 
-    ctx.deadline = ctx.config.timeLimitSeconds and (os.time() + ctx.config.timeLimitSeconds) or nil
+    ctx.deadline = ctx.config.timeLimitSeconds and ctx.config.timeLimitSeconds > 0 and (os.time() + ctx.config.timeLimitSeconds) or nil
 
     sendNpc(ctx, { action = 'spawnNpc', npcId = npcId, model = npc.model, x = pos.x, y = pos.y, z = pos.z, heading = npc.heading })
     ctx.UpdateTarget(pos)

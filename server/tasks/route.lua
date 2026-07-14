@@ -30,7 +30,7 @@ SWTasks.Register('route', {
     ctx.nodeState.route = ctx.nodeState.route or { index = 1 }
     local cp = ctx.config.checkpoints[ctx.nodeState.route.index]
     ctx.radius = (ctx.config.radius or ConfigRuntime.DefaultGotoRadius) + 0.0
-    ctx.deadline = ctx.config.timeLimitSeconds and (os.time() + ctx.config.timeLimitSeconds) or nil
+    ctx.deadline = ctx.config.timeLimitSeconds and ctx.config.timeLimitSeconds > 0 and (os.time() + ctx.config.timeLimitSeconds) or nil
     ctx.UpdateTarget({ x = cp.x + 0.0, y = cp.y + 0.0, z = cp.z + 0.0 })
     ctx.Notify('tip', T('route_checkpoint', ctx.nodeState.route.index, #ctx.config.checkpoints))
   end,

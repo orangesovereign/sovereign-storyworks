@@ -72,7 +72,7 @@ SWTasks.Register('goto', {
     end
 
     ctx.radius = (cfg.radius or ConfigRuntime.DefaultGotoRadius) + 0.0
-    ctx.deadline = cfg.timeLimitSeconds and (os.time() + cfg.timeLimitSeconds) or nil
+    ctx.deadline = cfg.timeLimitSeconds and cfg.timeLimitSeconds > 0 and (os.time() + cfg.timeLimitSeconds) or nil
     ctx.nextPing = 0
   end,
 

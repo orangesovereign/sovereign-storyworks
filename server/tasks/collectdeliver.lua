@@ -69,7 +69,7 @@ SWTasks.Register('collectdeliver', {
 
   start = function(ctx)
     ctx.needed = ctx.config.count or 1
-    ctx.deadline = ctx.config.timeLimitSeconds and (os.time() + ctx.config.timeLimitSeconds) or nil
+    ctx.deadline = ctx.config.timeLimitSeconds and ctx.config.timeLimitSeconds > 0 and (os.time() + ctx.config.timeLimitSeconds) or nil
     ctx.nextInvPoll = 0
     ctx.checking = false
 

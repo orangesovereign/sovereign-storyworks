@@ -28,6 +28,7 @@ client_scripts {
   'client/carry.lua',
   'client/npcs.lua',
   'client/missionnpcs.lua',
+  'client/builder.lua',
   'client/spikes.lua',
 }
 
@@ -42,6 +43,7 @@ server_scripts {
   'server/core/vorp.lua',
   'server/core/gametime.lua',
   'server/core/progress.lua',
+  'server/core/schemas.lua',
   'server/core/instance.lua',
   'server/tasks/goto.lua',
   'server/tasks/route.lua',
@@ -63,6 +65,7 @@ server_scripts {
   'server/tasks/reward.lua',
   'server/tasks/end.lua',
   'server/core/seed.lua',
+  'server/builder.lua',
   'server/commands.lua',
   'server/spikes.lua',
   'server/main.lua',
