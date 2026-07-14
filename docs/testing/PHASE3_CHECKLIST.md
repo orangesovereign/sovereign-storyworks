@@ -36,4 +36,8 @@ Findings + fixes (shipped same day; ledger revision 2):
 
 ### Round 2 — 2026-07-13 (owner)
 
-**"I completed it all. There wasn't any errors other than what I noted before."** Round-1 fixes confirmed (enemy health, escort blip). By completing the full chain: **spike S7 PASSED** (the escort walked to its destination — `TaskFollowNavMeshToCoord` works, no fallback needed), and the ugly-path zero-orphan lines (cancel/disconnect/restart) all held. Every Phase 3 exit-gate condition met — **gate awaits the owner's ruling.**
+**"I completed it all. There wasn't any errors other than what I noted before."** Round-1 fixes confirmed (enemy health, escort blip). By completing the full chain: **spike S7 PASSED** (the escort walked to its destination — `TaskFollowNavMeshToCoord` works, no fallback needed), and the ugly-path zero-orphan lines (cancel/disconnect/restart) all held. Every Phase 3 exit-gate condition met.
+
+### GATE RULING — 2026-07-13
+
+**PASSED. Owner: "Phase 3 closed."** Tagged `v0.3-alpha`. All 15 task types built and proven; spikes S1–S7 all resolved. Next: Phase 4 — Story Logic, Progression & Scheduling.

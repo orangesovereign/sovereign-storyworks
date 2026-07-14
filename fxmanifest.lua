@@ -9,7 +9,7 @@ lua54 'yes'
 
 author 'Sovereign County RP'
 description 'Sovereign Storyworks — all-in-one mission, story, NPC, dialogue and cutscene builder + runtime for RedM / VORP Core'
-version '0.3.0-phase3'
+version '0.3.0-alpha'
 
 shared_scripts {
   'config/config.lua',
