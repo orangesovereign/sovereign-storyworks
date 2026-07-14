@@ -38,4 +38,12 @@ Built end to end and confirmed the emitted mission def is valid: New Mission →
 
 ## Test log
 
-### Round 1 — (awaiting)
+### Round 1 — 2026-07-13 (owner)
+
+Findings + fixes (shipped same day):
+- **ART I: Esc didn't close.** With NUI focus the game control check never fires. → Esc now caught in the NUI (JS keydown); ignores Esc while typing in a field.
+- **ART III / END MISSION: "node n3 onFailure points to missing node".** Empty edges (`''`) were read as a node id pointing at a missing node. → Validate and NodeFinished now treat `''` as "finish here". Also: **end nodes are terminal** — no edge dropdowns, a "this ends the mission" note (end shouldn't require another step).
+- **Font too small (recurring high-res issue).** → `:root` font-size `clamp(15px, 1.85vh, 34px)` + builder sizes converted px→rem; scales up on high-res displays (same fix as menus/notify).
+- **ART III "visual errors after closing the dropdown" (image):** the attached image did NOT reach Claude. Suspected native `<select>` popup artifacts in CEF/NUI. **Awaiting owner re-share or a description** to fix precisely.
+
+### Round 2 — (awaiting: retests + the dropdown "visual errors" image)
