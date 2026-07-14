@@ -1,6 +1,7 @@
 # Phase 5 Exit-Gate — The No-Code Builder (plain-text mirror)
 
 **Living checklist (tick there):** https://claude.ai/code/artifact/4458b6c7-6449-4a0b-b597-3d88fe3ee2d3
+**Ledger rev. 2** — restyled to the approved Sovereign County dashboard design (filigree ledger window, `--sc-*` palette, Cinzel/Fell type, stat tiles, telegram dispatch slip for the gate). Folds the round-1 fix retests into the articles (Esc close, terminal end node, no-static dropdowns, unset-edge publish). 16 checks; same `sw-phase5-gate` state key.
 **Build under test:** sovereign_storyworks v0.5.0-beta (builder ships in the same bundle as the HUD; no new deps)
 **Gate (roadmap):** the owner personally builds and publishes a multi-task mission start-to-finish **without touching a file or command** — the A1 acceptance test (ART. V).
 
