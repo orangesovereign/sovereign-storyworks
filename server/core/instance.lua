@@ -263,7 +263,7 @@ function SWInstances.NodeFinished(inst, success)
   stopCurrentTask(inst)
 
   local edge = success and node.onSuccess or node.onFailure
-  if edge then
+  if edge and edge ~= '' then -- '' = finish here (empty edge, not a node id)
     return enterNode(inst, edge)
   end
 

@@ -217,8 +217,8 @@ SWSchemas.nodes = {
   },
   ---------------------------------------------------------------------- Flow ---
   {
-    type = 'end', label = 'End the mission', category = 'Flow',
-    summary = 'A terminal node: finish the mission as completed or failed.',
+    type = 'end', label = 'End the mission', category = 'Flow', terminal = true,
+    summary = 'A terminal node: finish the mission as completed or failed. Nothing runs after it.',
     fields = {
       { key = 'outcome', label = 'Outcome', widget = 'select', default = 'completed',
         options = { { value = 'completed', label = 'Completed (success)' }, { value = 'failed', label = 'Failed' } } },

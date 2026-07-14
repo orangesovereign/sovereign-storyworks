@@ -53,7 +53,9 @@ function SWMissions.Validate(def)
 
     for _, edge in ipairs({ 'onSuccess', 'onFailure' }) do
       local target = node[edge]
-      if target ~= nil and not def.nodes[target] then
+      -- an empty edge means "finish here" (completed on success, failed on
+      -- failure) — only a NON-empty edge naming an absent node is an error
+      if target ~= nil and target ~= '' and not def.nodes[target] then
         return false, ('node "%s" %s points to missing node "%s"'):format(nodeId, edge, target)
       end
     end

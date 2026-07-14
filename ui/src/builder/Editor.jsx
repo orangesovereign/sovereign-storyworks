@@ -143,23 +143,29 @@ export default function Editor({ schemas, def, setDef, flash, onSaved, onBackToL
                   {def.start === id && <span className="ed-badge">START</span>}
                   <button className="ed-node-x" onClick={(e) => { e.stopPropagation(); removeNode(id) }}>×</button>
                 </div>
-                <input className="ed-node-label" placeholder="Objective text shown to the player (optional)"
-                  value={node.label || ''} onClick={e => e.stopPropagation()}
-                  onChange={e => updateNode(id, { label: e.target.value })} />
-                <div className="ed-edges">
-                  <label>on success →
-                    <select value={node.onSuccess || ''} onClick={e => e.stopPropagation()} onChange={e => updateNode(id, { onSuccess: e.target.value })}>
-                      <option value="">— finish (completed) —</option>
-                      {nodeIds.filter(x => x !== id).map(x => <option key={x} value={x}>{def.nodes[x].label || (schemaFor[def.nodes[x].type]?.label) || x}</option>)}
-                    </select>
-                  </label>
-                  <label>on failure →
-                    <select value={node.onFailure || ''} onClick={e => e.stopPropagation()} onChange={e => updateNode(id, { onFailure: e.target.value })}>
-                      <option value="">— finish (failed) —</option>
-                      {nodeIds.filter(x => x !== id).map(x => <option key={x} value={x}>{def.nodes[x].label || (schemaFor[def.nodes[x].type]?.label) || x}</option>)}
-                    </select>
-                  </label>
-                </div>
+                {!(s && s.terminal) && (
+                  <input className="ed-node-label" placeholder="Objective text shown to the player (optional)"
+                    value={node.label || ''} onClick={e => e.stopPropagation()}
+                    onChange={e => updateNode(id, { label: e.target.value })} />
+                )}
+                {s && s.terminal ? (
+                  <div className="ed-terminal-note">This ends the mission. Nothing runs after it.</div>
+                ) : (
+                  <div className="ed-edges">
+                    <label>on success →
+                      <select value={node.onSuccess || ''} onClick={e => e.stopPropagation()} onChange={e => updateNode(id, { onSuccess: e.target.value })}>
+                        <option value="">— finish (completed) —</option>
+                        {nodeIds.filter(x => x !== id).map(x => <option key={x} value={x}>{def.nodes[x].label || (schemaFor[def.nodes[x].type]?.label) || x}</option>)}
+                      </select>
+                    </label>
+                    <label>on failure →
+                      <select value={node.onFailure || ''} onClick={e => e.stopPropagation()} onChange={e => updateNode(id, { onFailure: e.target.value })}>
+                        <option value="">— finish (failed) —</option>
+                        {nodeIds.filter(x => x !== id).map(x => <option key={x} value={x}>{def.nodes[x].label || (schemaFor[def.nodes[x].type]?.label) || x}</option>)}
+                      </select>
+                    </label>
+                  </div>
+                )}
                 {def.start !== id && (
                   <button className="ed-setstart" onClick={(e) => { e.stopPropagation(); update({ start: id }) }}>set as start</button>
                 )}

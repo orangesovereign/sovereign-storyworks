@@ -96,6 +96,19 @@ export default function Builder({ onClose }) {
 
   const doClose = useCallback(() => { closeBuilder(); onClose() }, [onClose])
 
+  // Esc closes — caught here because with NUI focus the game's control check
+  // never fires (owner round 1). Ignore Esc while typing in a field.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return
+      const t = e.target
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')) { t.blur(); return }
+      doClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [doClose])
+
   const onNav = (item) => {
     if (item.close) return doClose()
     if (item.id === 'new') return openNew()
