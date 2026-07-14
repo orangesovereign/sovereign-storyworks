@@ -44,6 +44,8 @@ Findings + fixes (shipped same day):
 - **ART I: Esc didn't close.** With NUI focus the game control check never fires. → Esc now caught in the NUI (JS keydown); ignores Esc while typing in a field.
 - **ART III / END MISSION: "node n3 onFailure points to missing node".** Empty edges (`''`) were read as a node id pointing at a missing node. → Validate and NodeFinished now treat `''` as "finish here". Also: **end nodes are terminal** — no edge dropdowns, a "this ends the mission" note (end shouldn't require another step).
 - **Font too small (recurring high-res issue).** → `:root` font-size `clamp(15px, 1.85vh, 34px)` + builder sizes converted px→rem; scales up on high-res displays (same fix as menus/notify).
-- **ART III "visual errors after closing the dropdown" (image):** the attached image did NOT reach Claude. Suspected native `<select>` popup artifacts in CEF/NUI. **Awaiting owner re-share or a description** to fix precisely.
+- **ART III "visual errors after closing the dropdown".** Owner image (received round 1b): rainbow GPU-memory static painted over the coords field the instant a native `<select>` closed and `showIf` revealed new content. Root cause is CEF's compositor mishandling the partial repaint when it tears down a native popup — not our CSS. → **Removed the trigger entirely:** new `Dropdown.jsx` (branded, self-rendered list, no native popup; keyboard-accessible; `position:fixed` so it escapes overflow clipping; closes on scroll/outside-click; Esc closes only the dropdown). All four native selects swapped. Matches sovereign_menus (custom menus, never had the artifact).
 
-### Round 2 — (awaiting: retests + the dropdown "visual errors" image)
+### Round 2 — (awaiting: owner retest of all round-1 fixes on the dev server)
+
+Retest focus: Esc close · end nodes terminal (no edge dropdowns) · publish an all-defaults mission with unset edges (no "missing node" error) · font size on your display · **dropdowns open/switch/close with no static** (the ART III fix).
