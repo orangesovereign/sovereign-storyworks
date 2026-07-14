@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "code": "phase4_daily",
+  "title": "Daily Mail Run",
+  "schedule": { "cycle": "daily" },
+  "repeat": "per_cycle",
+  "start": "run",
+  "nodes": {
+    "run": {
+      "type": "goto",
+      "label": "Deliver the mail (~50m any direction).",
+      "config": { "departure": { "distance": 50.0 } },
+      "onSuccess": "pay",
+      "onFailure": "pay"
+    },
+    "pay": {
+      "type": "reward",
+      "config": { "money": 5.0 },
+      "onSuccess": "done"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "Today's mail is delivered. Come back tomorrow after the reset." }
+    }
+  }
+}

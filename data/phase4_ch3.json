@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "code": "phase4_ch3",
+  "title": "A Debt Owed in Blood — Chapter III",
+  "repeat": "once",
+  "unlock": { "requires": ["phase4_ch2"] },
+  "start": "deed",
+  "nodes": {
+    "deed": {
+      "type": "holdaction",
+      "label": "Ride out (~40m north) and settle the debt for good.",
+      "config": { "originOffset": { "e": 0, "n": 40 }, "promptLabel": "Settle the debt", "holdMs": 1500 },
+      "onSuccess": "pay",
+      "onFailure": "pay"
+    },
+    "pay": {
+      "type": "reward",
+      "config": { "money": 30.0, "xp": 120 },
+      "onSuccess": "done"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "The debt is paid in full. The tale is finished." }
+    }
+  }
+}

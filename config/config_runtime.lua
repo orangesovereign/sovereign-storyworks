@@ -50,6 +50,12 @@ ConfigRuntime.Interact = {
 -- How often the server re-checks inventories for collect-type objectives (ms).
 ConfigRuntime.InventoryPollMs = 2000
 
+-- Scheduling & resets (D1). Real-world clock (server os.time), server-authoritative.
+ConfigRuntime.Schedule = {
+  resetHour = 6,   -- daily/weekly/monthly cycles roll over at this hour (0-23, server local time)
+  weekStart = 1,   -- 1 = Sunday … 7 = Saturday (Lua os.date %w is 0=Sun; we map 1..7 = Sun..Sat)
+}
+
 -- Combat & mission NPCs (Phase 3). Natives verified in vorp_utils/rdr3_discoveries;
 -- escort locomotion native flagged S7. V1 = solo instances, so mission NPCs are
 -- client-local: the client detects death/arrival/separation and reports; the server
@@ -116,4 +122,11 @@ ConfigRuntime.SeedFiles = {
   'data/phase2_freight.json',
   'data/phase2_delivery.json',
   'data/phase3_skirmish.json',
+  'data/phase4_ch1.json',
+  'data/phase4_ch2.json',
+  'data/phase4_ch3.json',
+  'data/phase4_daily.json',
+  'data/phase4_vars.json',
+  'data/phase4_luck.json',
+  'data/phase4_gated.json',
 }

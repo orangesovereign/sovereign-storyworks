@@ -127,6 +127,21 @@ local function makeCtx(inst, node, nodeId)
     node = node,
     config = node.config or {},
     state = inst.state,
+    -- C2/C3: story variables (persist across resume in inst.state.vars)
+    GetVar = function(name)
+      return inst.state.vars and inst.state.vars[name]
+    end,
+    SetVar = function(name, value)
+      inst.state.vars = inst.state.vars or {}
+      inst.state.vars[name] = value
+    end,
+    Vars = function() return inst.state.vars or {} end,
+    -- C3/C4/D2: VORP surface + the leader character/source (solo V1)
+    Leader = function()
+      local src
+      forEachParticipant(inst, function(s) src = src or s end)
+      return src, src and SWVorp.Character(src) or nil
+    end,
     ForEachParticipant = function(fn) forEachParticipant(inst, fn) end,
     Notify = function(kind, text) notify(inst, kind, text) end,
     NotifySubtitle = function(speaker, text, ms)
@@ -267,6 +282,16 @@ finishInstance = function(inst, status, message)
   inst.status = status
   persist(inst)
 
+  -- C1/C2: on a COMPLETED run, bump each participant's completion count and
+  -- persist the story variables (failed/cancelled runs do NOT rewrite history,
+  -- so a botched attempt never counts or corrupts the saved state)
+  if status == 'completed' then
+    local vars = inst.state.vars or {}
+    for charIdentifier in pairs(inst.participants) do
+      SWProgress.RecordCompletion(tostring(charIdentifier), inst.missionCode, vars)
+    end
+  end
+
   -- B5/B6/E1: wipe every mission prop and NPC this instance placed
   forEachParticipant(inst, function(src)
     TriggerClientEvent('sovereign_storyworks:client:carry', src, { action = 'clearAll' })
@@ -298,6 +323,20 @@ function SWInstances.Start(source, missionCode)
   local entry = SWMissions.GetByCode(missionCode)
   if not entry then return false, 'unknown_mission' end
 
+  -- D1/D2/D3/C1: availability gate (access, unlock prereqs, repeat, reset cycle)
+  local meta = {
+    access = entry.def.access,
+    unlock = entry.def.unlock,
+    schedule = entry.def.schedule,
+    ['repeat'] = entry.def['repeat'],
+    __code = entry.code,
+  }
+  local canStart, reason = SWProgress.CanStart(character, charIdentifier, meta)
+  if not canStart then return false, reason end
+
+  -- C2: resume this character's persisted story variables for this mission
+  local prog = SWProgress.Load(charIdentifier, entry.code)
+
   local insertId = MySQL.insert.await([[
     INSERT INTO `sovereign_mission_instances` (`mission_id`, `mission_code`, `status`, `current_node`, `state`)
     VALUES (?, ?, 'active', ?, '{}')
@@ -314,7 +353,7 @@ function SWInstances.Start(source, missionCode)
     missionCode = entry.code,
     def = entry.def,
     currentNode = entry.def.start,
-    state = {},
+    state = { vars = prog.vars or {} },
     status = 'active',
     participants = { [charIdentifier] = { source = source } },
   }

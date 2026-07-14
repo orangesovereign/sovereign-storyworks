@@ -10,4 +10,5 @@ ConfigLimits.RateLimits = {
   runtimeCommand = { max = 20, window = 60 }, -- Phase 1 /swstart /swcancel /swmissions
   interactionDone = { max = 30, window = 60 }, -- Phase 2 prompt completions from clients
   npcReport = { max = 120, window = 60 },      -- Phase 3 combat NPC death/arrival/separation reports
+  gameHour = { max = 10, window = 60 },        -- Phase 4 game-clock heartbeat
 }

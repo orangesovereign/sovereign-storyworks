@@ -9,7 +9,7 @@ lua54 'yes'
 
 author 'Sovereign County RP'
 description 'Sovereign Storyworks — all-in-one mission, story, NPC, dialogue and cutscene builder + runtime for RedM / VORP Core'
-version '0.3.0-alpha'
+version '0.4.0-phase4'
 
 shared_scripts {
   'config/config.lua',
@@ -39,6 +39,9 @@ server_scripts {
   'server/core/missions.lua',
   'server/core/interactions.lua',
   'server/core/missionnpcs.lua',
+  'server/core/vorp.lua',
+  'server/core/gametime.lua',
+  'server/core/progress.lua',
   'server/core/instance.lua',
   'server/tasks/goto.lua',
   'server/tasks/route.lua',
@@ -53,6 +56,11 @@ server_scripts {
   'server/tasks/eliminate.lua',
   'server/tasks/escort.lua',
   'server/tasks/defend.lua',
+  'server/tasks/setvar.lua',
+  'server/tasks/condition.lua',
+  'server/tasks/chance.lua',
+  'server/tasks/require.lua',
+  'server/tasks/reward.lua',
   'server/tasks/end.lua',
   'server/core/seed.lua',
   'server/commands.lua',

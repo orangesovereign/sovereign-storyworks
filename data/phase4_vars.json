@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "code": "phase4_vars",
+  "title": "The Regular",
+  "repeat": "unlimited",
+  "start": "tally",
+  "nodes": {
+    "tally": {
+      "type": "setvar",
+      "config": { "name": "visits", "op": "add", "value": 1 },
+      "onSuccess": "check"
+    },
+    "check": {
+      "type": "condition",
+      "config": { "source": "var", "name": "visits", "op": "gte", "value": 2 },
+      "onSuccess": "veteran",
+      "onFailure": "newcomer"
+    },
+    "veteran": {
+      "type": "reward",
+      "config": { "money": 10.0 },
+      "onSuccess": "veteran_end"
+    },
+    "veteran_end": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "The barkeep knows your face now — the good whiskey is on the house." }
+    },
+    "newcomer": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "First time here? Come back again — regulars get treated better." }
+    }
+  }
+}

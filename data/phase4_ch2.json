@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "code": "phase4_ch2",
+  "title": "A Debt Owed in Blood — Chapter II",
+  "repeat": "once",
+  "unlock": { "requires": ["phase4_ch1"] },
+  "start": "ride",
+  "nodes": {
+    "ride": {
+      "type": "goto",
+      "label": "Ride to the rendezvous (~40m west).",
+      "config": { "departure": { "distance": 40.0 } },
+      "onSuccess": "toll",
+      "onFailure": "toll"
+    },
+    "toll": {
+      "type": "require",
+      "config": { "kind": "money", "amount": 10.0, "message": "You need at least $10 on you to be taken seriously — come back richer." },
+      "onSuccess": "pay",
+      "onFailure": "broke"
+    },
+    "pay": {
+      "type": "reward",
+      "config": { "gold": 1.0 },
+      "onSuccess": "done"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "Chapter II is done. The final chapter awaits." }
+    },
+    "broke": {
+      "type": "end",
+      "config": { "outcome": "failed", "message": "You came empty-handed. Return when you can pay your way." }
+    }
+  }
+}

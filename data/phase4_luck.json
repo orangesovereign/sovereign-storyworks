@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "code": "phase4_luck",
+  "title": "Test Your Luck",
+  "repeat": "unlimited",
+  "start": "roll",
+  "nodes": {
+    "roll": {
+      "type": "chance",
+      "label": "A coin is flipped somewhere you cannot see.",
+      "config": { "percent": 50 },
+      "onSuccess": "win",
+      "onFailure": "lose"
+    },
+    "win": {
+      "type": "reward",
+      "config": { "money": 20.0 },
+      "onSuccess": "win_end"
+    },
+    "win_end": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "Fortune smiles — $20 richer." }
+    },
+    "lose": {
+      "type": "end",
+      "config": { "outcome": "failed", "message": "Fortune frowns. Try your luck again." }
+    }
+  }
+}

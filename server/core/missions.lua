@@ -19,6 +19,23 @@ function SWMissions.Validate(def)
     return false, ('start node "%s" does not exist'):format(tostring(def.start))
   end
 
+  -- optional Phase 4 metadata (all optional; validate shapes to catch typos)
+  if def['repeat'] ~= nil then
+    local r = def['repeat']
+    if r ~= 'once' and r ~= 'per_cycle' and r ~= 'unlimited' then
+      return false, "repeat must be 'once', 'per_cycle', or 'unlimited'"
+    end
+  end
+  if def.schedule ~= nil then
+    local c = type(def.schedule) == 'table' and def.schedule.cycle
+    if c ~= 'daily' and c ~= 'weekly' and c ~= 'monthly' then
+      return false, "schedule.cycle must be 'daily', 'weekly', or 'monthly'"
+    end
+  end
+  if def.unlock ~= nil and (type(def.unlock) ~= 'table' or (def.unlock.requires ~= nil and type(def.unlock.requires) ~= 'table')) then
+    return false, 'unlock.requires must be an array of mission codes'
+  end
+
   local count = 0
   for nodeId, node in pairs(def.nodes) do
     count = count + 1

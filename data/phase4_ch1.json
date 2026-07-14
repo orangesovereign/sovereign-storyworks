@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "code": "phase4_ch1",
+  "title": "A Debt Owed in Blood — Chapter I",
+  "repeat": "once",
+  "start": "ride",
+  "nodes": {
+    "ride": {
+      "type": "goto",
+      "label": "Ride to the meeting spot (~40m east).",
+      "config": { "departure": { "distance": 40.0 } },
+      "onSuccess": "pay",
+      "onFailure": "pay"
+    },
+    "pay": {
+      "type": "reward",
+      "config": { "money": 15.0, "xp": 60 },
+      "onSuccess": "done"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "Chapter I is settled. Chapter II now opens to you." }
+    }
+  }
+}

@@ -64,6 +64,23 @@ SWMigrations.list = {
       ]],
     },
   },
+  {
+    version = 3,
+    name = 'phase4_progression',
+    queries = {
+      [[
+        CREATE TABLE IF NOT EXISTS `sovereign_story_progress` (
+          `char_identifier` VARCHAR(64) NOT NULL,
+          `mission_code` VARCHAR(64) NOT NULL,
+          `completion_count` INT NOT NULL DEFAULT 0,
+          `last_completed_at` TIMESTAMP NULL DEFAULT NULL,
+          `vars` LONGTEXT NULL,
+          PRIMARY KEY (`char_identifier`, `mission_code`),
+          KEY `ix_mission` (`mission_code`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+      ]],
+    },
+  },
 }
 
 ---Run all pending migrations. Calls cb(true) on success, cb(false) on failure.

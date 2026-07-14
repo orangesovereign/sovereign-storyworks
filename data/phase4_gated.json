@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "code": "phase4_gated",
+  "title": "Sheriff's Errand",
+  "access": { "jobs": ["sheriff", "police", "law"], "minGrade": 0 },
+  "repeat": "unlimited",
+  "start": "ride",
+  "nodes": {
+    "ride": {
+      "type": "goto",
+      "label": "Sheriff's business — ride out ~40m.",
+      "config": { "departure": { "distance": 40.0 } },
+      "onSuccess": "pay",
+      "onFailure": "pay"
+    },
+    "pay": {
+      "type": "reward",
+      "config": { "money": 12.0 },
+      "onSuccess": "done"
+    },
+    "done": {
+      "type": "end",
+      "config": { "outcome": "completed", "message": "The county thanks its lawmen." }
+    }
+  }
+}

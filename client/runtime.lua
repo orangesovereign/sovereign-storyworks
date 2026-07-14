@@ -70,6 +70,14 @@ CreateThread(function()
   end
 end)
 
+-- C3: game-hour heartbeat (server can't read GetClockHours; RDR2 time is global)
+CreateThread(function()
+  while true do
+    TriggerServerEvent('sovereign_storyworks:server:gameHour', GetClockHours())
+    Wait(30000)
+  end
+end)
+
 AddEventHandler('onResourceStop', function(resourceName)
   if resourceName == GetCurrentResourceName() then
     clearObjective()
