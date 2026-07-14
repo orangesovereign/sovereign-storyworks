@@ -8,6 +8,7 @@ import { useMemo, useState } from 'react'
 import { action } from './nui.js'
 import { setPath } from './paths.js'
 import Inspector from './Inspector.jsx'
+import Dropdown from './Dropdown.jsx'
 
 let nodeSeq = 0
 function newNodeId(def) {
@@ -153,16 +154,14 @@ export default function Editor({ schemas, def, setDef, flash, onSaved, onBackToL
                 ) : (
                   <div className="ed-edges">
                     <label>on success →
-                      <select value={node.onSuccess || ''} onClick={e => e.stopPropagation()} onChange={e => updateNode(id, { onSuccess: e.target.value })}>
-                        <option value="">— finish (completed) —</option>
-                        {nodeIds.filter(x => x !== id).map(x => <option key={x} value={x}>{def.nodes[x].label || (schemaFor[def.nodes[x].type]?.label) || x}</option>)}
-                      </select>
+                      <Dropdown value={node.onSuccess || ''}
+                        options={[{ value: '', label: '— finish (completed) —' }, ...nodeIds.filter(x => x !== id).map(x => ({ value: x, label: def.nodes[x].label || (schemaFor[def.nodes[x].type]?.label) || x }))]}
+                        onChange={v => updateNode(id, { onSuccess: v })} />
                     </label>
                     <label>on failure →
-                      <select value={node.onFailure || ''} onClick={e => e.stopPropagation()} onChange={e => updateNode(id, { onFailure: e.target.value })}>
-                        <option value="">— finish (failed) —</option>
-                        {nodeIds.filter(x => x !== id).map(x => <option key={x} value={x}>{def.nodes[x].label || (schemaFor[def.nodes[x].type]?.label) || x}</option>)}
-                      </select>
+                      <Dropdown value={node.onFailure || ''}
+                        options={[{ value: '', label: '— finish (failed) —' }, ...nodeIds.filter(x => x !== id).map(x => ({ value: x, label: def.nodes[x].label || (schemaFor[def.nodes[x].type]?.label) || x }))]}
+                        onChange={v => updateNode(id, { onFailure: v })} />
                     </label>
                   </div>
                 )}
@@ -224,9 +223,7 @@ function Settings({ schemas, def, update }) {
             <label className="ins-field" key={f.key}>
               <span className="ins-label">{f.label}</span>
               {f.widget === 'select' ? (
-                <select className="ins-input" value={cur ?? f.default ?? ''} onChange={e => setMeta(f.key, e.target.value)}>
-                  {f.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                </select>
+                <Dropdown value={cur ?? f.default ?? ''} options={f.options} onChange={v => setMeta(f.key, v)} />
               ) : f.widget === 'number' ? (
                 <input className="ins-input num" type="number" value={cur ?? ''} onChange={e => setMeta(f.key, e.target.value === '' ? '' : Number(e.target.value))} />
               ) : f.widget === 'csv' ? (

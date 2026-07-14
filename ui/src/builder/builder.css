@@ -168,3 +168,20 @@
 .ins-line-row .ins-input.speaker { max-width: 90px; } .ins-line-row .ins-input.voice { max-width: 120px; }
 
 .ed-terminal-note { font-family: var(--font-fell, serif); font-style: italic; font-size: 0.82rem; color: #7b8a5a; margin: 7px 0; }
+
+/* custom dropdown (replaces native <select> — CEF popup-close artifact fix) */
+.dd { position: relative; display: inline-block; }
+.ins-field .dd, .ed-settings-grid .dd { display: block; }
+.dd-btn { width: 100%; display: flex; align-items: center; gap: 8px; background: #0a0a0a; border: 1px solid #29140a;
+  color: #e0d2b5; font-family: var(--font-body, serif); font-size: 0.9rem; padding: 7px 10px; cursor: pointer; text-align: left; }
+.dd-btn:hover { border-color: #86572c; }
+.dd.open .dd-btn { border-color: #86572c; }
+.dd-val { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dd-caret { color: #86572c; font-size: 0.7rem; }
+.dd-list { z-index: 200; max-height: 46vh; overflow-y: auto; background: #12100d; border: 1px solid #86572c;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.75); padding: 3px; }
+.dd-opt { padding: 7px 10px; color: #cea978; font-family: var(--font-body, serif); font-size: 0.9rem; cursor: pointer; white-space: nowrap; }
+.dd-opt.active { background: rgba(134, 87, 44, 0.16); color: #e0d2b5; }
+.dd-opt.sel { color: #e0d2b5; }
+.dd-opt.sel::before { content: '● '; color: #8a2a18; font-size: 0.6rem; }
+.ed-edges .dd-btn { font-size: 0.8rem; padding: 5px 8px; }

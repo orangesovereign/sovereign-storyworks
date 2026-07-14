@@ -5,6 +5,7 @@
 
 import { capture } from './nui.js'
 import { getPath, setPath, delPath } from './paths.js'
+import Dropdown from './Dropdown.jsx'
 
 function showField(field, config) {
   const cond = field.showIf
@@ -140,13 +141,11 @@ export default function Inspector({ schema, config, onConfig }) {
               <input type="checkbox" className="ins-check" checked={!!cur} onChange={e => setField(field.key, e.target.checked)} />
             )}
             {field.widget === 'select' && (
-              <select className="ins-input" value={cur ?? field.default ?? ''} onChange={e => {
-                let c = setPath(config, field.key, e.target.value)
+              <Dropdown value={cur ?? field.default ?? ''} options={field.options} onChange={val => {
+                let c = setPath(config, field.key, val)
                 if (field.clears) field.clears.forEach(p => { c = delPath(c, p) }) // wipe stale other-mode keys
                 onConfig(c)
-              }}>
-                {field.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-              </select>
+              }} />
             )}
             {field.widget === 'coords' && (
               <Coords value={field.key === '@root' ? config : cur} optional={field.optional}
