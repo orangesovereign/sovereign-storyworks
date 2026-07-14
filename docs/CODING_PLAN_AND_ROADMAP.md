@@ -115,6 +115,7 @@ The build is split into eleven phases. Each phase ends with an **exit gate**: a 
 
 ## Changelog
 
+- **v1.6 (2026-07-13)** — **Phase 4 exit gate PASSED** (owner: "GO"; all logic/progression/scheduling fixtures passed, no-blip observation confirmed intended). Tagged `v0.4-alpha`. Runtime feature-complete for V1. Phase 5 (Builder NUI I) begun.
 - **v1.5 (2026-07-13)** — **Phase 3 exit gate PASSED** (owner: "Phase 3 closed"; two dev-server rounds — enemy health rebalanced, escort blip fixed, spike S7 escort locomotion confirmed, ugly-path zero-orphan lines held). Tagged `v0.3-alpha`. All 15 task types built; spikes S1–S7 resolved. Phase 4 (Story Logic, Progression & Scheduling) begun.
 - **v1.4 (2026-07-13)** — **Phase 2 exit gate PASSED** (owner: "Phase 2 closed"; three dev-server rounds — HUD sizing/anchors reworked, four bugs fixed, dialogue self-pacing). Tagged `v0.2-alpha`. Side quest sovereign_menus built between gates. Phase 3 (Combat & NPC Operations) begun.
 - **v1.3 (2026-07-12)** — **Phase 1 exit gate PASSED** (owner: "Phase 1 closed"; three rounds — direction rule and notification-channel rule earned along the way). Tagged `v0.1-alpha`. Phase 2 begins with the owner-agreed K4 mockup approval.

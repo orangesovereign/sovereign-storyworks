@@ -28,4 +28,8 @@
 
 ### Round 1 — 2026-07-13 (owner)
 
-**"All tests pass."** One observation: no map blips during the Phase 4 missions — **confirmed INTENDED, not a defect.** The Phase 4 fixtures use departure-mode goto ("get N meters away, any direction" — no fixed point by the Phase 1 direction rule; guided by distance-callout tips) or pure logic nodes (luck/vars — no location at all). Fixed-location objectives still blip as in Phases 2–3 (carry/escort/combat/`phase4_ch3` hold-action all have real targets). Nothing to fix. Every Phase 4 exit-gate condition met — **gate awaits the owner's ruling.**
+**"All tests pass."** One observation: no map blips during the Phase 4 missions — **confirmed INTENDED, not a defect.** The Phase 4 fixtures use departure-mode goto ("get N meters away, any direction" — no fixed point by the Phase 1 direction rule; guided by distance-callout tips) or pure logic nodes (luck/vars — no location at all). Fixed-location objectives still blip as in Phases 2–3 (carry/escort/combat/`phase4_ch3` hold-action all have real targets). Nothing to fix. Every Phase 4 exit-gate condition met.
+
+### GATE RULING — 2026-07-13
+
+**PASSED. Owner: "GO."** Tagged `v0.4-alpha`. The runtime is feature-complete for V1. Next: Phase 5 — Builder NUI I (Shell, Library & Canvas) — the no-code editor.
