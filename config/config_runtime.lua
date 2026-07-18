@@ -25,6 +25,12 @@ ConfigRuntime.MaxActiveInstancesPerCharacter = 1
 -- (stale-state hygiene; disconnected players inside the window resume normally).
 ConfigRuntime.InstanceExpiryHours = 48
 
+-- LIVE disconnect grace: a mission parks when its player closes the game / drops.
+-- If they do not return within this many seconds, the mission FAILS and cleans up
+-- (props, NPCs, blips). Coming back inside the window resumes normally. Distinct
+-- from InstanceExpiryHours, which only sweeps leftovers at a server restart.
+ConfigRuntime.DisconnectGraceSeconds = 120
+
 -- Objective map blip (K2). Style hash from the proven vorp pattern
 -- (vorp_utils blips.lua / vorp_banking). 0 disables blips entirely.
 ConfigRuntime.ObjectiveBlipStyle = 1664425300

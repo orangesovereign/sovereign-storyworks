@@ -40,6 +40,13 @@ local function forEachParticipant(inst, fn)
   end
 end
 
+local function anyOnline(inst)
+  for _, p in pairs(inst.participants) do
+    if p.source then return true end
+  end
+  return false
+end
+
 -- K4 (ruling #9): ALL runtime messaging renders through the standalone
 -- sovereign_notify resource. A VORP Notify* call anywhere below is a defect.
 local function sendK4(source, payload)
@@ -439,6 +446,7 @@ local function resumeForCharacter(source, character)
   if not inst then return end
 
   inst.participants[tostring(character.charIdentifier)].source = source
+  inst.parkedAt = nil -- back within the grace window: cancel the disconnect-fail clock
 
   -- Re-enter the current node only if its task isn't already running (solo V1:
   -- the sole participant returning always re-arms it).
@@ -467,6 +475,9 @@ AddEventHandler('playerDropped', function()
         -- solo V1: nobody left online → park the task; state persists, node re-arms on return
         stopCurrentTask(inst)
         persist(inst)
+        -- start the disconnect grace clock; the runtime tick fails the mission if
+        -- no participant returns within ConfigRuntime.DisconnectGraceSeconds
+        if not anyOnline(inst) then inst.parkedAt = os.time() end
         SWLog.Info('instance %d parked (char %s disconnected)', inst.id, charIdentifier)
       end
     end
@@ -476,10 +487,19 @@ end)
 -- runtime tick -------------------------------------------------------------------
 
 CreateThread(function()
+  local grace = ConfigRuntime.DisconnectGraceSeconds or 120
   while true do
     Wait(ConfigRuntime.PositionPollMs)
-    for _, inst in pairs(active) do
-      if inst.status == 'active' and inst.taskCtx and inst.taskNode then
+    for _, inst in pairs(active) do -- safe to nil the current key mid-pairs (finishInstance does)
+      if inst.status ~= 'active' then
+        -- skip
+      elseif inst.parkedAt and not anyOnline(inst) then
+        -- disconnect grace: fail once the player has been gone too long
+        if (os.time() - inst.parkedAt) >= grace then
+          SWLog.Info('instance %d failed: player gone %ds (disconnect grace %ds)', inst.id, os.time() - inst.parkedAt, grace)
+          finishInstance(inst, 'failed', T('mission_abandoned'))
+        end
+      elseif inst.taskCtx and inst.taskNode then
         local taskType = SWTasks.Get(inst.taskNode.type)
         if taskType and taskType.tick then
           local ok, err = pcall(taskType.tick, inst.taskCtx)

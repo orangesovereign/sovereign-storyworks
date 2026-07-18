@@ -40,6 +40,7 @@ Locales['en'] = {
   mission_completed = 'Mission complete.',
   mission_failed = 'Mission failed.',
   mission_cancelled = 'Mission cancelled.',
+  mission_abandoned = 'Mission failed — you left it too long.',
   mission_broken = 'This mission is broken — the county clerk has been notified.',
   goto_arrived = 'You have arrived.',
   goto_out_of_time = 'Too slow — the moment has passed.',
