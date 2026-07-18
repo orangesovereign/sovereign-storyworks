@@ -57,3 +57,7 @@ Findings + fixes (shipped same day):
 ### Round 2 — (awaiting: owner retest on the dev server)
 
 Retest focus: Esc close · end nodes terminal (no edge dropdowns) · publish an all-defaults mission with unset edges (no "missing node" error) · **dropdowns open/switch/close with no rainbow static** (ART III) · **the UI sits in proportion on your monitor** — nothing clipped, no bottom scrollbar (round-1b rework; `--bld-scale` tunes it).
+
+Non-builder runtime asks raised during Phase 5 testing (already shipped, verify in play):
+- **Physical crate pickup** — use the **Physical carry** step (not Collect/deliver, which is inventory-only and has no world pickup). Crate spawns at the pick-up point, hold [G] to shoulder, hold [G] at the drop-off to set down.
+- **Disconnect grace** — close the game mid-mission and DON'T return: after `ConfigRuntime.DisconnectGraceSeconds` (120s) the mission fails and cleans up (props/NPCs gone, DB marked failed). Returning inside the 2 min resumes normally. A server restart is exempt (that's the 48h `InstanceExpiryHours` sweep, not this).
